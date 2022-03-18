@@ -97,8 +97,6 @@ public class FullScreenPlayer extends AbsPlayer implements View.OnClickListener,
     private ImageView mIvBack;                                // 顶部标题栏中的返回按钮
     public ImageView mLike;                                  // 点赞按钮
     public TextView fullscreenLikeNum;                       // 点赞数
-    public ImageView mCollection;                            // 收藏按钮
-    public TextView fullscreenCollection;                    // 收藏数
     private ImageView mShare;                                 // 分享按钮
     private ImageView mIvSnapshot;                            // 截屏按钮
     private ImageView mIvLock;                                // 锁屏按钮
@@ -331,8 +329,6 @@ public class FullScreenPlayer extends AbsPlayer implements View.OnClickListener,
         mIvMore = (ImageView) findViewById(R.id.superplayer_iv_more);
         mLike = findViewById(R.id.fullscreen_like);
         fullscreenLikeNum = findViewById(R.id.fullscreen_like_num);
-        mCollection = findViewById(R.id.fullscreen_collection);
-        fullscreenCollection = findViewById(R.id.fullscreen_collection_num);
         mShare = findViewById(R.id.superplayer_fullscreen_share);
         mIvSnapshot = (ImageView) findViewById(R.id.superplayer_iv_snapshot);
         mTvCurrent = (TextView) findViewById(R.id.superplayer_tv_current);

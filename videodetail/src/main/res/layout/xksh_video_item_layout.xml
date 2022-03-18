@@ -179,6 +179,7 @@
                     android:paddingLeft="@dimen/video_dp10"
                     android:paddingRight="@dimen/video_dp10"
                     android:text="关注"
+                    android:visibility="gone"
                     android:textColor="@color/video_white"
                     android:textSize="@dimen/sp_12">
 

@@ -83,7 +83,7 @@ import common.utils.SPUtils;
 import common.utils.ScreenUtils;
 import common.utils.SoftKeyBoardListener;
 import common.utils.ToastUtils;
-import common.utils.Utils;
+import common.utils.AppInit;
 import model.bean.ActivityRuleBean;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.SuperPlayerModel;
@@ -126,7 +126,6 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     //评论列表弹窗
     public CustomPopWindow popupWindow;
     private boolean popupWindowIsShow;
-    private LinearLayout videoDetailCollection;
     private LinearLayout videoDetailLikes;
 
     private View contentView;
@@ -162,11 +161,9 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     public int currentIndex = 0; //记录当前视频列表的位置
     private TextView commentTotal;
     private TextView commentPopCommentTotal;
-    private ImageView videoDetailCollectionImage; //收藏图标
 
     private ImageView videoDetailLikesImage; //点赞图标
     private TextView likesNum; //点赞数
-    private TextView collectionNum; //收藏数
     private String videoType; //视频类型
     private VideoInteractiveParam param;
     public String playUrl;
@@ -266,10 +263,8 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         commentEdittext = findViewById(R.id.comment_edittext);
         videoDetailRv = findViewById(R.id.video_detail_rv);
         videoDetailRv.setHasFixedSize(true);
-        videoDetailCollectionImage = findViewById(R.id.video_detail_collection_image);
         videoDetailLikesImage = findViewById(R.id.video_detail_likes_image);
         likesNum = findViewById(R.id.likes_num);
-        collectionNum = findViewById(R.id.collection_num);
 
         videoDetailmanager = new ViewPagerLayoutManager(VideoDetailActivity.this);
         videoDetailRv.setLayoutManager(videoDetailmanager);
@@ -477,7 +472,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                 }
 
 //                playerView.mWindowPlayer.setDataDTO(mDataDTO, mDataDTO);
-                playerView.mWindowPlayer.setViewpager((NoScrollViewPager) VideoDetailActivity.this.findViewById(R.id.video_vp));
+//                playerView.mWindowPlayer.setViewpager((NoScrollViewPager) VideoDetailActivity.this.findViewById(R.id.video_vp));
                 playerView.mWindowPlayer.setIsTurnPages(false);
                 playerView.mWindowPlayer.setManager(videoDetailmanager);
 //                playerView.mFullScreenPlayer.setDataDTO(mDataDTO);
@@ -628,8 +623,6 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 
         initSmartRefresh();
         commentTotal = findViewById(R.id.comment_total);
-        videoDetailCollection = findViewById(R.id.video_detail_collection);
-        videoDetailCollection.setOnClickListener(this);
         videoDetailLikes = findViewById(R.id.video_detail_likes);
         videoDetailLikes.setOnClickListener(this);
 
@@ -914,7 +907,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
             playerView.mSuperPlayer.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
             playerView.setOrientation(true);
             mLayoutBottomParams.addRule(BELOW, playerView.getId());
-            mLayoutBottomParams.setMargins(0, (Utils.getContext().getResources().getDisplayMetrics().heightPixels / 2) + ButtonSpan.dip2px(135), 0, 0);
+            mLayoutBottomParams.setMargins(0, (AppInit.getContext().getResources().getDisplayMetrics().heightPixels / 2) + ButtonSpan.dip2px(135), 0, 0);
             playerView.mWindowPlayer.mLayoutBottom.setLayoutParams(mLayoutBottomParams);
             if (null != itemRelativelayout) {
                 itemRelativelayout.addView(playerView.mWindowPlayer.mLayoutBottom);
@@ -1058,7 +1051,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                     .setOutsideTouchable(false)
                     .setFocusable(true)
                     .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, Utils.getContext().getResources().getDisplayMetrics().heightPixels - ButtonSpan.dip2px(200))
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, AppInit.getContext().getResources().getDisplayMetrics().heightPixels - ButtonSpan.dip2px(200))
                     .setAnimationStyle(R.style.take_popwindow_anim)
                     .create()
                     .showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
@@ -1109,7 +1102,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                     .setView(sharePopView)
                     .setOutsideTouchable(true)
                     .setFocusable(true)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, ButtonSpan.dip2px(150))
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, ButtonSpan.dip2px(150))
                     .setAnimationStyle(R.style.take_popwindow_anim)
                     .create()
                     .showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
@@ -1710,14 +1703,6 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 
 
     public void setLikeCollection(ContentStateModel.DataDTO contentStateModel) {
-        if (contentStateModel.getWhetherFavor().equals("true")) {
-            videoDetailCollectionImage.setImageResource(R.drawable.collection);
-        } else {
-            videoDetailCollectionImage.setImageResource(R.drawable.collection_icon);
-        }
-
-        collectionNum.setText(NumberFormatTool.formatNum(Long.parseLong(NumberFormatTool.getNumStr(contentStateModel.getFavorCountShow())), false));
-
         if (contentStateModel.getWhetherLike().equals("true")) {
             videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
         } else {
@@ -1783,25 +1768,6 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                                     Log.e("埋点", "埋点：收藏---" + jsonString);
                                 }
 
-                                if (json.get("data").toString().equals("1")) {
-                                    int num;
-                                    num = Integer.parseInt(NumberFormatTool.getNumStr(collectionNum.getText().toString()));
-                                    num++;
-                                    collectionNum.setText(NumberFormatTool.formatNum(num, false));
-                                    videoDetailCollectionImage.setImageResource(R.drawable.collection);
-                                    playerView.contentStateModel.setWhetherFavor("true");
-                                    playerView.contentStateModel.setFavorCountShow(NumberFormatTool.formatNum(num, false).toString());
-                                } else {
-                                    int num;
-                                    num = Integer.parseInt(NumberFormatTool.getNumStr(collectionNum.getText().toString()));
-                                    if (num > 0) {
-                                        num--;
-                                    }
-                                    collectionNum.setText(NumberFormatTool.formatNum(num, false));
-                                    videoDetailCollectionImage.setImageResource(R.drawable.collection_icon);
-                                    playerView.contentStateModel.setWhetherFavor("false");
-                                    playerView.contentStateModel.setFavorCountShow(NumberFormatTool.formatNum(num, false).toString());
-                                }
                                 if (null != playerView.contentStateModel) {
                                     playerView.setContentStateModel(myContentId, videoType);
                                 }
@@ -2228,7 +2194,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                     .setFocusable(true)
                     .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                     .setAnimationStyle(R.style.take_popwindow_anim)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .create()
                     .showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
         } else {
@@ -2251,7 +2217,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                     .setOutsideTouchable(true)
                     .setFocusable(true)
                     .setAnimationStyle(R.style.AnimCenter)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, Utils.getContext().getResources().getDisplayMetrics().heightPixels)
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, AppInit.getContext().getResources().getDisplayMetrics().heightPixels)
                     .create()
                     .showAtLocation(decorView, Gravity.CENTER, 0, 0);
         } else {

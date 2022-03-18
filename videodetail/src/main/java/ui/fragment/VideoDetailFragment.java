@@ -82,7 +82,7 @@ import common.utils.SPUtils;
 import common.utils.ScreenUtils;
 import common.utils.SoftKeyBoardListener;
 import common.utils.ToastUtils;
-import common.utils.Utils;
+import common.utils.AppInit;
 import flyco.tablayout.SlidingTabLayout;
 import model.bean.ActivityRuleBean;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
@@ -314,7 +314,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                 }
 
                 playerView.mWindowPlayer.setDataDTO(mDataDTO, mDataDTO);
-                playerView.mWindowPlayer.setViewpager((NoScrollViewPager) getActivity().findViewById(R.id.video_vp));
+//                playerView.mWindowPlayer.setViewpager((NoScrollViewPager) getActivity().findViewById(R.id.video_vp));
                 playerView.mWindowPlayer.setIsTurnPages(false);
                 playerView.mWindowPlayer.setManager(videoDetailmanager);
                 playerView.mFullScreenPlayer.setDataDTO(mDataDTO);
@@ -543,26 +543,26 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
         /**
          * 无wifi 继续播放点击
          */
-        adapter.setToAddPlayerViewClick(new VideoDetailAdapter.ToAddPlayerViewClick() {
-            @Override
-            public void clickNoWifi(int position) {
-                SPUtils.getInstance().put(Constants.AGREE_NETWORK, "1");
-                for (int i = 0; i < mDatas.size(); i++) {
-                    if (null != mDatas.get(i)) {
-                        mDatas.get(i).setWifi(true);
-                    }
-                }
-                for (int i = 0; i < ((VideoHomeActivity) getActivity()).xkshFragment.mDatas.size(); i++) {
-                    if (null != ((VideoHomeActivity) getActivity()).xkshFragment.mDatas.get(i)) {
-                        ((VideoHomeActivity) getActivity()).xkshFragment.mDatas.get(i).setWifi(true);
-                    }
-                }
-
-                addPlayView(position);
-                adapter.notifyDataSetChanged();
-                ((VideoHomeActivity) getActivity()).xkshFragment.adapter.notifyDataSetChanged();
-            }
-        });
+//        adapter.setToAddPlayerViewClick(new VideoDetailAdapter.ToAddPlayerViewClick() {
+//            @Override
+//            public void clickNoWifi(int position) {
+//                SPUtils.getInstance().put(Constants.AGREE_NETWORK, "1");
+//                for (int i = 0; i < mDatas.size(); i++) {
+//                    if (null != mDatas.get(i)) {
+//                        mDatas.get(i).setWifi(true);
+//                    }
+//                }
+//                for (int i = 0; i < ((VideoHomeActivity) getActivity()).xkshFragment.mDatas.size(); i++) {
+//                    if (null != ((VideoHomeActivity) getActivity()).xkshFragment.mDatas.get(i)) {
+//                        ((VideoHomeActivity) getActivity()).xkshFragment.mDatas.get(i).setWifi(true);
+//                    }
+//                }
+//
+//                addPlayView(position);
+//                adapter.notifyDataSetChanged();
+//                ((VideoHomeActivity) getActivity()).xkshFragment.adapter.notifyDataSetChanged();
+//            }
+//        });
 
         videoDetailRv.setAdapter(adapter);
     }
@@ -868,7 +868,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
             playerView.mSuperPlayer.setRenderMode(TXLiveConstants.RENDER_MODE_ADJUST_RESOLUTION);
             playerView.setOrientation(true);
             mLayoutBottomParams.addRule(BELOW, playerView.getId());
-            mLayoutBottomParams.setMargins(0, (Utils.getContext().getResources().getDisplayMetrics().heightPixels / 2) + ButtonSpan.dip2px(135), 0, 0);
+            mLayoutBottomParams.setMargins(0, (AppInit.getContext().getResources().getDisplayMetrics().heightPixels / 2) + ButtonSpan.dip2px(135), 0, 0);
             playerView.mWindowPlayer.mLayoutBottom.setLayoutParams(mLayoutBottomParams);
             if (null != itemRelativelayout) {
                 itemRelativelayout.addView(playerView.mWindowPlayer.mLayoutBottom);
@@ -1010,7 +1010,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                     .setOutsideTouchable(false)
                     .setFocusable(true)
                     .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, Utils.getContext().getResources().getDisplayMetrics().heightPixels - ButtonSpan.dip2px(200))
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, AppInit.getContext().getResources().getDisplayMetrics().heightPixels - ButtonSpan.dip2px(200))
                     .setAnimationStyle(R.style.take_popwindow_anim)
                     .create()
                     .showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
@@ -1061,7 +1061,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                     .setView(sharePopView)
                     .setOutsideTouchable(true)
                     .setFocusable(true)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, ButtonSpan.dip2px(150))
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, ButtonSpan.dip2px(150))
                     .setAnimationStyle(R.style.take_popwindow_anim)
                     .create()
                     .showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
@@ -2241,7 +2241,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                     .setFocusable(true)
                     .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                     .setAnimationStyle(R.style.take_popwindow_anim)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT)
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, ViewGroup.LayoutParams.WRAP_CONTENT)
                     .create()
                     .showAtLocation(rootView, Gravity.BOTTOM, 0, 0);
         } else {
@@ -2264,7 +2264,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                     .setOutsideTouchable(true)
                     .setFocusable(true)
                     .setAnimationStyle(R.style.AnimCenter)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, Utils.getContext().getResources().getDisplayMetrics().heightPixels)
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, AppInit.getContext().getResources().getDisplayMetrics().heightPixels)
                     .create()
                     .showAtLocation(decorView, Gravity.CENTER, 0, 0);
         } else {

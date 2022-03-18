@@ -10,6 +10,11 @@ public class Constants {
     public static final String GDY_TOKEN = "gdy_token";
     public static final String TRANSFORMATION_TOKEN = "transformation_token";
     public static final String TGT_CODE = "tgt_code";
+    public static final String USER_PHONE_NUM = "phoneNum";
+    public static final String USER_IMAGE_URL = "userImageUrl";
+    public static final String USER_NICKNAME = "nickName";
+    public static final String USER_APPID = "appId";
+    public static final String SZRM_USER_MODEL = "szrmUserModel";
 
     public static final String KEY_USER = "keyuser";
     public static final String KEY_REFRESH_TOKEN = "refresh_token";
@@ -62,10 +67,15 @@ public class Constants {
     public static final String LOADMORE_TYPE = "loadmore";
 
     /**
+     * 超时时间
+     */
+    public static final int REQUEST_TIME_OUT = 999999;
+
+    /**
      * 上报内容埋点固定传参
      */
     public static final String ENTER_FROM = "click_category";
-//    public static final String CATEGORY_NAME = "c2402539";
+    //    public static final String CATEGORY_NAME = "c2402539";
     public static final String PARAMS_FOR_SPECIAL = "content_manager_system";
 
     /**
@@ -86,7 +96,7 @@ public class Constants {
     public static final String SHORT_VIDEO_SUBMIT = "short_video_submit"; //编辑视频发布 （提交发布成功时触发）
     public static final String SHORT_VIDEO_LIKE_RANKING = "short_video_like_ranking"; //点赞排行榜按钮点击 (搜索页面右上角排行榜标志点击时触发)
     public static final String SHORT_VIDEO_TOPIC_LISTPAGE = "short_video_topic_listpage"; //热门话题列表页点击
-    public static final String CLICK_USER ="click_user"; //点击其他用户（非自己）
+    public static final String CLICK_USER = "click_user"; //点击其他用户（非自己）
     public static final String NOTICE_USER = "notice_user"; //关注用户
     public static final String SHORT_VIDEO_PERSONAL_BUTTON = "short_video_personal_button"; //视频个人中心页点击（非视频按钮）
     public static final String CONTENT_VIDEO_PLAY = "content_video_play";  //视频开始播放
@@ -99,6 +109,14 @@ public class Constants {
 
     public static final double Horizontal_Proportion = 1.7777;
     public static final double Portrait_Proportion = 0.5625;
-
-
+    public static final String SDK_JS_SETTITLE = "setTitle";
+    public static final String SDK_JS_MONITORLIFECYCLE = "monitorLifeCycle";
+    public static final String SDK_JS_GETDEVICEID = "getDeviceId";
+    public static final String SDK_JS_GETUSERINFO = "getUserInfo";
+    public static final String SDK_JS_JUMPTONATIVEPAGE = "jumpToNativePage";
+    public static final String SDK_JS_SHARE = "share";
+    public static final String SDK_JS_SAVEPHOTO = "savePhoto";
+    public static final String SDK_JS_OPENVIDEO = "openVideo";
+    public static final String SDK_JS_GOLOGING = "goLogin";
+    public static final String SDK_JS_GETAPPVERSION = "getAppVersion";
 }

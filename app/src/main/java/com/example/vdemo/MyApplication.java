@@ -3,14 +3,18 @@ package com.example.vdemo;
 import android.app.Application;
 
 import common.utils.OkGoUtils;
-import common.utils.Utils;
+import common.utils.AppInit;
 
 public class MyApplication extends Application {
 
+    /**
+     * isDebug 是否为测试环境
+     * appkey 你的appKey
+     */
     @Override
     public void onCreate() {
         super.onCreate();
-        Utils.init(this,false);
+        AppInit.init(this,true, "your_appId","your_appKey");
         OkGoUtils.initOkGo(this);
 
 //        /* 初始化开始 */

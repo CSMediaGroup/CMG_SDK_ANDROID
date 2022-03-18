@@ -177,32 +177,6 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/video_detail_collection"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/video_detail_collection_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/collection_icon"></ImageView>
-
-                <TextView
-                    android:id="@+id/collection_num"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_marginTop="@dimen/video_dp5"
-                    android:textColor="@color/p60_opacity_white"
-                    android:textSize="11sp">
-
-                </TextView>
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/video_detail_likes"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"

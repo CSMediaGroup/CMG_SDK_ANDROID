@@ -3,12 +3,64 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1503623188405797" />
+        <entry key="videodetail/src/main/res/drawable/anthology_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/app_content_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/bg_font_window.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/choose_pop_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/comment_input_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/corners_radius_button.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/follow_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/followed_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/full_watch_btn_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/keyword_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/layer_list_progress_drawable.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/line_small.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/publisher_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/seek_bar_thumb_font.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/shape_dialog_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/shape_input_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/shape_progressbar_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/shape_progressbar_progress.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_biz_video_progressbar.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_gray_thumb.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_gray_track.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_green_track.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_layer_list_progress_bar.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_laylist_vod_video_progress.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_shape_round_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_shape_vtt_text_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_thumb.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_track.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/tag_selector_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/tagflow_select_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/tagflow_text_color.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/tagflow_unselect_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/upload_progress_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/video_detail_bottom_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/video_flipper_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/video_tab_tips_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/layout/activity_base_web.xml" value="0.165" />
+        <entry key="videodetail/src/main/res/layout/activity_custom_web_view.xml" value="0.1503623188405797" />
+        <entry key="videodetail/src/main/res/layout/activity_easy_web.xml" value="0.1852355072463768" />
+        <entry key="videodetail/src/main/res/layout/activity_login.xml" value="0.18020833333333333" />
+        <entry key="videodetail/src/main/res/layout/activity_video_detail.xml" value="0.1852355072463768" />
         <entry key="videodetail/src/main/res/layout/activity_video_main.xml" value="0.1503623188405797" />
+        <entry key="videodetail/src/main/res/layout/activity_web.xml" value="0.335" />
+        <entry key="videodetail/src/main/res/layout/comment_list_empty.xml" value="0.1852355072463768" />
+        <entry key="videodetail/src/main/res/layout/fragment_video_detail.xml" value="0.1852355072463768" />
+        <entry key="videodetail/src/main/res/layout/fragment_xksh.xml" value="0.14175724637681159" />
+        <entry key="videodetail/src/main/res/layout/layout_share_window.xml" value="0.25" />
         <entry key="videodetail/src/main/res/layout/layout_tab_segment.xml" value="0.10520833333333333" />
-        <entry key="videodetail/src/main/res/layout/superplayer_vod_player_fullscreen.xml" value="0.1" />
+        <entry key="videodetail/src/main/res/layout/mine_layout_bottomtipdialog.xml" value="0.165" />
+        <entry key="videodetail/src/main/res/layout/mine_layout_clearcachedialog.xml" value="0.335" />
+        <entry key="videodetail/src/main/res/layout/mine_layout_imagetype.xml" value="0.335" />
+        <entry key="videodetail/src/main/res/layout/no_login_tips.xml" value="0.1852355072463768" />
+        <entry key="videodetail/src/main/res/layout/superplayer_vod_player_fullscreen.xml" value="0.125" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_player_window.xml" value="0.1" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_view.xml" value="0.14895833333333333" />
+        <entry key="videodetail/src/main/res/layout/xksh_video_item_layout.xml" value="0.1852355072463768" />
       </map>
     </option>
   </component>

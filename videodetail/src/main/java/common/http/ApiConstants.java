@@ -198,6 +198,28 @@ public class ApiConstants {
     }
 
     public String getCategoryData() {
-        return getBaseUrl()+"api/cms/client/category/getCategoryData";
+        return getBaseUrl() + "api/cms/client/category/getCategoryData";
     }
+
+    /**
+     * 数智融媒登录
+     */
+    public String getLoginParty() {
+        return getBaseUrl() + "api/sys/login/3rd/party";
+    }
+
+    /**
+     * 获取随机视频
+     */
+    public String queryRandomVideoList(){
+        return getBaseUrl() + "api/cms/client/video/queryRandomVideoList";
+    }
+
+    /**
+     * 获取机构
+     */
+    public String getCfg(){
+        return getBaseUrl() + "api/sys/client/org/cfg";
+    }
+
 }

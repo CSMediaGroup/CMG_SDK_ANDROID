@@ -19,14 +19,14 @@ import common.http.ApiConstants;
 /**
  * 常用工具类
  */
-public final class Utils {
+public final class AppInit {
     private static SimpleDateFormat formatterYmd = new SimpleDateFormat("MM-dd");//初始化Formatter的转换格式。
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");//初始化Formatter的转换格式。
     public static boolean mIsDebug;
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
 
-    private Utils() {
+    private AppInit() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 
@@ -35,10 +35,10 @@ public final class Utils {
      *
      * @param context 上下文
      */
-    public static void init(@NonNull final Context context, Boolean isDebug) {
-        Utils.mContext = context.getApplicationContext();
+    public static void init(@NonNull final Context context, Boolean isDebug,String appId, String appKey) {
+        AppInit.mContext = context.getApplicationContext();
         mIsDebug = isDebug;
-        if (isDebug) {
+        if (mIsDebug) {
             //UAT测试环境
             ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");
         } else {

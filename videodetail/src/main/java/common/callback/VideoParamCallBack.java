@@ -14,6 +14,7 @@ public interface VideoParamCallBack {
 
     /**
      * 获取分享四要素函数
+     *
      * @param shareInfo
      */
     void shared(ShareInfo shareInfo);

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,13 +44,12 @@ import common.model.VideoChannelModel;
 import common.model.VideoDetailModel;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
-import common.utils.Utils;
-import widget.CustomLoadMoreView;
+import common.utils.AppInit;
+
 import static common.callback.VideoInteractiveParam.param;
 import static common.constants.Constants.PANELCODE;
 import static common.constants.Constants.VIDEOTAG;
 import static common.constants.Constants.success_code;
-import static utils.NetworkUtil.setDataWifiState;
 
 public class LiveFragment extends Fragment implements View.OnClickListener {
     private RecyclerView liveRv;
@@ -383,7 +381,7 @@ public class LiveFragment extends Fragment implements View.OnClickListener {
                     .setOutsideTouchable(true)
                     .setFocusable(true)
                     .setAnimationStyle(R.style.AnimCenter)
-                    .size(Utils.getContext().getResources().getDisplayMetrics().widthPixels, Utils.getContext().getResources().getDisplayMetrics().heightPixels)
+                    .size(AppInit.getContext().getResources().getDisplayMetrics().widthPixels, AppInit.getContext().getResources().getDisplayMetrics().heightPixels)
                     .create()
                     .showAtLocation(getActivity().getWindow().getDecorView(), Gravity.CENTER, 0, 0);
         } else {

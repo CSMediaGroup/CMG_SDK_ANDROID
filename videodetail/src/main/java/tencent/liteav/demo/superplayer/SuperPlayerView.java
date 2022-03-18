@@ -67,7 +67,6 @@ import common.model.PlayImageSpriteInfo;
 import common.model.PlayKeyFrameDescInfo;
 import common.model.VideoQuality;
 import common.utils.ButtonSpan;
-import common.utils.DebugLogUtils;
 import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
@@ -257,13 +256,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
         this.mContentId = contentId;
         this.mVideoType = videoType;
 
-        //全屏模式下获取到的收藏点赞状态
-        if (contentStateModel.getWhetherFavor().equals("true")) {
-            mFullScreenPlayer.mCollection.setImageResource(R.drawable.collection);
-        } else {
-            mFullScreenPlayer.mCollection.setImageResource(R.drawable.collection_icon);
-        }
-
         if (contentStateModel.getWhetherLike().equals("true")) {
             mFullScreenPlayer.mLike.setImageResource(R.drawable.favourite_select);
         } else {
@@ -271,7 +263,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
         }
 
         mFullScreenPlayer.fullscreenLikeNum.setText(NumberFormatTool.formatNum(Long.parseLong(NumberFormatTool.getNumStr(contentStateModel.getLikeCountShow())), false));
-        mFullScreenPlayer.fullscreenCollection.setText(NumberFormatTool.formatNum(Long.parseLong(NumberFormatTool.getNumStr(contentStateModel.getFavorCountShow())), false));
 
         //全屏点赞按钮
         mFullScreenPlayer.mLike.setOnClickListener(new OnClickListener() {
@@ -285,17 +276,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
             }
         });
 
-        //全屏收藏按钮
-        mFullScreenPlayer.mCollection.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (TextUtils.isEmpty(PersonInfoManager.getInstance().getTransformationToken())) {
-                    noLoginTipsPop();
-                } else {
-                    addOrCancelFavor(mContentId, mVideoType);
-                }
-            }
-        });
     }
 
     public ContentStateModel.DataDTO getContentStateModel() {
@@ -367,7 +347,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                                 }
 
                             } else if (json.get("code").toString().equals(token_error)) {
-                                DebugLogUtils.DebugLog("无token,跳转登录");
                                 try {
                                     param.toLogin();
                                 } catch (Exception e) {
@@ -390,80 +369,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                     @Override
                     public void onError(Response<String> response) {
                         ToastUtils.showShort("点赞失败");
-                    }
-                });
-    }
-
-    /**
-     * 收藏/取消收藏
-     */
-    private void addOrCancelFavor(String contentId, String type) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("contentId", contentId);
-            jsonObject.put("type", type);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        OkGo.<String>post(ApiConstants.getInstance().addOrCancelFavor())
-                .tag(VIDEOTAG)
-                .headers("token", PersonInfoManager.getInstance().getTransformationToken())
-                .upJson(jsonObject)
-                .cacheMode(CacheMode.NO_CACHE)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        if (null == response.body()) {
-                            ToastUtils.showShort(R.string.data_err);
-                            return;
-                        }
-                        try {
-                            JSONObject json = new JSONObject(response.body());
-                            if (json.get("code").toString().equals(success_code)) {
-
-                                if (json.get("data").toString().equals("1")) {
-                                    int num;
-                                    num = Integer.parseInt(NumberFormatTool.getNumStr(mFullScreenPlayer.fullscreenCollection.getText().toString()));
-                                    num++;
-                                    mFullScreenPlayer.fullscreenCollection.setText(NumberFormatTool.formatNum(num, false));
-                                    mFullScreenPlayer.mCollection.setImageResource(R.drawable.collection);
-                                    contentStateModel.setWhetherFavor("true");
-                                    contentStateModel.setFavorCountShow(NumberFormatTool.formatNum(num, false).toString());
-                                } else {
-                                    int num;
-                                    num = Integer.parseInt(NumberFormatTool.getNumStr(mFullScreenPlayer.fullscreenCollection.getText().toString()));
-                                    if (num > 0) {
-                                        num--;
-                                    }
-                                    mFullScreenPlayer.fullscreenCollection.setText(NumberFormatTool.formatNum(num, false));
-                                    mFullScreenPlayer.mCollection.setImageResource(R.drawable.collection_icon);
-                                    contentStateModel.setWhetherFavor("false");
-                                    contentStateModel.setFavorCountShow(NumberFormatTool.formatNum(num, false).toString());
-                                }
-                            } else if (json.get("code").toString().equals(token_error)) {
-                                DebugLogUtils.DebugLog("无token 去跳登录");
-                                try {
-                                    param.toLogin();
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                if (null != json.get("message").toString()) {
-                                    ToastUtils.showShort(json.get("message").toString());
-                                } else {
-                                    ToastUtils.showShort("收藏失败");
-                                }
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            ToastUtils.showShort("收藏失败");
-                        }
-
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        ToastUtils.showShort("收藏失败");
                     }
                 });
     }

@@ -62,7 +62,7 @@
                     android:id="@+id/fullscreen_like"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
-                    android:layout_toLeftOf="@+id/fullscreen_collection"
+                    android:layout_toLeftOf="@+id/superplayer_fullscreen_share"
                     android:src="@drawable/favourite">
 
                 </ImageView>
@@ -80,32 +80,6 @@
                     >
 
                 </TextView>
-
-
-                <ImageView
-                    android:id="@+id/fullscreen_collection"
-                    android:layout_width="20dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_toLeftOf="@+id/superplayer_fullscreen_share"
-                    android:src="@drawable/collection_icon">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/fullscreen_collection_num"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="-20dp"
-                    android:layout_toRightOf="@+id/fullscreen_collection"
-                    android:textColor="@color/superplayer_white"
-                    android:textSize="8sp"
-                    tool:text="100W+"
-                    >
-
-                </TextView>
-
 
                 <ImageView
                     android:id="@+id/superplayer_fullscreen_share"

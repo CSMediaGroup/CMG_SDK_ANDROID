@@ -3,7 +3,6 @@ package adpter;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +29,7 @@ import common.model.RecommendModel;
 import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.ScreenUtils;
-import common.utils.Utils;
+import common.utils.AppInit;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
 import ui.activity.VideoHomeActivity;
@@ -41,7 +40,6 @@ import static common.constants.Constants.BLUE_V;
 import static common.constants.Constants.YELLOW_V;
 import static common.utils.SPUtils.isVisibleNoWifiView;
 import static ui.fragment.VideoDetailFragment.videoIsNormal;
-import static ui.fragment.XkshFragment.isFollow;
 import static common.callback.VideoInteractiveParam.param;
 
 @Keep
@@ -58,10 +56,12 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
     private RelativeLayout mVideoDetailCommentBtn;
     private ViewPagerLayoutManager mVideoDetailmanager;
     private String spaceStr = "";
+    private String logoUrl;
 //    private String topicNameStr;
 
     public XkshVideoAdapter(int layoutResId, @Nullable List<DataDTO> data, Context context,
-                            SuperPlayerView playerView, SmartRefreshLayout refreshLayout, RelativeLayout videoDetailCommentBtn, ViewPagerLayoutManager videoDetailmanager) {
+                            SuperPlayerView playerView, SmartRefreshLayout refreshLayout, RelativeLayout videoDetailCommentBtn, ViewPagerLayoutManager videoDetailmanager
+    , String mLogoUrl) {
         super(layoutResId, data);
         this.mContext = context;
         this.mDatas = data;
@@ -69,6 +69,7 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
         this.mRefreshlayout = refreshLayout;
         this.mVideoDetailCommentBtn = videoDetailCommentBtn;
         this.mVideoDetailmanager = videoDetailmanager;
+        this.logoUrl = mLogoUrl;
     }
 
     @Override
@@ -90,6 +91,19 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
         ImageView coverPicture = helper.getView(R.id.cover_picture);
         final TextView ellipsisTv = helper.getView(R.id.ellipsis_tv);
 
+        if (null != mContext && !((VideoHomeActivity) mContext).isFinishing()
+                && !((VideoHomeActivity) mContext).isDestroyed()) {
+            Glide.with(mContext)
+                    .load(logoUrl)
+                    .into(verticalVideoWdcsLogo);
+        }
+
+        if (null != mContext && !((VideoHomeActivity) mContext).isFinishing()
+                && !((VideoHomeActivity) mContext).isDestroyed()) {
+            Glide.with(mContext)
+                    .load(logoUrl)
+                    .into(horizontalVideoWdcsLogo);
+        }
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) coverPicture.getLayoutParams();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -170,11 +184,11 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
         String localUserId = PersonInfoManager.getInstance().getUserId();
         String userId = item.getCreateBy();
 
-        if (TextUtils.isEmpty(item.getIssuerId()) || TextUtils.equals(localUserId, userId)) {
-            follow.setVisibility(View.GONE);
-        } else {
-            follow.setVisibility(View.VISIBLE);
-        }
+//        if (TextUtils.isEmpty(item.getIssuerId()) || TextUtils.equals(localUserId, userId)) {
+//            follow.setVisibility(View.GONE);
+//        } else {
+//            follow.setVisibility(View.VISIBLE);
+//        }
 
 
         //无wifi时继续播放按钮
@@ -225,19 +239,20 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
         publisherHeadimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(item.getIssuerId())) {
-                    return;
-                }
-                //跳转H5头像TA人主页
-                try {
-                    if (Utils.mIsDebug) {
-                        param.recommendUrl(Constants.HEAD_OTHER + item.getCreateBy(), null);
-                    } else {
-                        param.recommendUrl(Constants.HEAD_OTHER_ZS + item.getCreateBy(), null);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                //sdk去掉头像点击
+//                if (TextUtils.isEmpty(item.getIssuerId())) {
+//                    return;
+//                }
+//                //跳转H5头像TA人主页
+//                try {
+//                    if (AppInit.mIsDebug) {
+//                        param.recommendUrl(Constants.HEAD_OTHER + item.getCreateBy(), null);
+//                    } else {
+//                        param.recommendUrl(Constants.HEAD_OTHER_ZS + item.getCreateBy(), null);
+//                    }
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
             }
         });
 
