@@ -160,8 +160,8 @@ public class MainActivity extends AppCompatActivity {
 //                intent.putExtra("newsLink", "https://www.baidu.com/");
 //                intent.putExtra("newsLink", "https://uat-h5.zhcs.csbtv.com/sdk/news/#/");
 //                intent.putExtra("newsLink", "file:///android_asset/jsbridge/demo.html");
-                intent.putExtra("newsLink", "http://192.168.31.233:3000/home");
-//                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
+//                intent.putExtra("newsLink", "file:///android_asset/jsbridge/test.html");
+                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
                 startActivity(intent);
             }
         });

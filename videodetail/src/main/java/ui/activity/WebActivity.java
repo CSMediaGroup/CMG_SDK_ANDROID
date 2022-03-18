@@ -84,6 +84,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private String logoUrl;
     private String webUrl;
     private String intentUrl;
+    private String cfgStr; //获取的机构数据json字符串
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,6 +149,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
                         if (response.body().getCode().equals(success_code)) {
                             MechanismModel.DataDTO model = response.body().getData();
+                            cfgStr = JSON.toJSONString(model);
                             logoUrl = model.getLogo();
                             webUrl = model.getConfig().getListUrl();
                             initBridge();
@@ -204,9 +206,11 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 String str2 = "javascript: window.deviceId = '";
                 String str3 = "javascript: window.appVersion = '";
                 String str4 = "'";
+                String str5 = "javascript: window.orgInfo = '";
                 mAgentWeb.getJsAccessEntrace().callJs(str1 + PersonInfoManager.getInstance().getSzrmUserModel() + str4);
                 mAgentWeb.getJsAccessEntrace().callJs(str2 + SystemUtil.getANDROID_ID() + str4);
                 mAgentWeb.getJsAccessEntrace().callJs(str3 + getAppInfo() + str4);
+                mAgentWeb.getJsAccessEntrace().callJs(str5 + cfgStr + str4);
             }
 
             @Override
@@ -257,142 +261,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
         if (null != mBridgeWebView) {
             setBridge();
-//            /**
-//             * 设置标题
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_SETTITLE, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    Log.e("WebActivity", "页面标题为：" + data);
-//                    webTitle.setText(data);
-//                    function.onCallBack("标题");
-//                }
-//            });
-//
-//            /**
-//             * 返回
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_MONITORLIFECYCLE, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    finish();
-//                }
-//            });
-//
-//            /**
-//             * 获取设备id
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_GETDEVICEID, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    function.onCallBack(SystemUtil.getANDROID_ID());
-//                }
-//            });
-//
-//            /**
-//             * 获取用户信息
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_GETUSERINFO, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    if (null != userInfo) {
-//                        String str = JSON.toJSONString(userInfo);
-//                        function.onCallBack(str);
-//                    }
-//                }
-//            });
-//
-//            /**
-//             * 打开新的webview
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_JUMPTONATIVEPAGE, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    Intent intent = new Intent(WebActivity.this, EasyWebActivity.class);
-//                    intent.putExtra("param", data);
-//                    startActivity(intent);
-//                }
-//            });
-//
-//            /**
-//             * 分享
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_SHARE, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    ShareInfo shareInfo = JSON.parseObject(data, ShareInfo.class);
-//                    SdkInteractiveParam.getInstance().shared(shareInfo);
-//                }
-//            });
-//
-//            /**
-//             * 保存图片
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_SAVEPHOTO, new BridgeHandler() {
-//                @Override
-//                public void handler(final String data, final CallBackFunction function) {
-//                    String[] writePerMissionGrop = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//                    new RxPermissions(WebActivity.this).request(writePerMissionGrop).subscribe(new Consumer<Boolean>() {
-//                        @Override
-//                        public void accept(Boolean aBoolean) throws Exception {
-//                            if (aBoolean) {
-//                                JSONObject jsonObject = JSON.parseObject(data);
-//                                final String url = jsonObject.getString("url");
-//                                new Thread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        ImageUtils.saveBitmap2file(SavePhoto.getBitmap(url), WebActivity.this
-//                                                , handler, function);
-//                                    }
-//                                }).start();
-//                            } else {
-//                                function.onCallBack("0");
-//                                ToastUtils.showShort("请在设置中手动开启写入SD卡权限");
-//                            }
-//                        }
-//                    });
-//                }
-//            });
-//
-//            /**
-//             * 打开登录页
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_GOLOGING, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    SdkInteractiveParam.getInstance().toLogin();
-//                }
-//            });
-//
-//
-//            /**
-//             * 打开视频
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_OPENVIDEO, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
-//                    JSONObject jsonObject = JSON.parseObject(data);
-//                    intent.putExtra("contentId", jsonObject.getString("contentId"));
-//                    startActivity(intent);
-//                }
-//            });
-//
-//            /**
-//             * 获取手机信息
-//             */
-//            mBridgeWebView.registerHandler(Constants.SDK_JS_GETAPPVERSION, new BridgeHandler() {
-//                @Override
-//                public void handler(String data, CallBackFunction function) {
-//                    AppSystemModel model = new AppSystemModel();
-//                    model.setPlatform("Android");
-//                    model.setDeviceBrand(SystemUtil.getDeviceBrand());
-//                    model.setVersionCode(String.valueOf(SystemUtil.getVersionCode(WebActivity.this)));
-//                    model.setVersionName(SystemUtil.getVersionName(WebActivity.this));
-//                    String str = JSON.toJSONString(model);
-//                    function.onCallBack(str);
-//                }
-//            });
         }
 
         handler = new Handler() {
