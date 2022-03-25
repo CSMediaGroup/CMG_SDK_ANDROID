@@ -60,6 +60,6 @@ public class EasyWebActivity extends BaseAgentWebActivity {
     @Nullable
     @Override
     protected String getUrl() {
-        return param.getNewsLink();
+        return "http://192.168.31.161:8081/news/index.html";
     }
 }

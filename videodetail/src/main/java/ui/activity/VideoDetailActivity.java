@@ -100,6 +100,7 @@ import static android.widget.RelativeLayout.BELOW;
 import static common.constants.Constants.VIDEOTAG;
 import static common.constants.Constants.success_code;
 import static common.constants.Constants.token_error;
+import static common.utils.AppInit.appId;
 import static tencent.liteav.demo.superplayer.SuperPlayerView.mTargetPlayerMode;
 import static tencent.liteav.demo.superplayer.ui.player.AbsPlayer.formattedTime;
 import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mDuration;
@@ -2265,6 +2266,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         }
         OkGo.<RecommendModel>post(ApiConstants.getInstance().recommendList())
                 .tag(recommendTag)
+                .headers("appId",appId)
                 .upJson(jsonObject)
                 .execute(new JsonCallback<RecommendModel>() {
                     @Override

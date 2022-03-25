@@ -23,6 +23,7 @@ public final class AppInit {
     private static SimpleDateFormat formatterYmd = new SimpleDateFormat("MM-dd");//初始化Formatter的转换格式。
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");//初始化Formatter的转换格式。
     public static boolean mIsDebug;
+    public static String appId;
     @SuppressLint("StaticFieldLeak")
     private static Context mContext;
 
@@ -35,9 +36,10 @@ public final class AppInit {
      *
      * @param context 上下文
      */
-    public static void init(@NonNull final Context context, Boolean isDebug,String appId, String appKey) {
+    public static void init(@NonNull final Context context, Boolean isDebug, String mAppId, String appKey) {
         AppInit.mContext = context.getApplicationContext();
         mIsDebug = isDebug;
+        appId = mAppId;
         if (mIsDebug) {
             //UAT测试环境
             ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");

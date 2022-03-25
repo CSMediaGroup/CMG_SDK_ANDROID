@@ -1,5 +1,7 @@
 package ui.activity;
 
+import static common.utils.AppInit.appId;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -39,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private String mobile;
     private String headProfile;
     private String nickName;
+    private TextView signOutLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         userIdEtv = findViewById(R.id.userId);
         tel = findViewById(R.id.tel);
-        adress = findViewById(R.id.adress);
+        adress = findViewById(R.id.headProfile);
         nickNameEtv = findViewById(R.id.nickName);
 
         //登录
@@ -56,11 +59,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("appId", "1");
-                    jsonObject.put("userId", "12345");
-                    jsonObject.put("mobile", "18684711216");
-                    jsonObject.put("headProfile", "https://oss.zhcs.csbtv.com/zhcs-prd/icon/WechatIMG180.png");
-                    jsonObject.put("nickName", "JSON");
+                    jsonObject.put("appId", appId);
+                    jsonObject.put("userId", userIdEtv.getText());
+                    jsonObject.put("mobile", tel.getText());
+                    jsonObject.put("headProfile", adress.getText());
+                    jsonObject.put("nickName", nickNameEtv.getText());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -97,6 +100,13 @@ public class LoginActivity extends AppCompatActivity {
                                 ToastUtils.showShort(com.wdcs.videodetail.demo.R.string.net_err);
                             }
                         });
+            }
+        });
+
+        findViewById(R.id.signOutLogin).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PersonInfoManager.getInstance().clearThirdUserToken();
             }
         });
     }

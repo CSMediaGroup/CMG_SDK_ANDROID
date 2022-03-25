@@ -44,7 +44,7 @@
         <entry key="videodetail/src/main/res/layout/activity_base_web.xml" value="0.165" />
         <entry key="videodetail/src/main/res/layout/activity_custom_web_view.xml" value="0.1503623188405797" />
         <entry key="videodetail/src/main/res/layout/activity_easy_web.xml" value="0.1852355072463768" />
-        <entry key="videodetail/src/main/res/layout/activity_login.xml" value="0.18020833333333333" />
+        <entry key="videodetail/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="videodetail/src/main/res/layout/activity_video_detail.xml" value="0.1852355072463768" />
         <entry key="videodetail/src/main/res/layout/activity_video_main.xml" value="0.1503623188405797" />
         <entry key="videodetail/src/main/res/layout/activity_web.xml" value="0.335" />
@@ -60,6 +60,7 @@
         <entry key="videodetail/src/main/res/layout/superplayer_vod_player_fullscreen.xml" value="0.125" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_player_window.xml" value="0.1" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_view.xml" value="0.14895833333333333" />
+        <entry key="videodetail/src/main/res/layout/video_detail_item.xml" value="0.2" />
         <entry key="videodetail/src/main/res/layout/xksh_video_item_layout.xml" value="0.1852355072463768" />
       </map>
     </option>

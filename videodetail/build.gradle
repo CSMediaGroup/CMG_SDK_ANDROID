@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library';
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -13,7 +12,7 @@ android {
 
         multiDexEnabled true
         ndk {
-            abiFilters "armeabi-v7a","arm64-v8a"
+            abiFilters "armeabi-v7a", "arm64-v8a"
         }
         consumerProguardFiles "proguard-rules"
     }
@@ -46,7 +45,9 @@ android {
     dataBinding {
         enabled true
     }
+
 }
+
 
 dependencies {
 
@@ -75,17 +76,17 @@ dependencies {
     api 'com.hyman:flowlayout-lib:1.1.2'
     api "com.github.tbruyelle:rxpermissions:0.10.2"
     api 'com.zhihu.android:matisse:0.5.3-beta3'
-    api  "io.reactivex.rxjava2:rxjava:2.2.3"
-    api  "io.reactivex.rxjava2:rxandroid:2.1.0"
+    api "io.reactivex.rxjava2:rxjava:2.2.3"
+    api "io.reactivex.rxjava2:rxandroid:2.1.0"
     //rx系列与View生命周期同步
-    api   "com.trello.rxlifecycle3:rxlifecycle:3.1.0"
-    api   "com.trello.rxlifecycle3:rxlifecycle-components:3.1.0"
-    api   "com.afollestad.material-dialogs:core:0.9.4.5"
-    api   "com.afollestad.material-dialogs:commons:0.9.4.5"
-    api   'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    api   "com.squareup.retrofit2:retrofit:2.4.0"
-    api   "com.squareup.retrofit2:converter-gson:2.4.0"
-    api   "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+    api "com.trello.rxlifecycle3:rxlifecycle:3.1.0"
+    api "com.trello.rxlifecycle3:rxlifecycle-components:3.1.0"
+    api "com.afollestad.material-dialogs:core:0.9.4.5"
+    api "com.afollestad.material-dialogs:commons:0.9.4.5"
+    api 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    api "com.squareup.retrofit2:retrofit:2.4.0"
+    api "com.squareup.retrofit2:converter-gson:2.4.0"
+    api "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
     api 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
     api 'com.google.zxing:core:3.3.0'
     api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx'
@@ -100,3 +101,4 @@ dependencies {
 ////    implementation 'com.volcengine:metasec_ml:4.3.4'
 ////    implementation "com.bytedance.applog:RangersAppLog-All-metasec-cn:6.8.0"
 }
+apply from: '../nexus.gradle'

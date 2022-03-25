@@ -1,6 +1,7 @@
 package ui.activity;
 
 import static common.constants.Constants.success_code;
+import static common.utils.AppInit.appId;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -82,9 +83,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private JSONObject dataObject;
     private JumpToNativePageModel param;
     private String logoUrl;
-    private String webUrl;
     private String intentUrl;
     private String cfgStr; //获取的机构数据json字符串
+    private String intent = "0";
+    private String mechanismId; //机构Id
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +107,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         ScreenUtils.fullScreen(this, true);
         ScreenUtils.setStatusBarColor(this, R.color.white);
         param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
-        intentUrl = getIntent().getStringExtra("newsLink");
+        intent = getIntent().getStringExtra("intent");
         if (null != param && TextUtils.isEmpty(param.getNewsLink())) {
             iconShare.setVisibility(View.GONE);
         } else {
@@ -119,8 +121,15 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         shareCircleBtn.setOnClickListener(this);
         shareQqBtn = sharePopView.findViewById(R.id.share_qq_btn);
         shareQqBtn.setOnClickListener(this);
-        getCfg();
         mBridgeWebView = new BridgeWebView(this);
+        if (TextUtils.equals("1", intent)) {
+            intentUrl = param.getNewsLink();
+            initBridge();
+        } else {
+            intentUrl = getIntent().getStringExtra("newsLink");
+            getCfg();
+        }
+
 
         //登录
         findViewById(R.id.toLogin).setOnClickListener(new View.OnClickListener() {
@@ -138,7 +147,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private void getCfg() {
         OkGo.<MechanismModel>get(ApiConstants.getInstance().getCfg())
                 .tag("cfg")
-                .params("appId", "1818423")
+                .params("appId", appId)
                 .execute(new JsonCallback<MechanismModel>(MechanismModel.class) {
                     @Override
                     public void onSuccess(Response<MechanismModel> response) {
@@ -151,7 +160,8 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                             MechanismModel.DataDTO model = response.body().getData();
                             cfgStr = JSON.toJSONString(model);
                             logoUrl = model.getLogo();
-                            webUrl = model.getConfig().getListUrl();
+                            intentUrl = model.getConfig().getListUrl();
+                            mechanismId = model.getId();
                             initBridge();
                         } else {
                             ToastUtils.showShort(response.body().getMessage());
@@ -235,7 +245,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LOGIN_REQUEST_CODE) {
+        if (requestCode == LOGIN_REQUEST_CODE && null != data) {
             userInfo = (SdkUserInfo.DataDTO) data.getExtras().getSerializable("userInfo");
             PersonInfoManager.getInstance().setUserId(userInfo.getLoginSysUserVo().getId());
             String userInfoStr = JSON.toJSONString(userInfo);
@@ -248,6 +258,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
 
     private void initBridge() {
+
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(container, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
                 .useDefaultIndicator(-1, 2)
@@ -270,10 +281,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 int id = msg.what;
                 if (id == 1) {
                     CallBackFunction callBackFunction = (CallBackFunction) msg.obj;
-                    callBackFunction.onCallBack("1");
+                    callBackFunction.onCallBack(PersonInfoManager.getInstance().getSzrmUserModel());
                 } else {
                     CallBackFunction callBackFunction = (CallBackFunction) msg.obj;
-                    callBackFunction.onCallBack("0");
+                    callBackFunction.onCallBack(PersonInfoManager.getInstance().getSzrmUserModel());
                 }
             }
         };
@@ -301,13 +312,12 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     function.onCallBack(deviceIdStr);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETUSERINFO)) { //获取用户信息
                     String userInfoStr = PersonInfoManager.getInstance().getSzrmUserModel();
-                    if (!TextUtils.isEmpty(userInfoStr)) {
-                        function.onCallBack(userInfoStr);
-                    }
+                    function.onCallBack(userInfoStr);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_JUMPTONATIVEPAGE)) { //跳转新webView
                     Intent intent = new Intent(WebActivity.this, WebActivity.class);
                     JumpToNativePageModel model = JSON.parseObject(JSON.toJSONString(dataObject), JumpToNativePageModel.class);
                     intent.putExtra("param", model);
+                    intent.putExtra("intent", "1");
                     startActivity(intent);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_SHARE)) { //分享
                     sharePop();
@@ -335,6 +345,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GOLOGING)) { //跳转登录
 //                    SdkInteractiveParam.getInstance().toLogin();
                     Intent intent = new Intent(WebActivity.this, LoginActivity.class);
+                    intent.putExtra("mechanismId", mechanismId);
                     startActivityForResult(intent, LOGIN_REQUEST_CODE);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_OPENVIDEO)) { //打开视频
                     Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
@@ -408,7 +419,9 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onPause() {
-        mAgentWeb.getWebLifeCycle().onPause();
+        if (null != mAgentWeb) {
+            mAgentWeb.getWebLifeCycle().onPause();
+        }
         super.onPause();
     }
 
@@ -424,6 +437,14 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             //不需要请求数智融媒的登录
         }
         super.onResume();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != mAgentWeb) {
+            mAgentWeb.getWebLifeCycle().onDestroy();
+        }
     }
 
     private void szrmLoginRequest() {

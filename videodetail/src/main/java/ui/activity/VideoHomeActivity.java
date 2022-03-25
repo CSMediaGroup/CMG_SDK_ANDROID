@@ -110,6 +110,7 @@ import static common.constants.Constants.TRACKINGUPLOAD;
 import static common.constants.Constants.VIDEOTAG;
 import static common.constants.Constants.success_code;
 import static common.constants.Constants.token_error;
+import static common.utils.AppInit.appId;
 import static common.utils.SPUtils.isVisibleNoWifiView;
 import static common.utils.ShareUtils.toShare;
 import static tencent.liteav.demo.superplayer.SuperPlayerView.instance;
@@ -979,7 +980,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 adapter.loadMoreFail();
                                 return;
                             }
-//                            loadMoreData(ApiConstants.getInstance().getVideoDetailListUrl(), mDatas.get(mDatas.size() - 1).getId() + "", panelCode, "true", Constants.LOADMORE_TYPE);
+                            getRandomVideoList();
                         }
                     });
                 }
@@ -1364,7 +1365,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 recordContentId = String.valueOf(mDatas.get(mDatas.size() - 1).getId());
                             }
                             videoDetailCommentBtn.setVisibility(View.VISIBLE);
-                            getRandomVideoList();
                         } else {
                             videoDetailCommentBtn.setVisibility(View.GONE);
                         }
@@ -1396,7 +1396,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         OkGo.<VideoDetailModel>get(ApiConstants.getInstance().queryRandomVideoList())
                 .cacheMode(CacheMode.NO_CACHE)
                 .params("pageSize", "15")
-                .params("org_id", "1399362")
+                .params("org_id", appId)
                 .execute(new JsonCallback<VideoDetailModel>(VideoDetailModel.class) {
                     @Override
                     public void onSuccess(Response<VideoDetailModel> response) {
@@ -2046,6 +2046,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         }
         OkGo.<RecommendModel>post(ApiConstants.getInstance().recommendList())
                 .tag(recommendTag)
+                .headers("appId",appId)
                 .upJson(jsonObject)
                 .execute(new JsonCallback<RecommendModel>() {
                     @Override

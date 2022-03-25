@@ -25,6 +25,8 @@ import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
 import common.utils.PersonInfoManager;
+import common.utils.ToastUtils;
+import ui.activity.EasyWebActivity;
 import ui.activity.LoginActivity;
 import ui.activity.VideoDetailActivity;
 import ui.activity.VideoHomeActivity;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView classList;
     private TextView login_activity;
     private TextView others_home_page;
+    private TextView clear_user_info;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +174,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivityForResult(intent, LOGIN_REQUEST_CODE);
+            }
+        });
+
+        findViewById(R.id.clear_user_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PersonInfoManager.getInstance().clearThirdUserToken();
+                ToastUtils.showShort("清除用户信息");
             }
         });
     }
