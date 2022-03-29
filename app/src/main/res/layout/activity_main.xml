@@ -113,4 +113,11 @@
         android:text="清除用户信息"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"></TextView>
+
+    <Switch
+        android:id="@+id/isRealease"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:text="切换正式环境"></Switch>
 </LinearLayout>

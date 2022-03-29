@@ -108,10 +108,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         ScreenUtils.setStatusBarColor(this, R.color.white);
         param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
         intent = getIntent().getStringExtra("intent");
-        if (null != param && TextUtils.isEmpty(param.getNewsLink())) {
-            iconShare.setVisibility(View.GONE);
-        } else {
+        if (null != param && !TextUtils.isEmpty(param.getNewsLink())) {
             iconShare.setVisibility(View.VISIBLE);
+        } else {
+            iconShare.setVisibility(View.GONE);
         }
 
         sharePopView = View.inflate(this, R.layout.share_pop_view, null);
@@ -158,11 +158,13 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
                         if (response.body().getCode().equals(success_code)) {
                             MechanismModel.DataDTO model = response.body().getData();
-                            cfgStr = JSON.toJSONString(model);
-                            logoUrl = model.getLogo();
-                            intentUrl = model.getConfig().getListUrl();
-                            mechanismId = model.getId();
-                            initBridge();
+                            if (null != model) {
+                                cfgStr = JSON.toJSONString(model);
+                                logoUrl = model.getLogo();
+                                intentUrl = model.getConfig().getListUrl();
+                                mechanismId = model.getId();
+                                initBridge();
+                            }
                         } else {
                             ToastUtils.showShort(response.body().getMessage());
                         }

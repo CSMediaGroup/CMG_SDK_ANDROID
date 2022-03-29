@@ -6,7 +6,9 @@ import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import common.callback.SdkInteractiveParam;
 import common.callback.SdkParamCallBack;
 import common.callback.VideoInteractiveParam;
 import common.callback.VideoParamCallBack;
+import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.SdkUserInfo;
 import common.model.ShareInfo;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView login_activity;
     private TextView others_home_page;
     private TextView clear_user_info;
+    private Switch isRealease;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         classList = findViewById(R.id.class_list);
         others_home_page = findViewById(R.id.others_home_page);
         login_activity = findViewById(R.id.login_activity);
+        isRealease = findViewById(R.id.isRealease);
         fxsys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -182,6 +187,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 PersonInfoManager.getInstance().clearThirdUserToken();
                 ToastUtils.showShort("清除用户信息");
+            }
+        });
+
+        isRealease.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    ApiConstants.getInstance().setBaseUrl("https://fuse-api-gw.zhcs.csbtv.com/");
+                } else {
+                    ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");
+                }
             }
         });
     }

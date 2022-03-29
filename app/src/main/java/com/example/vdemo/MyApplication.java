@@ -14,7 +14,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInit.init(this,true, "1832192","your_appKey");
+        AppInit.init(this,true, "2346992","your_appKey");
         OkGoUtils.initOkGo(this);
 
 //        /* 初始化开始 */

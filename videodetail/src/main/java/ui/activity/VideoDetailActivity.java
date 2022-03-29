@@ -221,6 +221,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     private RelativeLayout.LayoutParams playViewParams;
     private String className;
     private boolean isShow = true;
+    private String logoUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +243,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         playerView = new SuperPlayerView(this, getWindow().getDecorView(), true);
         classId = getIntent().getStringExtra("classId");
         panelCode = getIntent().getStringExtra("panelId");
+        logoUrl = getIntent().getStringExtra("logoUrl");
         if (!TextUtils.isEmpty(getIntent().getStringExtra("contentId"))) {
             myContentId = getIntent().getStringExtra("contentId");
         }
@@ -687,7 +689,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         videoDetailWhiteCommentRl.setOnClickListener(this);
         initCommentPopRv();
         adapter = new VideoCollectionAdapter(R.layout.video_fragment_item, mDatas, VideoDetailActivity.this,
-                playerView, refreshLayout, videoDetailCommentBtn, videoDetailmanager, className);
+                playerView, refreshLayout, videoDetailCommentBtn, videoDetailmanager, className, logoUrl);
         adapter.setLoadMoreView(new CustomLoadMoreView());
         adapter.setPreLoadNumber(2);
         adapter.openLoadAnimation();
@@ -792,6 +794,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         mDatas.clear();
         OkGo.<VideoCollectionModel>get(ApiConstants.getInstance().getSpecList())
                 .tag(VIDEOTAG)
+                .headers("appId",appId)
                 .params("classId", collectionId)
                 .params("pageIndex", mPageIndex)
                 .params("pageSize", mPageSize)
@@ -846,6 +849,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                     public void onFinish() {
                         super.onFinish();
                         loadingProgress.setVisibility(View.GONE);
+                        isLoadComplate = false;
                     }
                 });
     }
@@ -979,7 +983,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                 if (playerView.mSuperPlayer.getPlayerState() == SuperPlayerDef.PlayerState.PLAYING) {
                     playerView.mSuperPlayer.pause();
                 }
-                isLoadComplate = false;
+                isLoadComplate = true;
                 adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
 //                getPullDownData(mVideoSize, panelCode, "false", Constants.REFRESH_TYPE);
                 videoPageIndex = 1;
@@ -1159,9 +1163,9 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
      * 获取更多数据
      */
     private void loadMoreData(String collectionId, String mPageIndex, String mPageSize) {
-        if (null != playerView && null != playerView.getParent()) {
-            ((ViewGroup) playerView.getParent()).removeView(playerView);
-        }
+//        if (null != playerView && null != playerView.getParent()) {
+//            ((ViewGroup) playerView.getParent()).removeView(playerView);
+//        }
         OkGo.<VideoCollectionModel>get(ApiConstants.getInstance().getSpecList())
                 .tag(VIDEOTAG)
                 .params("classId", collectionId)
@@ -1184,12 +1188,13 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                             }
 
                             if (response.body().getData().getRecords().size() == 0) {
-                                adapter.loadMoreEnd();
-                                adapter.setOnLoadMoreListener(null, videoDetailRv);
-                                if (null != footerView && null != footerView.getParent()) {
-                                    ((ViewGroup) footerView.getParent()).removeView(footerView);
-                                }
-                                adapter.addFooterView(footerView);
+                                adapter.loadMoreComplete();
+//                                adapter.setOnLoadMoreListener(null, videoDetailRv);
+//                                if (null != footerView && null != footerView.getParent()) {
+//                                    ((ViewGroup) footerView.getParent()).removeView(footerView);
+//                                }
+//                                adapter.addFooterView(footerView);
+                                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
                                 isLoadComplate = true;
                             } else {
                                 adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);

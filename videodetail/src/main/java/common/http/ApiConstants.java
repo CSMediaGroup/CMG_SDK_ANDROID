@@ -1,7 +1,7 @@
 package common.http;
 
 public class ApiConstants {
-    public String baseUrl;
+    public String baseUrl = "https://uat-fuse-api-gw.zhcs.csbtv.com/";
 
     private static ApiConstants instance;
 

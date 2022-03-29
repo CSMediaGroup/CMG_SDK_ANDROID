@@ -41,6 +41,7 @@ import common.utils.ScreenUtils;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
 import ui.activity.VideoDetailActivity;
+import ui.activity.VideoHomeActivity;
 import utils.GlideUtil;
 import widget.EllipsizeTextView;
 import common.model.VideoCollectionModel.DataDTO.RecordsDTO;
@@ -60,11 +61,12 @@ public class VideoCollectionAdapter extends BaseQuickAdapter<RecordsDTO, BaseVie
     private ViewPagerLayoutManager mVideoDetailmanager;
     private String topicNameStr;
     private String mClassName;
+    private String logoUrl;
 
     public VideoCollectionAdapter(int layoutResId, @Nullable List<RecordsDTO> data, Context context,
                                   SuperPlayerView playerView, SmartRefreshLayout refreshLayout,
                                   RelativeLayout videoDetailCommentBtn, ViewPagerLayoutManager videoDetailmanager,
-                                  String className) {
+                                  String className, String logoUrl) {
         super(layoutResId, data);
         this.mContext = context;
         this.mDatas = data;
@@ -73,6 +75,7 @@ public class VideoCollectionAdapter extends BaseQuickAdapter<RecordsDTO, BaseVie
         this.mVideoDetailCommentBtn = videoDetailCommentBtn;
         this.mVideoDetailmanager = videoDetailmanager;
         this.mClassName = className;
+        this.logoUrl = logoUrl;
     }
 
 
@@ -96,6 +99,20 @@ public class VideoCollectionAdapter extends BaseQuickAdapter<RecordsDTO, BaseVie
         ImageView horizontalVideoWdcsLogo = helper.getView(R.id.horizontal_video_wdcs_logo);
         ImageView coverPicture = helper.getView(R.id.cover_picture);
         final TextView ellipsisTv = helper.getView(R.id.ellipsis_tv);
+
+        if (null != mContext && !((VideoDetailActivity) mContext).isFinishing()
+                && !((VideoDetailActivity) mContext).isDestroyed()) {
+            Glide.with(mContext)
+                    .load(logoUrl)
+                    .into(verticalVideoWdcsLogo);
+        }
+
+        if (null != mContext && !((VideoDetailActivity) mContext).isFinishing()
+                && !((VideoDetailActivity) mContext).isDestroyed()) {
+            Glide.with(mContext)
+                    .load(logoUrl)
+                    .into(horizontalVideoWdcsLogo);
+        }
 
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) coverPicture.getLayoutParams();
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -260,7 +277,7 @@ public class VideoCollectionAdapter extends BaseQuickAdapter<RecordsDTO, BaseVie
         }
 
 
-//        foldTextView.setText(brief);
+        foldTextView.setText(brief);
         if (foldTextView.getLineCount() > 2 && foldTextView.getVisibility() == View.VISIBLE) {
             ellipsisTv.setVisibility(View.VISIBLE);
         } else {

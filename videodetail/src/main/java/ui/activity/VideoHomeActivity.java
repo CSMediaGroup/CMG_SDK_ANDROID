@@ -572,7 +572,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 addPageViews(myContentId);
                 OkGo.getInstance().cancelTag("contentState");
                 getContentState(myContentId);
-                getThematicCollection(myContentId);
                 String localUserId = PersonInfoManager.getInstance().getUserId();
                 String userId = mDataDTO.getCreateBy();
                 if (TextUtils.isEmpty(mDataDTO.getIssuerId()) || TextUtils.equals(localUserId, userId)) {
@@ -709,7 +708,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 }
                 getCommentList("1", String.valueOf(mPageSize), true);
                 getContentState(myContentId);
-                getThematicCollection(myContentId);
+
                 String localUserId = PersonInfoManager.getInstance().getUserId();
                 String userId = mDataDTO.getCreateBy();
                 if (TextUtils.isEmpty(mDataDTO.getIssuerId()) || TextUtils.equals(localUserId, userId)) {
@@ -1690,6 +1689,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                             Intent intent = new Intent(VideoHomeActivity.this, VideoDetailActivity.class);
                                             intent.putExtra("classId", classId);
                                             intent.putExtra("className", strChun.trim());
+                                            intent.putExtra("logoUrl", logoUrl);
                                             startActivity(intent);
                                         }
                                     }, VideoHomeActivity.this), 0, sp.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -1702,11 +1702,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 }
                                 foldTextView.setMovementMethod(LinkMovementMethod.getInstance());
                                 foldTextView.setText(builder);
-                                if (foldTextView.getLineCount() > 2 && foldTextView.getVisibility() == View.VISIBLE) {
-                                    adapter.getViewByPosition(currentIndex, R.id.ellipsis_tv).setVisibility(View.VISIBLE);
-                                } else {
-                                    adapter.getViewByPosition(currentIndex, R.id.ellipsis_tv).setVisibility(View.GONE);
-                                }
                                 expendTextView.setMovementMethod(LinkMovementMethod.getInstance());
                                 expendTextView.setText(builder);
                             }
@@ -2046,7 +2041,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         }
         OkGo.<RecommendModel>post(ApiConstants.getInstance().recommendList())
                 .tag(recommendTag)
-                .headers("appId",appId)
+                .headers("appId", appId)
                 .upJson(jsonObject)
                 .execute(new JsonCallback<RecommendModel>() {
                     @Override
@@ -2093,6 +2088,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                         }
                         loadingProgress.setVisibility(View.GONE);
                         addPlayView(position);
+                        getThematicCollection(myContentId);
                     }
                 });
     }

@@ -22,7 +22,6 @@
         android:layout_height="30dp"
         android:layout_marginLeft="@dimen/video_dp20"
         android:layout_marginTop="120dp"
-        android:src="@drawable/video_wdcs_logo"
         android:visibility="gone">
 
     </ImageView>
@@ -38,7 +37,6 @@
             android:layout_height="30dp"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="280dp"
-            android:src="@drawable/video_wdcs_logo"
             android:visibility="gone">
 
         </ImageView>

@@ -1,6 +1,7 @@
 package common.manager;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,15 +46,20 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
-        super.onLayoutChildren(recycler, state);
-//
+        try {
+            super.onLayoutChildren(recycler, state);
+        } catch (IndexOutOfBoundsException e) {
+            Log.e("bug", "crash in RecyclerView");
+        }
     }
+//
 
     /**
      * 滑动状态的改变
      * 缓慢拖拽-> SCROLL_STATE_DRAGGING
      * 快速滚动-> SCROLL_STATE_SETTLING
      * 空闲状态-> SCROLL_STATE_IDLE
+     *
      * @param state
      */
     @Override
@@ -67,7 +73,7 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
                 int positionIdle = getPosition(viewIdle);
                 if (getItemCount() > 0) {
                     if (mOnViewPagerListener != null && getChildCount() == 1) {
-                        mOnViewPagerListener.onPageSelected(positionIdle,positionIdle == getItemCount() - 1);
+                        mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 1);
                     }
                 }
                 break;
@@ -90,9 +96,9 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
     }
 
 
-
     /**
      * 监听竖直方向的相对偏移量
+     *
      * @param dy
      * @param recycler
      * @param state
@@ -107,6 +113,7 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
     /**
      * 监听水平方向的相对偏移量
+     *
      * @param dx
      * @param recycler
      * @param state
@@ -120,9 +127,10 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
     /**
      * 设置监听
+     *
      * @param listener
      */
-    public void setOnViewPagerListener(OnViewPagerListener listener){
+    public void setOnViewPagerListener(OnViewPagerListener listener) {
         this.mOnViewPagerListener = listener;
     }
 
@@ -136,10 +144,12 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
         @Override
         public void onChildViewDetachedFromWindow(View view) {
-            if (mDrift >= 0){
-                if (mOnViewPagerListener != null) mOnViewPagerListener.onPageRelease(true,getPosition(view));
+            if (mDrift >= 0) {
+                if (mOnViewPagerListener != null)
+                    mOnViewPagerListener.onPageRelease(true, getPosition(view));
             } else {
-                if (mOnViewPagerListener != null) mOnViewPagerListener.onPageRelease(false,getPosition(view));
+                if (mOnViewPagerListener != null)
+                    mOnViewPagerListener.onPageRelease(false, getPosition(view));
             }
 
         }
@@ -147,6 +157,7 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
     /**
      * 设置是否可以竖直滑动
+     *
      * @param isScoll
      */
     public void setCanScoll(boolean isScoll) {
