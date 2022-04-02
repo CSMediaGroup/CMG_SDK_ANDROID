@@ -1188,14 +1188,15 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                             }
 
                             if (response.body().getData().getRecords().size() == 0) {
-                                adapter.loadMoreComplete();
-//                                adapter.setOnLoadMoreListener(null, videoDetailRv);
-//                                if (null != footerView && null != footerView.getParent()) {
-//                                    ((ViewGroup) footerView.getParent()).removeView(footerView);
-//                                }
-//                                adapter.addFooterView(footerView);
-                                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
+                                adapter.loadMoreEnd();
+                                adapter.setOnLoadMoreListener(null, videoDetailRv);
+                                if (null != footerView && null != footerView.getParent()) {
+                                    ((ViewGroup) footerView.getParent()).removeView(footerView);
+                                }
+                                adapter.addFooterView(footerView);
+//                                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
                                 isLoadComplate = true;
+                                adapter.setNewData(mDatas);
                             } else {
                                 adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
                                 isLoadComplate = false;
@@ -2008,7 +2009,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onResume() {
         super.onResume();
-        if (playerView != null) {
+        if (playerView != null && !SPUtils.isVisibleNoWifiView(this)) {
             if (playerView.homeVideoIsLoad) {
                 playerView.mSuperPlayer.resume();
             } else {

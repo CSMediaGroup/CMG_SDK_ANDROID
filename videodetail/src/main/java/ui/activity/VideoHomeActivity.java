@@ -1179,7 +1179,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-        if (playerView != null && null != mDataDTO) {
+        if (playerView != null && null != mDataDTO && !SPUtils.isVisibleNoWifiView(this)) {
             SuperPlayerImpl.mCurrentPlayVideoURL = mDataDTO.getPlayUrl();
             if (playerView.homeVideoIsLoad) {
                 playerView.mSuperPlayer.resume();
