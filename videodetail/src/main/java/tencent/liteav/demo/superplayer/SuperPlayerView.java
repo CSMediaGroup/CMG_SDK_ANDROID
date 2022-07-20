@@ -41,7 +41,7 @@ import com.tencent.liteav.basic.log.TXCLog;
 import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.TXVodPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -257,9 +257,9 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
         this.mVideoType = videoType;
 
         if (contentStateModel.getWhetherLike().equals("true")) {
-            mFullScreenPlayer.mLike.setImageResource(R.drawable.favourite_select);
+            mFullScreenPlayer.mLike.setImageResource(R.drawable.szrm_sdk_favourite_select);
         } else {
-            mFullScreenPlayer.mLike.setImageResource(R.drawable.favourite);
+            mFullScreenPlayer.mLike.setImageResource(R.drawable.szrm_sdk_favourite);
         }
 
         mFullScreenPlayer.fullscreenLikeNum.setText(NumberFormatTool.formatNum(Long.parseLong(NumberFormatTool.getNumStr(contentStateModel.getLikeCountShow())), false));
@@ -312,7 +312,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                             if (null != json && json.get("code").toString().equals("200")) {
                                 if (json.get("data").toString().equals("1")) {
                                     int num;
-                                    mFullScreenPlayer.mLike.setImageResource(R.drawable.favourite_select);
+                                    mFullScreenPlayer.mLike.setImageResource(R.drawable.szrm_sdk_favourite_select);
                                     if (TextUtils.isEmpty(mFullScreenPlayer.fullscreenLikeNum.getText().toString())) {
                                         num = 0;
                                     } else {
@@ -328,7 +328,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                                     contentStateModel.setLikeCountShow(NumberFormatTool.formatNum(num, false).toString());
                                 } else {
                                     int num;
-                                    mFullScreenPlayer.mLike.setImageResource(R.drawable.favourite);
+                                    mFullScreenPlayer.mLike.setImageResource(R.drawable.szrm_sdk_favourite);
                                     if (TextUtils.isEmpty(mFullScreenPlayer.fullscreenLikeNum.getText().toString())) {
                                         num = 0;
                                     } else {

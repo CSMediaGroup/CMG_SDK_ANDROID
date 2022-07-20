@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/video_c9"
+        android:visibility="gone"
         android:padding="50dp"
         android:text="视频详情页面" />
 
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/video_c9"
+        android:visibility="gone"
         android:padding="30dp"
         android:text="获取token值"></TextView>
 
@@ -120,4 +122,30 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:text="切换正式环境"></Switch>
+
+    <TextView
+        android:id="@+id/uuid"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text=""
+        android:enabled="true"
+        android:textIsSelectable="true"
+        android:focusable="true"
+        android:longClickable="true"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"></TextView>
+
+    <TextView
+        android:id="@+id/test"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:text="测试页面"
+        android:background="@color/video_c9"
+        android:gravity="center">
+
+    </TextView>
 </LinearLayout>

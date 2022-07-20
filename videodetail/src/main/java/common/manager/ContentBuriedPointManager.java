@@ -20,11 +20,12 @@ import common.model.ParamsModel;
 import common.utils.AppUtils;
 import common.utils.PersonInfoManager;
 import utils.NetworkUtil;
+import utils.UUIDUtils;
 
 
 public class ContentBuriedPointManager {
     public static JSONObject setContentBuriedPoint(Context context, String contentId, String duration, String percent, String event,
-                                                   String category_name, String requestId) {
+                                                   String category_name, String requestId, String appName) {
         if (TextUtils.isEmpty(contentId)) {
             return null;
         }
@@ -33,8 +34,8 @@ public class ContentBuriedPointManager {
         //user对象 ---start
         ContentBuriedPointModel.UserDTO userDTO = new ContentBuriedPointModel.UserDTO();
         try {
-            userDTO.setBddid(param.getDeviceId());
-            userDTO.setUser_unique_id(param.getDeviceId());
+            userDTO.setBddid(UUIDUtils.deviceUUID());
+            userDTO.setUser_unique_id(UUIDUtils.deviceUUID());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -51,7 +52,7 @@ public class ContentBuriedPointManager {
         headerDTO.setTraffic_type(netType);
         headerDTO.setApp_channel("");
         headerDTO.setOs_name("android");
-        headerDTO.setApp_name(AppUtils.getAppName(context));
+        headerDTO.setApp_name(appName);
         headerDTO.setDevice_brand(AppUtils.getDeviceBrand());
         headerDTO.setApp_version(String.valueOf(AppUtils.getVersionCode(context)));
         headerDTO.setClient_ip("");
@@ -94,19 +95,15 @@ public class ContentBuriedPointManager {
         __items.add(itemsDTO);
         paramsModel.set__items(__items);
         Gson gson = new Gson();
-        String paramJson= gson.toJson(paramsModel);
+        String paramJson = gson.toJson(paramsModel);
         //params对象 ---end
         eventsDTO.setParams(paramJson);
         events.add(eventsDTO);
         //events对象 ---end
 
         ContentBuriedPointModel.IdsDTO idsDTO = new ContentBuriedPointModel.IdsDTO();
-        try {
-            idsDTO.setDevice_id(param.getDeviceId());
-            idsDTO.setUser_unique_id(param.getDeviceId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        idsDTO.setDevice_id(UUIDUtils.deviceUUID());
+        idsDTO.setUser_unique_id(UUIDUtils.deviceUUID());
         idsDTO.setUser_id(PersonInfoManager.getInstance().getUserId());
         model.setUser(userDTO);
         model.setHeader(headerDTO);

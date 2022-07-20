@@ -1,6 +1,7 @@
 package com.example.vdemo;
 
 
+import static common.utils.AppInit.appId;
 import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
 
 import android.content.Intent;
@@ -22,6 +23,7 @@ import common.callback.SdkInteractiveParam;
 import common.callback.SdkParamCallBack;
 import common.callback.VideoInteractiveParam;
 import common.callback.VideoParamCallBack;
+import common.constants.Constants;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.SdkUserInfo;
@@ -31,9 +33,11 @@ import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import ui.activity.EasyWebActivity;
 import ui.activity.LoginActivity;
+import ui.activity.TgtCodeActivity;
 import ui.activity.VideoDetailActivity;
 import ui.activity.VideoHomeActivity;
 import ui.activity.WebActivity;
+import utils.UUIDUtils;
 
 public class MainActivity extends AppCompatActivity {
     private TextView tv;
@@ -46,12 +50,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView others_home_page;
     private TextView clear_user_info;
     private Switch isRealease;
+    private TextView uuid;
+    private TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tv = findViewById(R.id.tv);
+        test = findViewById(R.id.test);
         panelCode = findViewById(R.id.panelid);
         panelCode.setText("48662");
         contentId = findViewById(R.id.contentid);
@@ -60,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         others_home_page = findViewById(R.id.others_home_page);
         login_activity = findViewById(R.id.login_activity);
         isRealease = findViewById(R.id.isRealease);
+        uuid = findViewById(R.id.uuid);
+        uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
         fxsys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,9 +204,20 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     ApiConstants.getInstance().setBaseUrl("https://fuse-api-gw.zhcs.csbtv.com/");
+                    appId = Constants.LIUYANG_JGH;
                 } else {
                     ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");
+                    appId = Constants.YUEYANG_JGH;
                 }
+            }
+        });
+
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, TgtCodeActivity.class);
+                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
+                startActivity(intent);
             }
         });
     }

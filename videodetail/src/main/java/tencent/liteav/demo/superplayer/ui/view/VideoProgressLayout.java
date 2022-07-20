@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 
 /**

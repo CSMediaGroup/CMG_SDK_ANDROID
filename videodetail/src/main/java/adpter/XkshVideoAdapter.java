@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -265,9 +265,9 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
         } else {
             officialCertificationImg.setVisibility(View.VISIBLE);
             if (TextUtils.equals(item.getCreatorCertMark(), BLUE_V)) {
-                officialCertificationImg.setImageResource(R.drawable.official_certification);
+                officialCertificationImg.setImageResource(R.drawable.szrm_sdk_official_certification);
             } else if (TextUtils.equals(item.getCreatorCertMark(), YELLOW_V)) {
-                officialCertificationImg.setImageResource(R.drawable.yellow_v);
+                officialCertificationImg.setImageResource(R.drawable.szrm_sdk_yellow_v);
             }
         }
 

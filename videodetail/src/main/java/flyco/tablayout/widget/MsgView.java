@@ -9,7 +9,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 
 /** 用于需要圆角矩形框背景的TextView的情况,减少直接使用TextView时引入的shape资源文件 */

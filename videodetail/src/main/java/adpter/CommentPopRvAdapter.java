@@ -21,7 +21,7 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Response;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 
 import org.json.JSONException;

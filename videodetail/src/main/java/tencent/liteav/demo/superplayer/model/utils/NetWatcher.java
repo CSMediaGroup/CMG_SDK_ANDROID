@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.tencent.rtmp.TXLivePlayer;
-import com.tencent.rtmp.TXLog;
 import com.tencent.rtmp.TXVodPlayer;
 
 import java.lang.ref.WeakReference;
@@ -56,12 +55,10 @@ public class NetWatcher {
         mLoadingCount = 0;
         mLoadingTime= 0;
         mLoadingStartTime = 0;
-        TXLog.w("NetWatcher", "net check start watch ");
         Handler mainHandler = new Handler(Looper.getMainLooper());
         mainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                TXLog.w("NetWatcher", "net check loading count = "+mLoadingCount+" loading time = "+mLoadingTime);
 //                if (mLoadingCount >= MAX_LOADING_COUNT || mLoadingTime >= MAX_LOADING_TIME) {
 //                    showSwitchStreamDialog();
 //                }
@@ -84,12 +81,10 @@ public class NetWatcher {
         mLoadingCount = 0;
         mLoadingTime= 0;
         mLoadingStartTime = 0;
-        TXLog.w("NetWatcher", "net check start watch ");
         Handler mainHandler = new Handler(Looper.getMainLooper());
         mainHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                TXLog.w("NetWatcher", "net check loading count = "+mLoadingCount+" loading time = "+mLoadingTime);
 //                if (mLoadingCount >= MAX_LOADING_COUNT || mLoadingTime >= MAX_LOADING_TIME) {
 //                    showSwitchStreamDialog();
 //                }
@@ -110,7 +105,6 @@ public class NetWatcher {
         mLoadingStartTime = 0;
         mPlayURL = "";
         mLivePlayer = null;
-        TXLog.w("NetWatcher", "net check stop watch");
     }
 
     /**

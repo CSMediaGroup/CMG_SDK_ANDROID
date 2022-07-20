@@ -29,7 +29,7 @@ import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -218,7 +218,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
         } else if (id == R.id.upload_video_cancel) {
             uploadVideoCancel.setVisibility(View.GONE);
             uploadCompleteTip.setVisibility(View.GONE);
-            uploadBtn.setImageResource(R.drawable.upload_btn);
+            uploadBtn.setImageResource(R.drawable.szrm_sdk_upload_btn);
             uploadVideoBean = null;
         } else if (id == R.id.upload_cancel_tv) {
             finish();
@@ -388,7 +388,7 @@ public class UploadActivity extends AppCompatActivity implements View.OnClickLis
                     public void uploadProgress(Progress progress) {
                         uploadProgress.setVisibility(View.VISIBLE);
                         uploadProgress.setProgress((int) (progress.fraction * 100));
-                        uploadBtn.setImageResource(R.drawable.uploading);
+                        uploadBtn.setImageResource(R.drawable.szrm_sdk_uploading);
                     }
 
                     @Override

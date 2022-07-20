@@ -63,7 +63,7 @@
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
                     android:layout_toLeftOf="@+id/superplayer_fullscreen_share"
-                    android:src="@drawable/favourite">
+                    android:src="@drawable/szrm_sdk_favourite">
 
                 </ImageView>
 
@@ -87,7 +87,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:layout_toLeftOf="@+id/superplayer_iv_snapshot"
-                    android:src="@drawable/fullscreen_share">
+                    android:src="@drawable/szrm_sdk_fullscreen_share">
 
                 </ImageView>
 
@@ -98,7 +98,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_toLeftOf="@+id/superplayer_iv_more"
                     android:gravity="center"
-                    android:src="@drawable/fullscreen_screenshot" />
+                    android:src="@drawable/szrm_sdk_fullscreen_screenshot" />
 
                 <ImageView
                     android:id="@+id/superplayer_iv_more"

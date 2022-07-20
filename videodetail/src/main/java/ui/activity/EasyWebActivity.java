@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.wdcs.videodetail.demo.R;
+
+import com.szrm.videodetail.demo.R;
 
 import common.model.JumpToNativePageModel;
 import common.utils.ScreenUtils;

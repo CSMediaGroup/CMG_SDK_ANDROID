@@ -95,6 +95,12 @@ public class MechanismModel {
             private String listUrl;
             private String categoryCode;
             private String detailUrl;
+            private String generateType;
+            private String sourceName;
+            private String toVolcengine;
+            private String recommendScene;
+            private String appKey;
+            private String appName;
 
             public String getListUrl() {
                 return listUrl;
@@ -118,6 +124,54 @@ public class MechanismModel {
 
             public void setDetailUrl(String detailUrl) {
                 this.detailUrl = detailUrl;
+            }
+
+            public String getGenerateType() {
+                return generateType;
+            }
+
+            public void setGenerateType(String generateType) {
+                this.generateType = generateType;
+            }
+
+            public String getSourceName() {
+                return sourceName;
+            }
+
+            public void setSourceName(String sourceName) {
+                this.sourceName = sourceName;
+            }
+
+            public String getToVolcengine() {
+                return toVolcengine;
+            }
+
+            public void setToVolcengine(String toVolcengine) {
+                this.toVolcengine = toVolcengine;
+            }
+
+            public String getRecommendScene() {
+                return recommendScene;
+            }
+
+            public void setRecommendScene(String recommendScene) {
+                this.recommendScene = recommendScene;
+            }
+
+            public String getAppKey() {
+                return appKey;
+            }
+
+            public void setAppKey(String appKey) {
+                this.appKey = appKey;
+            }
+
+            public String getAppName() {
+                return appName;
+            }
+
+            public void setAppName(String appName) {
+                this.appName = appName;
             }
         }
     }

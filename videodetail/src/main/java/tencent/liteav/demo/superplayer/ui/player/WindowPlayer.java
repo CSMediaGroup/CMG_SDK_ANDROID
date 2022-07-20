@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import common.constants.Constants;
 import common.manager.BuriedPointModelManager;

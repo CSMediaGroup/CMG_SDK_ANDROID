@@ -88,7 +88,7 @@
 
     <style name="video_sdk_web_toolBar">
         <item name="colorControlNormal">#ffffff</item>
-        <item name="android:homeAsUpIndicator">@drawable/icon_close_dialog</item>
+        <item name="android:homeAsUpIndicator">@drawable/szrm_sdk_icon_close_dialog</item>
         <item name="android:titleTextStyle">@style/video_sdk_web_titlestyle</item>
     </style>
 

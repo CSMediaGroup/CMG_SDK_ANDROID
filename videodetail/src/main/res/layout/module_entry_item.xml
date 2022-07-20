@@ -29,5 +29,5 @@
         android:layout_height="36dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:src="@drawable/push" />
+        android:src="@drawable/szrm_sdk_push" />
 </LinearLayout>

@@ -28,7 +28,15 @@
     @androidx.annotation.Keep *;
 }
 
--keep class com.tencent.** { *; }
--keep class model.** { *; }
--keep class adpter.** { *; }
--keep class ui.activity.VideoDetailActivity.**
+#-keep class com.tencent.** { *; }
+-keep class common.model.** {*;}
+-keep class common.callback.**{*;}
+-keep class common.utils.AppInit {*;}
+-keep class common.utils.OkGoUtils {*;}
+#-keep class adpter.** { *; }
+#-keep class ui.activity.VideoDetailActivity.**
+#-keep class tencent.liteav.demo.superplayer.**{*;}
+#-keep class widget.**{*;}
+-keep class utils.**{*;}
+-keep class model.bean.**{*;}
+-keep class ui.**{*;}

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.tencent.rtmp.ui.TXCloudVideoView;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import java.lang.reflect.Field;
 

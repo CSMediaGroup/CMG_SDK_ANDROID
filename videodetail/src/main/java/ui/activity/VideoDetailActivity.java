@@ -42,8 +42,8 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.szrm.videodetail.demo.R;
 import com.tencent.rtmp.TXLiveConstants;
-import com.wdcs.videodetail.demo.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -108,6 +108,7 @@ import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mProgress;
 import static ui.activity.VideoHomeActivity.maxPercent;
 import static ui.activity.VideoHomeActivity.uploadBuriedPoint;
 import static utils.NetworkUtil.setDataWifiStates;
+
 import common.model.VideoCollectionModel.DataDTO.RecordsDTO;
 
 public class VideoDetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -222,6 +223,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     private String className;
     private boolean isShow = true;
     private String logoUrl;
+    private String appName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,6 +246,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         classId = getIntent().getStringExtra("classId");
         panelCode = getIntent().getStringExtra("panelId");
         logoUrl = getIntent().getStringExtra("logoUrl");
+        appName = getIntent().getStringExtra("appName");
         if (!TextUtils.isEmpty(getIntent().getStringExtra("contentId"))) {
             myContentId = getIntent().getStringExtra("contentId");
         }
@@ -427,15 +430,18 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         SuperPlayerImpl.setReadPlayCallBack(new SuperPlayerImpl.ReadPlayCallBack() {
             @Override
             public void ReadPlayCallback() {
-                if (null == mDataDTO || TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-                    return;
-                }
                 if (null == playerView.buriedPointModel.getXksh_renew() || TextUtils.equals("false", playerView.buriedPointModel.getXksh_renew())) {
 //                    //不为重播
                     videoOldSystemTime = DateUtils.getTimeCurrent();
                     String event;
                     event = Constants.CMS_VIDEO_PLAY;
-                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, mDataDTO.getThirdPartyId(), "", "", event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), event);
+                    String contentId = "";
+                    if (TextUtils.isEmpty(mDataDTO.getThirdPartyId())) {
+                        contentId = String.valueOf(mDataDTO.getId());
+                    } else {
+                        contentId = mDataDTO.getThirdPartyId();
+                    }
+                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, contentId, "", "", event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), event);
                 }
             }
         });
@@ -534,32 +540,36 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 //              ContentBuriedPointManager.setContentBuriedPoint();
                 playerView.mWindowPlayer.hide();
 
-                if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-                    if (mDuration != 0 && mProgress != 0) {
-                        //上报埋点
-                        long evePlayTime = Math.abs(mProgress - lsDuration);
-                        double currentPercent = (evePlayTime * 1.0 / mDuration);
-                        double uploadPercent = 0;
-                        if (null == playerView.buriedPointModel.getIs_renew() || TextUtils.equals("false", playerView.buriedPointModel.getIs_renew())) {
+                if (mDuration != 0 && mProgress != 0) {
+                    //上报埋点
+                    long evePlayTime = Math.abs(mProgress - lsDuration);
+                    double currentPercent = (evePlayTime * 1.0 / mDuration);
+                    double uploadPercent = 0;
+                    if (null == playerView.buriedPointModel.getIs_renew() || TextUtils.equals("false", playerView.buriedPointModel.getIs_renew())) {
 //                      //不为重播
-                            if (currentPercent > maxPercent) {
-                                uploadPercent = currentPercent;
-                                maxPercent = currentPercent;
-                            } else {
-                                uploadPercent = maxPercent;
-                            }
+                        if (currentPercent > maxPercent) {
+                            uploadPercent = currentPercent;
+                            maxPercent = currentPercent;
                         } else {
-                            uploadPercent = 1;
+                            uploadPercent = maxPercent;
                         }
-                        videoReportTime = DateUtils.getTimeCurrent() - videoOldSystemTime;
-                        BigDecimal two = new BigDecimal(uploadPercent);
-                        double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-                        String event;
-                        event = Constants.CMS_VIDEO_OVER;
-                        uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), event);
-//                        DebugLogUtils.DebugLog("埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
-                        Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
+                    } else {
+                        uploadPercent = 1;
                     }
+                    videoReportTime = DateUtils.getTimeCurrent() - videoOldSystemTime;
+                    BigDecimal two = new BigDecimal(uploadPercent);
+                    double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+                    String event;
+                    event = Constants.CMS_VIDEO_OVER;
+                    String contentId = "";
+                    if (TextUtils.isEmpty(mDataDTO.getThirdPartyId())) {
+                        contentId = String.valueOf(mDataDTO.getId());
+                    } else {
+                        contentId = mDataDTO.getThirdPartyId();
+                    }
+                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, contentId, String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), event);
+//                        DebugLogUtils.DebugLog("埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
+                    Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
                 }
 
                 mDataDTO = mDatas.get(position);
@@ -794,7 +804,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         mDatas.clear();
         OkGo.<VideoCollectionModel>get(ApiConstants.getInstance().getSpecList())
                 .tag(VIDEOTAG)
-                .headers("appId",appId)
+                .headers("appId", appId)
                 .params("classId", collectionId)
                 .params("pageIndex", mPageIndex)
                 .params("pageSize", mPageSize)
@@ -923,9 +933,13 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         if (rlLp != null) {
             rlLp.addView(playerView, 1);
             //露出即上报
-            if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, mDataDTO.getThirdPartyId(), "", "", Constants.CMS_CLIENT_SHOW, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), Constants.CMS_CLIENT_SHOW);
+            String contentId = "";
+            if (TextUtils.isEmpty(mDataDTO.getThirdPartyId())) {
+                contentId = String.valueOf(mDataDTO.getId());
+            } else {
+                contentId = mDataDTO.getThirdPartyId();
             }
+            uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, contentId, "", "", Constants.CMS_CLIENT_SHOW, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), Constants.CMS_CLIENT_SHOW);
             play(mDatas.get(position).getPlayUrl(), mDatas.get(position).getTitle());
         }
     }
@@ -1613,7 +1627,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                             } else {
                                 for (int i = 0; i < collectionList.size(); i++) {
                                     ImageSpan imgSpan = new ImageSpan(VideoDetailActivity.this,
-                                            R.drawable.collection_image,
+                                            R.drawable.szrm_sdk_collection_image,
                                             ImageSpan.ALIGN_CENTER);
                                     final String str = collectionTvList.get(i);
                                     SpannableString sp = new SpannableString(str);
@@ -1694,13 +1708,13 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         } else {
             SpannableString sp = new SpannableString(className);
             ImageSpan imgSpan = new ImageSpan(VideoDetailActivity.this,
-                    R.drawable.collection_image,
+                    R.drawable.szrm_sdk_collection_image,
                     ImageSpan.ALIGN_CENTER);
             sp.setSpan(imgSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             sp.setSpan(new ForegroundColorSpan(Color.WHITE), 0, className.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             SpannableStringBuilder builder = new SpannableStringBuilder();
             builder.append(sp);
-            builder.append(" "+brief);
+            builder.append(" " + brief);
             foldTextView.setText(builder);
             expendTextView.setText(builder);
         }
@@ -1711,9 +1725,9 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 
     public void setLikeCollection(ContentStateModel.DataDTO contentStateModel) {
         if (contentStateModel.getWhetherLike().equals("true")) {
-            videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
+            videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite_select);
         } else {
-            videoDetailLikesImage.setImageResource(R.drawable.favourite);
+            videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite);
         }
 
         if (contentStateModel.getLikeCountShow().equals("0")) {
@@ -1845,7 +1859,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 
                                 if (json.get("data").toString().equals("1")) {
                                     int num;
-                                    videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
+                                    videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite_select);
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(likesNum.getText().toString()));
                                     num++;
                                     likesNum.setText(NumberFormatTool.formatNum(num, false));
@@ -1853,7 +1867,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                                     playerView.contentStateModel.setLikeCountShow(NumberFormatTool.formatNum(num, false).toString());
                                 } else {
                                     int num;
-                                    videoDetailLikesImage.setImageResource(R.drawable.favourite);
+                                    videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite);
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(likesNum.getText().toString()));
                                     if (num > 0) {
                                         num--;
@@ -2044,37 +2058,41 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         if (null == mDataDTO) {
             return;
         }
-        if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-            if (playerView.mWindowPlayer.mCurrentPlayState != SuperPlayerDef.PlayerState.END) {
+        if (playerView.mWindowPlayer.mCurrentPlayState != SuperPlayerDef.PlayerState.END) {
 
-                if (mProgress != 0 && mDuration != 0) {
-                    /**
-                     * 上报内容埋点 视频播放时长
-                     */
-                    long evePlayTime = Math.abs(mProgress - lsDuration);
-                    double currentPercent = (evePlayTime * 1.0 / mDuration);
-                    double uploadPercent = 0;
-                    if (null == playerView.buriedPointModel.getIs_renew() || TextUtils.equals("false", playerView.buriedPointModel.getIs_renew())) {
+            if (mProgress != 0 && mDuration != 0) {
+                /**
+                 * 上报内容埋点 视频播放时长
+                 */
+                long evePlayTime = Math.abs(mProgress - lsDuration);
+                double currentPercent = (evePlayTime * 1.0 / mDuration);
+                double uploadPercent = 0;
+                if (null == playerView.buriedPointModel.getIs_renew() || TextUtils.equals("false", playerView.buriedPointModel.getIs_renew())) {
 //                      //不为重播
-                        if (currentPercent > maxPercent) {
-                            uploadPercent = currentPercent;
-                            maxPercent = currentPercent;
-                        } else {
-                            uploadPercent = maxPercent;
-                        }
+                    if (currentPercent > maxPercent) {
+                        uploadPercent = currentPercent;
+                        maxPercent = currentPercent;
                     } else {
-                        uploadPercent = 1;
+                        uploadPercent = maxPercent;
                     }
-                    videoReportTime = DateUtils.getTimeCurrent() - videoOldSystemTime;
-                    BigDecimal two = new BigDecimal(uploadPercent);
-                    double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-                    lsDuration = mProgress;
-                    String event;
-                    event = Constants.CMS_VIDEO_OVER;
-                    //上报埋点
-                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), event);
-                    Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
+                } else {
+                    uploadPercent = 1;
                 }
+                videoReportTime = DateUtils.getTimeCurrent() - videoOldSystemTime;
+                BigDecimal two = new BigDecimal(uploadPercent);
+                double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+                lsDuration = mProgress;
+                String event;
+                event = Constants.CMS_VIDEO_OVER;
+                //上报埋点
+                String contentId = "";
+                if (TextUtils.isEmpty(mDataDTO.getThirdPartyId())) {
+                    contentId = String.valueOf(mDataDTO.getId());
+                } else {
+                    contentId = mDataDTO.getThirdPartyId();
+                }
+                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoDetailActivity.this, contentId, String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), event);
+                Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
             }
         }
     }
@@ -2272,7 +2290,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
         }
         OkGo.<RecommendModel>post(ApiConstants.getInstance().recommendList())
                 .tag(recommendTag)
-                .headers("appId",appId)
+                .headers("appId", appId)
                 .upJson(jsonObject)
                 .execute(new JsonCallback<RecommendModel>() {
                     @Override

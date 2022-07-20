@@ -11,7 +11,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 public class GlideUtil {
     /**

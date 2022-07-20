@@ -157,7 +157,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/white_comment_icon">
+                    android:src="@drawable/szrm_sdk_white_comment_icon">
 
                 </ImageView>
 
@@ -188,7 +188,7 @@
                     android:id="@+id/video_detail_likes_image"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:src="@drawable/favourite">
+                    android:src="@drawable/szrm_sdk_favourite">
 
                 </ImageView>
 
@@ -216,7 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/share_icon"></ImageView>
+                    android:src="@drawable/szrm_sdk_share_icon"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"

@@ -38,7 +38,7 @@ import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
 
@@ -61,6 +61,7 @@ import common.utils.ScreenUtils;
 import common.utils.SystemUtil;
 import common.utils.ToastUtils;
 import io.reactivex.functions.Consumer;
+import utils.UUIDUtils;
 
 public class WebActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = WebActivity.class.getSimpleName();
@@ -84,6 +85,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private JumpToNativePageModel param;
     private String logoUrl;
     private String intentUrl;
+    private String appName;
     private String cfgStr; //获取的机构数据json字符串
     private String intent = "0";
     private String mechanismId; //机构Id
@@ -91,7 +93,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
         setContentView(R.layout.activity_web);
         initView();
     }
@@ -163,6 +164,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                                 logoUrl = model.getLogo();
                                 intentUrl = model.getConfig().getListUrl();
                                 mechanismId = model.getId();
+                                appName = model.getConfig().getAppName();
                                 initBridge();
                             }
                         } else {
@@ -220,7 +222,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 String str4 = "'";
                 String str5 = "javascript: window.orgInfo = '";
                 mAgentWeb.getJsAccessEntrace().callJs(str1 + PersonInfoManager.getInstance().getSzrmUserModel() + str4);
-                mAgentWeb.getJsAccessEntrace().callJs(str2 + SystemUtil.getANDROID_ID() + str4);
+                mAgentWeb.getJsAccessEntrace().callJs(str2 + UUIDUtils.deviceUUID() + str4);
                 mAgentWeb.getJsAccessEntrace().callJs(str3 + getAppInfo() + str4);
                 mAgentWeb.getJsAccessEntrace().callJs(str5 + cfgStr + str4);
             }
@@ -309,7 +311,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     finish();
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETDEVICEID)) { //获取设备id
                     DeviceIdModel model = new DeviceIdModel();
-                    model.setDeviceId(SystemUtil.getANDROID_ID());
+                    model.setDeviceId(UUIDUtils.deviceUUID());
                     String deviceIdStr = JSON.toJSONString(model);
                     function.onCallBack(deviceIdStr);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETUSERINFO)) { //获取用户信息
@@ -353,6 +355,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
                     intent.putExtra("contentId", dataObject.getString("contentId"));
                     intent.putExtra("logoUrl", logoUrl);
+                    intent.putExtra("appName", appName);
                     startActivity(intent);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETAPPVERSION)) { //获取设备版本号等信息
                     function.onCallBack(getAppInfo());
@@ -467,7 +470,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Response<SdkUserInfo> response) {
                         if (null == response.body().getData()) {
-                            ToastUtils.showShort(com.wdcs.videodetail.demo.R.string.data_err);
+                            ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
                             return;
                         }
                         if (response.body().getCode().equals("200")) {
@@ -494,7 +497,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                             ToastUtils.showShort(response.message());
                             return;
                         }
-                        ToastUtils.showShort(com.wdcs.videodetail.demo.R.string.net_err);
+                        ToastUtils.showShort(com.szrm.videodetail.demo.R.string.net_err);
                     }
                 });
     }

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.zhouwei.library.CustomPopWindow;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 public enum PopWindowManager {
     INSTANCE;

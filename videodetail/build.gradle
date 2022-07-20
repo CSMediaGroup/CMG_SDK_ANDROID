@@ -25,12 +25,12 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -70,7 +70,7 @@ dependencies {
     api 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
     api 'com.scwang.smart:refresh-footer-classics:2.0.3'    //经典加载
     api 'com.lzy.net:okgo:3.0.4'
-    api 'com.alibaba:fastjson:1.2.73'
+    api 'com.alibaba:fastjson:1.2.83'
     api 'com.alibaba:fastjson:1.1.72.android'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
     api 'com.hyman:flowlayout-lib:1.1.2'

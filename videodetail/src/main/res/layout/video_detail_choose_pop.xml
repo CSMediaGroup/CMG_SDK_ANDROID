@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/choose_pop_dismiss">
+            android:src="@drawable/szrm_sdk_choose_pop_dismiss">
 
         </ImageView>
 

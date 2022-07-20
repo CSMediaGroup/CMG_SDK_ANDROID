@@ -1,6 +1,7 @@
 package common.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -13,6 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import common.constants.Constants;
 import common.http.ApiConstants;
 
 
@@ -36,10 +38,16 @@ public final class AppInit {
      *
      * @param context 上下文
      */
-    public static void init(@NonNull final Context context, Boolean isDebug, String mAppId, String appKey) {
+    public static void init(@NonNull final Context context, Boolean isDebug) {
         AppInit.mContext = context.getApplicationContext();
+        if (isDebug) {
+            appId = Constants.YUEYANG_JGH;
+        } else {
+            appId = Constants.LIUYANG_JGH;
+        }
+        OkGoUtils.initOkGo((Application) AppInit.mContext, appId);
         mIsDebug = isDebug;
-        appId = mAppId;
+
         if (mIsDebug) {
             //UAT测试环境
             ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");

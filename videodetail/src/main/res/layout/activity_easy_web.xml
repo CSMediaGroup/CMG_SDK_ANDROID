@@ -28,7 +28,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/back_black" />
+                android:src="@drawable/szrm_sdk_back_black" />
 
             <ImageView
                 android:id="@+id/imgClose"
@@ -37,7 +37,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="40dp"
                 android:layout_toRightOf="@+id/imgBack"
-                android:src="@drawable/icon_close_dialog"
+                android:src="@drawable/szrm_sdk_icon_close_dialog"
                 android:visibility="gone" />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/icon_share_more_black" />
+                android:src="@drawable/szrm_sdk_icon_share_more_black" />
         </RelativeLayout>
 
     </LinearLayout>

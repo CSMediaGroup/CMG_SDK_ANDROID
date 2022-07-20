@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Response<SdkUserInfo> response) {
                                 if (null == response.body().getData()) {
-                                    ToastUtils.showShort(com.wdcs.videodetail.demo.R.string.data_err);
+                                    ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
                                     return;
                                 }
                                 if (response.body().getCode().equals("200")) {
@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                                     ToastUtils.showShort(response.message());
                                     return;
                                 }
-                                ToastUtils.showShort(com.wdcs.videodetail.demo.R.string.net_err);
+                                ToastUtils.showShort(com.szrm.videodetail.demo.R.string.net_err);
                             }
                         });
             }

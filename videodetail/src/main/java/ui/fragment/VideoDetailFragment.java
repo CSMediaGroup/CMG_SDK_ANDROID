@@ -43,7 +43,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.tencent.rtmp.TXLiveConstants;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -400,7 +400,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                         } else {
                             event = Constants.CMS_VIDEO_OVER_AUTO;
                         }
-                        uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(),mDataDTO.getRequestId()), event);
+                        uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(),mDataDTO.getRequestId(), "palmliuyang"), event);
 //                        DebugLogUtils.DebugLog("埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
                         Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
                     }
@@ -677,7 +677,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                     } else {
                         event = Constants.CMS_VIDEO_OVER_AUTO;
                     }
-                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(),mDataDTO.getRequestId()), event);
+                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(),mDataDTO.getRequestId(),"palmliuyang"), event);
                     Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
                 }
             }
@@ -880,7 +880,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
             rlLp.addView(playerView, 1);
             //露出即上报
             if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), "", "", Constants.CMS_CLIENT_SHOW, mDataDTO.getVolcCategory(),mDataDTO.getRequestId()), Constants.CMS_CLIENT_SHOW);
+                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), "", "", Constants.CMS_CLIENT_SHOW, mDataDTO.getVolcCategory(),mDataDTO.getRequestId(),"palmliuyang"), Constants.CMS_CLIENT_SHOW);
             }
             play(mDatas.get(position).getPlayUrl(), mDatas.get(position).getTitle());
         }
@@ -1656,7 +1656,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                             } else {
                                 for (int i = 0; i < collectionList.size(); i++) {
                                     ImageSpan imgSpan = new ImageSpan(getActivity(),
-                                            R.drawable.collection_image,
+                                            R.drawable.szrm_sdk_collection_image,
                                             ImageSpan.ALIGN_CENTER);
                                     final String str = collectionTvList.get(i);
                                     SpannableString sp = new SpannableString(str);
@@ -1717,17 +1717,17 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
 
     public void setLikeCollection(ContentStateModel.DataDTO contentStateModel) {
         if (contentStateModel.getWhetherFavor().equals("true")) {
-            videoDetailCollectionImage.setImageResource(R.drawable.collection);
+            videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection);
         } else {
-            videoDetailCollectionImage.setImageResource(R.drawable.collection_icon);
+            videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection_icon);
         }
 
         collectionNum.setText(NumberFormatTool.formatNum(Long.parseLong(NumberFormatTool.getNumStr(contentStateModel.getFavorCountShow())), false));
 
         if (contentStateModel.getWhetherLike().equals("true")) {
-            videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
+            videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite_select);
         } else {
-            videoDetailLikesImage.setImageResource(R.drawable.favourite);
+            videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite);
         }
 
         if (contentStateModel.getLikeCountShow().equals("0")) {
@@ -1794,7 +1794,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(collectionNum.getText().toString()));
                                     num++;
                                     collectionNum.setText(NumberFormatTool.formatNum(num, false));
-                                    videoDetailCollectionImage.setImageResource(R.drawable.collection);
+                                    videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection);
                                     playerView.contentStateModel.setWhetherFavor("true");
                                     playerView.contentStateModel.setFavorCountShow(NumberFormatTool.formatNum(num, false).toString());
                                 } else {
@@ -1804,7 +1804,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                                         num--;
                                     }
                                     collectionNum.setText(NumberFormatTool.formatNum(num, false));
-                                    videoDetailCollectionImage.setImageResource(R.drawable.collection_icon);
+                                    videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection_icon);
                                     playerView.contentStateModel.setWhetherFavor("false");
                                     playerView.contentStateModel.setFavorCountShow(NumberFormatTool.formatNum(num, false).toString());
                                 }
@@ -1878,7 +1878,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
 
                                 if (json.get("data").toString().equals("1")) {
                                     int num;
-                                    videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
+                                    videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite_select);
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(likesNum.getText().toString()));
                                     num++;
                                     likesNum.setText(NumberFormatTool.formatNum(num, false));
@@ -1886,7 +1886,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                                     playerView.contentStateModel.setLikeCountShow(NumberFormatTool.formatNum(num, false).toString());
                                 } else {
                                     int num;
-                                    videoDetailLikesImage.setImageResource(R.drawable.favourite);
+                                    videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite);
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(likesNum.getText().toString()));
                                     if (num > 0) {
                                         num--;
@@ -2118,7 +2118,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                         event = Constants.CMS_VIDEO_OVER_AUTO;
                     }
                     //上报埋点
-                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(),mDataDTO.getRequestId()), event);
+                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(videoReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(),mDataDTO.getRequestId(),"palmliuyang"), event);
                     Log.e("video_md", "埋点事件：" + event + "播放时长:" + videoReportTime + "---" + "播放百分比:" + pointPercentTwo);
                 }
             }

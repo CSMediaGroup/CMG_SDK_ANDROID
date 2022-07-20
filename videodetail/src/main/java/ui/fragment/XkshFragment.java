@@ -41,7 +41,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.tencent.rtmp.TXLiveConstants;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -397,7 +397,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                         xkshReportTime = DateUtils.getTimeCurrent() - xkshOldSystemTime;
                         BigDecimal two = new BigDecimal(uploadPercent);
                         double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-                        uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), Constants.CMS_VIDEO_OVER_AUTO, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), Constants.CMS_VIDEO_OVER_AUTO);
+                        uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), Constants.CMS_VIDEO_OVER_AUTO, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), "palmliuyang"), Constants.CMS_VIDEO_OVER_AUTO);
                         Log.e("xksh_md", "埋点事件：" + Constants.CMS_VIDEO_OVER_AUTO + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
                     }
                 }
@@ -631,7 +631,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                     xkshReportTime = DateUtils.getTimeCurrent() - xkshOldSystemTime;
                     BigDecimal two = new BigDecimal(uploadPercent);
                     double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), Constants.CMS_VIDEO_OVER_AUTO, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), Constants.CMS_VIDEO_OVER_AUTO);
+                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), Constants.CMS_VIDEO_OVER_AUTO, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), "palmliuyang"), Constants.CMS_VIDEO_OVER_AUTO);
                     Log.e("xksh_md", "埋点事件：" + Constants.CMS_VIDEO_OVER_AUTO + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
                 }
             }
@@ -837,7 +837,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
             rlLp.addView(playerView, 1);
             //露出即上报
             if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), "", "", Constants.CMS_CLIENT_SHOW, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), Constants.CMS_CLIENT_SHOW);
+                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), "", "", Constants.CMS_CLIENT_SHOW, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), "palmliuyang"), Constants.CMS_CLIENT_SHOW);
             }
             play(mDatas.get(position).getPlayUrl(), mDatas.get(position).getTitle());
         }
@@ -1608,7 +1608,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                             } else {
                                 for (int i = 0; i < collectionList.size(); i++) {
                                     ImageSpan imgSpan = new ImageSpan(getActivity(),
-                                            R.drawable.collection_image,
+                                            R.drawable.szrm_sdk_collection_image,
                                             ImageSpan.ALIGN_CENTER);
                                     final String str = collectionTvList.get(i);
                                     final String strChun = collectionStrList.get(i);
@@ -1671,17 +1671,17 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
 
     public void setLikeCollection(ContentStateModel.DataDTO contentStateModel) {
         if (contentStateModel.getWhetherFavor().equals("true")) {
-            videoDetailCollectionImage.setImageResource(R.drawable.collection);
+            videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection);
         } else {
-            videoDetailCollectionImage.setImageResource(R.drawable.collection_icon);
+            videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection_icon);
         }
 
         collectionNum.setText(NumberFormatTool.formatNum(Long.parseLong(NumberFormatTool.getNumStr(contentStateModel.getFavorCountShow())), false));
 
         if (contentStateModel.getWhetherLike().equals("true")) {
-            videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
+            videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite_select);
         } else {
-            videoDetailLikesImage.setImageResource(R.drawable.favourite);
+            videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite);
         }
 
         if (contentStateModel.getLikeCountShow().equals("0")) {
@@ -1775,7 +1775,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(collectionNum.getText().toString()));
                                     num++;
                                     collectionNum.setText(NumberFormatTool.formatNum(num, false));
-                                    videoDetailCollectionImage.setImageResource(R.drawable.collection);
+                                    videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection);
                                     playerView.contentStateModel.setWhetherFavor("true");
                                 } else {
                                     int num;
@@ -1784,7 +1784,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                                         num--;
                                     }
                                     collectionNum.setText(NumberFormatTool.formatNum(num, false));
-                                    videoDetailCollectionImage.setImageResource(R.drawable.collection_icon);
+                                    videoDetailCollectionImage.setImageResource(R.drawable.szrm_sdk_collection_icon);
                                     playerView.contentStateModel.setWhetherFavor("false");
                                 }
                                 if (null != playerView.contentStateModel) {
@@ -1857,7 +1857,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
 
                                 if (json.get("data").toString().equals("1")) {
                                     int num;
-                                    videoDetailLikesImage.setImageResource(R.drawable.favourite_select);
+                                    videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite_select);
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(likesNum.getText().toString()));
                                     num++;
                                     likesNum.setText(NumberFormatTool.formatNum(num, false));
@@ -1865,7 +1865,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                                     playerView.contentStateModel.setLikeCountShow(NumberFormatTool.formatNum(num, false).toString());
                                 } else {
                                     int num;
-                                    videoDetailLikesImage.setImageResource(R.drawable.favourite);
+                                    videoDetailLikesImage.setImageResource(R.drawable.szrm_sdk_favourite);
                                     num = Integer.parseInt(NumberFormatTool.getNumStr(likesNum.getText().toString()));
                                     if (num > 0) {
                                         num--;
@@ -1968,7 +1968,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                 playerView.mSuperPlayer.reStart();
             }
         }
-        Log.e("yqh_yqh","onResume播放地址："+SuperPlayerImpl.mCurrentPlayVideoURL);
+        Log.e("yqh_yqh", "onResume播放地址：" + SuperPlayerImpl.mCurrentPlayVideoURL);
         isPause = false;
         xkshOldSystemTime = DateUtils.getTimeCurrent();
         if (!TextUtils.isEmpty(myContentId)) {
@@ -2092,7 +2092,7 @@ public class XkshFragment extends Fragment implements View.OnClickListener {
                     double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
                     lsDuration = mProgress;
                     //上报埋点
-                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId()), event);
+                    uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(getActivity(), mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), "palmliuyang"), event);
                     Log.e("xksh_md", "埋点事件：" + event + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
                 }
             }

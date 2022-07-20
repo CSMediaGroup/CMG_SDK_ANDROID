@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

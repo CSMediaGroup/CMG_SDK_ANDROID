@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 public class CollectionClickble extends ClickableSpan implements View.OnClickListener{
     private final View.OnClickListener mListener;

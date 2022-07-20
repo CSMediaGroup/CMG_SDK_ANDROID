@@ -45,7 +45,7 @@
             android:layout_marginLeft="@dimen/video_dp10"
             android:layout_toRightOf="@+id/view_flipper_content"
             android:paddingRight="@dimen/video_dp10"
-            android:src="@drawable/cancel_collect">
+            android:src="@drawable/szrm_sdk_cancel_collect">
 
         </ImageView>
     </LinearLayout>

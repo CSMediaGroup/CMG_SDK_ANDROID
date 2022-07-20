@@ -119,4 +119,8 @@ public class Constants {
     public static final String SDK_JS_OPENVIDEO = "openVideo";
     public static final String SDK_JS_GOLOGING = "goLogin";
     public static final String SDK_JS_GETAPPVERSION = "getAppVersion";
+
+    //浏阳 2346992 岳阳 1832192
+    public static final String LIUYANG_JGH = "2346992";
+    public static final String YUEYANG_JGH = "1832192";
 }

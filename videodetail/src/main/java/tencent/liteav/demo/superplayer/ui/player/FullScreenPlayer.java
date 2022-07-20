@@ -32,7 +32,7 @@ import com.tencent.rtmp.TXImageSprite;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 
 import common.constants.Constants;

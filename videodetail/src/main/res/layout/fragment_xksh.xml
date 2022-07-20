@@ -51,7 +51,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="130dp"
         android:layout_marginRight="@dimen/video_dp10"
-        android:src="@drawable/ranking_list"></ImageView>
+        android:src="@drawable/szrm_sdk_ranking_list"></ImageView>
 
     <LinearLayout
         android:id="@+id/activity_linear"
@@ -150,7 +150,7 @@
                     android:layout_width="12dp"
                     android:layout_height="12dp"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/white_comment_icon">
+                    android:src="@drawable/szrm_sdk_white_comment_icon">
 
                 </ImageView>
 
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/collection_icon"></ImageView>
+                    android:src="@drawable/szrm_sdk_collection_icon"></ImageView>
 
                 <TextView
                     android:id="@+id/collection_num"
@@ -207,7 +207,7 @@
                     android:id="@+id/video_detail_likes_image"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:src="@drawable/favourite">
+                    android:src="@drawable/szrm_sdk_favourite">
 
                 </ImageView>
 
@@ -233,7 +233,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/share_icon"></ImageView>
+                    android:src="@drawable/szrm_sdk_share_icon"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -255,7 +255,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
-                    android:src="@drawable/publish_works"></ImageView>
+                    android:src="@drawable/szrm_sdk_publish_works"></ImageView>
 
                 <TextView
                     android:layout_width="match_parent"

@@ -10,7 +10,7 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import java.util.List;
 
@@ -30,11 +30,11 @@ public class LiveRvAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> {
         ImageView imageView = helper.getView(R.id.live_item_img);
         ImageView liveState = helper.getView(R.id.item_live_state);
         if (TextUtils.equals(item.getLiveStatus(),"0")) {
-            liveState.setImageResource(R.drawable.live_preview);
+            liveState.setImageResource(R.drawable.szrm_sdk_live_preview);
         } else if (TextUtils.equals(item.getLiveStatus(),"1")) {
-            liveState.setImageResource(R.drawable.living);
+            liveState.setImageResource(R.drawable.szrm_sdk_living);
         } else {
-            liveState.setImageResource(R.drawable.live_end);
+            liveState.setImageResource(R.drawable.szrm_sdk_live_end);
         }
         TextView textView = helper.getView(R.id.live_item_title);
         if (null != mContext && !((VideoHomeActivity)mContext).isFinishing()

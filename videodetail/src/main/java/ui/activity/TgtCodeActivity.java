@@ -5,15 +5,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.wdcs.videodetail.demo.R;
+
+import com.just.agentweb.AgentWebView;
+import com.szrm.videodetail.demo.R;
 
 import common.callback.VideoInteractiveParam;
+import widget.BaseWebView;
+import widget.SzrmWebView;
 
 public class TgtCodeActivity extends AppCompatActivity {
     private TextView tgt;
     private TextView to_video;
+    private SzrmWebView szrmWeb;
+    private RelativeLayout container;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,5 +43,7 @@ public class TgtCodeActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        szrmWeb = new SzrmWebView(this, container, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 200));
     }
 }

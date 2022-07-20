@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 public class LoadingView extends RelativeLayout {
 
@@ -24,7 +24,7 @@ public class LoadingView extends RelativeLayout {
         ImageView imgLoading = view.findViewById(R.id.imgLoading);
         if (null != context) {
             Glide.with(context)
-                    .load(R.drawable.tiny_loading)
+                    .load(R.drawable.szrm_sdk_tiny_loading)
                     .into(imgLoading);
         }
     }

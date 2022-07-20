@@ -14,7 +14,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 
-import com.wdcs.videodetail.demo.R;
+import com.szrm.videodetail.demo.R;
 
 import java.util.ArrayList;
 

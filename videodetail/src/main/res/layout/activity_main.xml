@@ -28,7 +28,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
         android:visibility="gone"
-        android:src="@drawable/ic_head" />
+        android:src="@drawable/szrm_sdk_ic_head" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

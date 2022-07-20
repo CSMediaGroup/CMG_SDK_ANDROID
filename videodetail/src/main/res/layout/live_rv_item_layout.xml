@@ -26,7 +26,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
             android:layout_marginTop="160dp"
-            android:src="@drawable/live_preview"
+            android:src="@drawable/szrm_sdk_live_preview"
             ></ImageView>
     </RelativeLayout>
 

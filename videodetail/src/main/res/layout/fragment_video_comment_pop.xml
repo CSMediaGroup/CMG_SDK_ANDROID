@@ -47,7 +47,7 @@
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:src="@drawable/pop_dismiss"></ImageView>
+                android:src="@drawable/szrm_sdk_pop_dismiss"></ImageView>
         </RelativeLayout>
     </RelativeLayout>
 
@@ -81,7 +81,7 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/white_comment_icon"></ImageView>
+                android:src="@drawable/szrm_sdk_white_comment_icon"></ImageView>
 
             <TextView
                 android:id="@+id/comment_edtInput"

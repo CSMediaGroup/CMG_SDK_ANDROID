@@ -9,7 +9,7 @@
         android:id="@+id/zdy_iv_pause"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/play_icon"
+        android:src="@drawable/szrm_sdk_play_icon"
         android:visibility="gone"
         android:layout_centerInParent="true"></ImageView>
 
@@ -161,7 +161,7 @@
                 app:psb_progress="0"
                 app:psb_progressColor="@color/superplayer_white"
                 app:psb_progressHeight="2dp"
-                app:psb_thumbBackground="@drawable/superplayer_vod_thumb" />
+                app:psb_thumbBackground="@drawable/szrm_sdk_superplayer_vod_thumb" />
 
 
         </RelativeLayout>
@@ -183,7 +183,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="30dp"
             android:paddingLeft="10dp"
-            android:src="@drawable/superplayer_ic_vod_fullscreen" />
+            android:src="@drawable/szrm_sdk_superplayer_ic_vod_fullscreen" />
     </LinearLayout>
 
     <!--重播-->

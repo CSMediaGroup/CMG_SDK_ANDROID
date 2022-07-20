@@ -86,7 +86,7 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
     public int demouration;
     public SuperPlayerView superPlayerView;
     private boolean noFirst = false;
-    public static boolean xkshNoFirst = false;
+    public boolean xkshNoFirst = false;
 
     public SuperPlayerImpl(Context context, TXCloudVideoView videoView, SuperPlayerView superPlayerView) {
         initialize(context, videoView);
@@ -159,7 +159,7 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
 
     }
 
-    public static void setXkshFirst(boolean isFirst) {
+    public void setXkshFirst(boolean isFirst) {
         xkshNoFirst = isFirst;
     }
 

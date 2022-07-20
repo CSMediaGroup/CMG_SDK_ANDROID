@@ -163,7 +163,7 @@
                             android:layout_height="95dp"
                             android:paddingTop="@dimen/video_dp10"
                             android:scaleType="fitXY"
-                            android:src="@drawable/upload_btn">
+                            android:src="@drawable/szrm_sdk_upload_btn">
 
                         </ImageView>
 
@@ -173,7 +173,7 @@
                             android:layout_height="wrap_content"
                             android:visibility="gone"
                             android:layout_alignParentRight="true"
-                            android:src="@drawable/upload_video_cancel">
+                            android:src="@drawable/szrm_sdk_upload_video_cancel">
                         </ImageView>
                     </RelativeLayout>
 

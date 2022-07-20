@@ -35,6 +35,7 @@ import io.reactivex.functions.Consumer;
 import ui.activity.EasyWebActivity;
 import ui.activity.VideoHomeActivity;
 import common.model.SdkUserInfo.DataDTO.LoginSysUserVoDTO;
+import utils.UUIDUtils;
 
 public class AndroidInterface {
 
@@ -82,11 +83,7 @@ public class AndroidInterface {
      */
     @JavascriptInterface
     public String getDeviceId() {
-        if (TextUtils.isEmpty(SystemUtil.getANDROID_ID())) {
-            return SPUtils.getInstance().getString(Constants.PUSH_TOKEN, "");
-        }
-        Log.e("AndroidInterface", "传递的设备id：" + SystemUtil.getANDROID_ID());
-        return SystemUtil.getANDROID_ID();
+        return UUIDUtils.deviceUUID();
     }
 
     /**

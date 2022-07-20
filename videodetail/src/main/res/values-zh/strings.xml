@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">视频详情页面</string>
+    <string name="app_name">智慧浏阳sdk</string>
 
     <string name="btn_cancel">取消</string>
     <string name="btn_ok">确定</string>

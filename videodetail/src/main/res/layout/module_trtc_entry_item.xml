@@ -10,7 +10,7 @@
     <View
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:background="@drawable/bg_item_gradient"
+        android:background="@drawable/szrm_sdk_bg_item_gradient"
         app:layout_constraintBottom_toBottomOf="@+id/tv_title"
         app:layout_constraintEnd_toEndOf="@+id/img_item"
         app:layout_constraintStart_toStartOf="@+id/img_item"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        tools:src="@drawable/live_stream" />
+        tools:src="@drawable/szrm_sdk_live_stream" />
 
     <TextView
         android:id="@+id/tv_title"

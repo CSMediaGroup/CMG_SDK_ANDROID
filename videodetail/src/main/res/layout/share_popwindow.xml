@@ -11,7 +11,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginRight="40dp"
-        android:src="@drawable/share_wechat_icon">
+        android:src="@drawable/szrm_sdk_share_wechat_icon">
 
     </ImageView>
 
@@ -21,7 +21,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginRight="40dp"
-        android:src="@drawable/share_circle_icon"
+        android:src="@drawable/szrm_sdk_share_circle_icon"
         >
 
     </ImageView>
@@ -31,7 +31,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center"
-        android:src="@drawable/share_qq_icon"
+        android:src="@drawable/szrm_sdk_share_qq_icon"
         >
 
     </ImageView>
