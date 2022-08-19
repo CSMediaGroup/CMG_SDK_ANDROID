@@ -123,4 +123,5 @@ public class Constants {
     //浏阳 2346992 岳阳 1832192
     public static final String LIUYANG_JGH = "2346992";
     public static final String YUEYANG_JGH = "1832192";
+    public static final String KUNMING_JGH = "1911189";
 }

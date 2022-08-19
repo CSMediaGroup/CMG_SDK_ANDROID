@@ -1,5 +1,7 @@
 package common.utils;
 
+import static common.constants.Constants.KUNMING_JGH;
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
@@ -40,11 +42,12 @@ public final class AppInit {
      */
     public static void init(@NonNull final Context context, Boolean isDebug) {
         AppInit.mContext = context.getApplicationContext();
-        if (isDebug) {
-            appId = Constants.YUEYANG_JGH;
-        } else {
-            appId = Constants.LIUYANG_JGH;
-        }
+//        if (isDebug) {
+//            appId = Constants.YUEYANG_JGH;
+//        } else {
+//            appId = Constants.LIUYANG_JGH;
+//        }
+        appId = Constants.KUNMING_JGH;
         OkGoUtils.initOkGo((Application) AppInit.mContext, appId);
         mIsDebug = isDebug;
 
