@@ -29,10 +29,11 @@
 }
 
 #-keep class com.tencent.** { *; }
--keep class common.model.** {*;}
--keep class common.callback.**{*;}
--keep class common.utils.AppInit {*;}
--keep class common.utils.OkGoUtils {*;}
+#-keep class common.model.** {*;}
+#-keep class common.callback.**{*;}
+#-keep class common.utils.AppInit {*;}
+#-keep class common.utils.OkGoUtils {*;}
+-keep class common.** {*;}
 #-keep class adpter.** { *; }
 #-keep class ui.activity.VideoDetailActivity.**
 #-keep class tencent.liteav.demo.superplayer.**{*;}
