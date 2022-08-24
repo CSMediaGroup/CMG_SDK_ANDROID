@@ -41,3 +41,4 @@
 -keep class utils.**{*;}
 -keep class model.bean.**{*;}
 -keep class ui.**{*;}
+-keep class res.**{*;}
