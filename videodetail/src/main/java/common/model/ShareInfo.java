@@ -14,61 +14,61 @@ public class ShareInfo {
      * @param shareTitle 分享标题
      * @param platform 分享平台
      */
-    public String shareUrl, shareImage, shareBrief, shareTitle, platform;
+    public String link, imgUrl, content, title, platform;
 
-    public static ShareInfo getInstance(String shareUrl, String shareImage, String shareBrief, String shareTitle, String platform) {
-        return new ShareInfo(shareUrl, shareImage, shareBrief, shareTitle, platform);
+    public static ShareInfo getInstance(String link, String imgUrl, String content, String title, String platform) {
+        return new ShareInfo(link, imgUrl, content, title, platform);
     }
 
     public ShareInfo() {
 
     }
 
-    public ShareInfo(String shareUrl, String shareImage, String shareBrief, String shareTitle, String platform) {
-        this.shareUrl = shareUrl;
-        this.shareImage = shareImage;
-        this.shareBrief = shareBrief;
-        this.shareTitle = shareTitle;
+    public ShareInfo(String link, String imgUrl, String content, String title, String platform) {
+        this.link = link;
+        this.imgUrl = imgUrl;
+        this.content = content;
+        this.title = title;
         this.platform = platform;
     }
 
-    public ShareInfo(String shareUrl, String shareImage, String shareBrief, String shareTitle) {
-        this.shareUrl = shareUrl;
-        this.shareImage = shareImage;
-        this.shareBrief = shareBrief;
-        this.shareTitle = shareTitle;
+    public ShareInfo(String link, String imgUrl, String content, String title) {
+        this.link = link;
+        this.imgUrl = imgUrl;
+        this.content = content;
+        this.title = title;
     }
 
     public String getShareUrl() {
-        return shareUrl;
+        return link;
     }
 
-    public void setShareUrl(String shareUrl) {
-        this.shareUrl = shareUrl;
+    public void setShareUrl(String link) {
+        this.link = link;
     }
 
     public String getShareImage() {
-        return shareImage;
+        return imgUrl;
     }
 
-    public void setShareImage(String shareImage) {
-        this.shareImage = shareImage;
+    public void setShareImage(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getShareBrief() {
-        return shareBrief;
+        return content;
     }
 
-    public void setShareBrief(String shareBrief) {
-        this.shareBrief = shareBrief;
+    public void setShareBrief(String content) {
+        this.content = content;
     }
 
     public String getShareTitle() {
-        return shareTitle;
+        return title;
     }
 
-    public void setShareTitle(String shareTitle) {
-        this.shareTitle = shareTitle;
+    public void setShareTitle(String title) {
+        this.title = title;
     }
 
     public String getPlatform() {
