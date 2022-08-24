@@ -22,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="@color/video_c9"
-        android:visibility="gone"
         android:padding="30dp"
         android:text="获取token值"></TextView>
 

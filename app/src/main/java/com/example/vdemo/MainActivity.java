@@ -6,6 +6,7 @@ import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -148,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void shared(ShareInfo shareInfo) {
-
+                        Log.e("share", JSON.toJSONString(shareInfo));
                     }
 
                     @Override
@@ -220,6 +221,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
     @Override

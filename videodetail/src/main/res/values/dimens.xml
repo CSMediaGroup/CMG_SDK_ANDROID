@@ -28,4 +28,10 @@
     <dimen name="video_popwindow_bottom_heigt">150dp</dimen>
     <dimen name="superplayer_media_controller_view_height">48dip</dimen>
     <dimen name="privacy_dialog_width">150dp</dimen>
+    <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_13">13sp</dimen>
+    <dimen name="sp_14">14sp</dimen>
+    <dimen name="sp_15">15sp</dimen>
+    <dimen name="sp_16">16sp</dimen>
+
 </resources>
