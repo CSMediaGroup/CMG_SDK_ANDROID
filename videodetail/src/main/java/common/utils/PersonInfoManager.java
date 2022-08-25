@@ -257,42 +257,43 @@ public class PersonInfoManager {
      * 判断是否要去请求数智融媒登录接口
      */
     public boolean isRequestSzrmLogin() {
-//        ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
-        String userId = PersonInfoManager.getInstance().getUserId();
-//        if (null != userInfo && !TextUtils.isEmpty(userInfo.getUserId())) { //获取的用户信息不为空
-        if (!TextUtils.isEmpty(userId)) {
-            if (!TextUtils.isEmpty(PersonInfoManager.getInstance().getUserId())) {//本地用户id不为空
-                if (TextUtils.equals(userId, userId)) { //比较获取的和本地的userId 是否一致
-                    return false;  //已经登录
+        ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
+        if (null != userInfo) { //获取的用户信息不为空
+            if (!TextUtils.isEmpty(userInfo.getUserId())) { //获取的用户id不为空
+                if (!TextUtils.isEmpty(PersonInfoManager.getInstance().getUserId())) {//本地用户id不为空
+                    if (TextUtils.equals(userInfo.getUserId(), PersonInfoManager.getInstance().getUserId())) { //比较获取的和本地的userId 是否一致
+                        return false;  //已经登录
+                    } else {
+                        clearThirdUserToken(); //userId不一致 表明切换了用户或者已经超时
+                        return true;
+                    }
                 } else {
-                    clearThirdUserToken(); //userId不一致 表明切换了用户或者已经超时
+                    //本地userId为空，相当于第一次登录
                     return true;
                 }
             } else {
-                //本地userId为空，相当于第一次登录
-                return true;
+                //获取的用户信息为空，没有登录，不需要请求  点击点赞收藏等则会跳转登录
+                clearThirdUserToken();
+                return false;
             }
-        } else {
-            //获取的用户信息为空，没有登录，不需要请求  点击点赞收藏等则会跳转登录
-            clearThirdUserToken();
         }
         return false;
     }
 
-    public void callPhone(final FragmentActivity activity, final String phone) {
-        new RxPermissions(activity).request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean) {
-                    Intent intent = new Intent(Intent.ACTION_CALL);
-                    Uri data = Uri.parse(phone);
-                    intent.setData(data);
-                    activity.startActivity(intent);
-                } else {
-                    ToastUtils.showShort("获取权限失败，请在设置中打开相关权限");
+        public void callPhone ( final FragmentActivity activity, final String phone){
+            new RxPermissions(activity).request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
+                @Override
+                public void accept(Boolean aBoolean) throws Exception {
+                    if (aBoolean) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        Uri data = Uri.parse(phone);
+                        intent.setData(data);
+                        activity.startActivity(intent);
+                    } else {
+                        ToastUtils.showShort("获取权限失败，请在设置中打开相关权限");
+                    }
                 }
-            }
-        });
+            });
 
+        }
     }
-}

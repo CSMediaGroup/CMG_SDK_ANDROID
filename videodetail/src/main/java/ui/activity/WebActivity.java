@@ -52,6 +52,7 @@ import common.model.JumpToNativePageModel;
 import common.model.MechanismModel;
 import common.model.SdkUserInfo;
 import common.model.ShareInfo;
+import common.model.ThirdUserInfo;
 import common.utils.AppInit;
 import common.utils.ButtonSpan;
 import common.utils.ImageUtils;
@@ -439,8 +440,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             //需要去请求数智融媒的登录
             szrmLoginRequest();
-        } else {
-            //不需要请求数智融媒的登录
         }
         super.onResume();
     }
@@ -455,12 +454,13 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
     private void szrmLoginRequest() {
         org.json.JSONObject jsonObject = new org.json.JSONObject();
+        ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
         try {
-            jsonObject.put("appId", "1");
-            jsonObject.put("userId", "12345");
-            jsonObject.put("mobile", "18684711216");
-            jsonObject.put("headProfile", "https://oss.zhcs.csbtv.com/zhcs-prd/icon/WechatIMG180.png");
-            jsonObject.put("nickName", "JSON");
+            jsonObject.put("appId", appId);
+            jsonObject.put("userId", userInfo.getUserId());
+            jsonObject.put("mobile", userInfo.getPhoneNum());
+            jsonObject.put("headProfile", userInfo.getHeadImageUrl());
+            jsonObject.put("nickName", userInfo.getNickName());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -476,13 +476,15 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                         }
                         if (response.body().getCode().equals("200")) {
                             String token = response.body().getData().getToken();
-                            SdkUserInfo.DataDTO.LoginSysUserVoDTO loginUserInfo = new SdkUserInfo.DataDTO.LoginSysUserVoDTO();
+                            SdkUserInfo.DataDTO.LoginSysUserVoDTO loginUserInfo = response.body().getData().getLoginSysUserVo();
                             PersonInfoManager.getInstance().setTransformationToken(token);
                             PersonInfoManager.getInstance().setAppId(response.body().getData().getAppId());
-                            PersonInfoManager.getInstance().setUserId(loginUserInfo.getId());
-                            PersonInfoManager.getInstance().setPhoneNum(loginUserInfo.getPhone());
-                            PersonInfoManager.getInstance().setNickName(loginUserInfo.getNickname());
-                            PersonInfoManager.getInstance().setUserImageUrl(loginUserInfo.getHead());
+                            if (null != loginUserInfo) {
+                                PersonInfoManager.getInstance().setUserId(SdkInteractiveParam.getInstance().getUserInfo().getUserId());
+                                PersonInfoManager.getInstance().setPhoneNum(loginUserInfo.getPhone());
+                                PersonInfoManager.getInstance().setNickName(loginUserInfo.getNickname());
+                                PersonInfoManager.getInstance().setUserImageUrl(loginUserInfo.getHead());
+                            }
                             String userModelStr = JSON.toJSONString(response.body().getData());
                             PersonInfoManager.getInstance().setSzrmUserModel(userModelStr);
                             Log.e(TAG, "数智融媒 登录成功");
