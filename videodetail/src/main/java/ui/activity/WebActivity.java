@@ -403,11 +403,11 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         if (id == R.id.imgBack) {
             finish();
         } else if (id == R.id.share_wx_btn) {
-            toShare();
+            toShare("WX");
         } else if (id == R.id.share_circle_btn) {
-            toShare();
+            toShare("Circle");
         } else if (id == R.id.share_qq_btn) {
-            toShare();
+            toShare("QQ");
         } else if (id == R.id.iconShare) {
             sharePop();
         }
@@ -416,9 +416,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     /**
      * 分享
      */
-    private void toShare() {
+    private void toShare(String platform) {
         String shareStr = JSON.toJSONString(dataObject);
         ShareInfo shareInfo = JSON.parseObject(shareStr, ShareInfo.class);
+        shareInfo.setPlatform(platform);
         SdkInteractiveParam.getInstance().shared(shareInfo);
     }
 
