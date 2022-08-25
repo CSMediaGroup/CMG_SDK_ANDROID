@@ -347,10 +347,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                         }
                     });
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GOLOGING)) { //跳转登录
-//                    SdkInteractiveParam.getInstance().toLogin();
-                    Intent intent = new Intent(WebActivity.this, LoginActivity.class);
-                    intent.putExtra("mechanismId", mechanismId);
-                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
+                    SdkInteractiveParam.getInstance().toLogin();
+//                    Intent intent = new Intent(WebActivity.this, LoginActivity.class);
+//                    intent.putExtra("mechanismId", mechanismId);
+//                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_OPENVIDEO)) { //打开视频
                     Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
                     intent.putExtra("contentId", dataObject.getString("contentId"));

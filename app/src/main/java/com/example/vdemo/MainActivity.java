@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public void toLogin() {
-
+                        Log.e("toLogin", "toLogin");
                     }
                 });
             }
