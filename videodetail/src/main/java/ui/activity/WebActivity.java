@@ -402,7 +402,9 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.imgBack) {
-            finish();
+            if (!mAgentWeb.back()){
+                finish();
+            }
         } else if (id == R.id.share_wx_btn) {
             toShare("WX");
         } else if (id == R.id.share_circle_btn) {
@@ -426,14 +428,15 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onPause() {
+        super.onPause();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onPause();
         }
-        super.onPause();
     }
 
     @Override
     protected void onResume() {
+        super.onResume();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onResume();
         }
@@ -441,7 +444,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             //需要去请求数智融媒的登录
             szrmLoginRequest();
         }
-        super.onResume();
     }
 
     @Override
@@ -450,19 +452,22 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onDestroy();
         }
+        OkGo.getInstance().cancelAll();
     }
 
     private void szrmLoginRequest() {
         org.json.JSONObject jsonObject = new org.json.JSONObject();
         ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
-        try {
-            jsonObject.put("appId", appId);
-            jsonObject.put("userId", userInfo.getUserId());
-            jsonObject.put("mobile", userInfo.getPhoneNum());
-            jsonObject.put("headProfile", userInfo.getHeadImageUrl());
-            jsonObject.put("nickName", userInfo.getNickName());
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if (null != userInfo) {
+            try {
+                jsonObject.put("appId", appId);
+                jsonObject.put("userId", userInfo.getUserId());
+                jsonObject.put("mobile", userInfo.getPhoneNum());
+                jsonObject.put("headProfile", userInfo.getHeadImageUrl());
+                jsonObject.put("nickName", userInfo.getNickName());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         OkGo.<SdkUserInfo>post(ApiConstants.getInstance().getLoginParty())
                 .tag("sdkLogin")

@@ -276,8 +276,11 @@ public class PersonInfoManager {
                 clearThirdUserToken();
                 return false;
             }
+        } else {
+            //获取的用户信息为空，没有登录，不需要请求  点击点赞收藏等则会跳转登录
+            clearThirdUserToken();
+            return false;
         }
-        return false;
     }
 
         public void callPhone ( final FragmentActivity activity, final String phone){
