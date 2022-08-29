@@ -29,7 +29,7 @@ public final class AppInit {
     public static boolean mIsDebug;
     public static String appId;
     @SuppressLint("StaticFieldLeak")
-    private static Context mContext;
+    public static Context mContext;
 
     private AppInit() {
         throw new UnsupportedOperationException("u can't instantiate me...");

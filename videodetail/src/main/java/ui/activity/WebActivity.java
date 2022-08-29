@@ -90,6 +90,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private String cfgStr; //获取的机构数据json字符串
     private String intent = "0";
     private String mechanismId; //机构Id
+    private boolean isFinish;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,7 +233,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mBridgeWebViewClient.onPageFinished(view, url);
-
+                isFinish = true;
             }
 
         };
@@ -240,7 +241,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mAgentWeb != null && mAgentWeb.handleKeyEvent(keyCode, event)) {
+        if (isFinish && null != mAgentWeb && mAgentWeb.handleKeyEvent(keyCode, event)) {
             return true;
         }
 
@@ -274,7 +275,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 .createAgentWeb()
                 .ready()
                 .go(intentUrl);
-
         if (null != mBridgeWebView) {
             setBridge();
         }
@@ -485,7 +485,9 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                             PersonInfoManager.getInstance().setTransformationToken(token);
                             PersonInfoManager.getInstance().setAppId(response.body().getData().getAppId());
                             if (null != loginUserInfo) {
-                                PersonInfoManager.getInstance().setUserId(SdkInteractiveParam.getInstance().getUserInfo().getUserId());
+                                if (null != SdkInteractiveParam.getInstance().getUserInfo() && !TextUtils.isEmpty(SdkInteractiveParam.getInstance().getUserInfo().getUserId())) {
+                                    PersonInfoManager.getInstance().setUserId(SdkInteractiveParam.getInstance().getUserInfo().getUserId());
+                                }
                                 PersonInfoManager.getInstance().setPhoneNum(loginUserInfo.getPhone());
                                 PersonInfoManager.getInstance().setNickName(loginUserInfo.getNickname());
                                 PersonInfoManager.getInstance().setUserImageUrl(loginUserInfo.getHead());

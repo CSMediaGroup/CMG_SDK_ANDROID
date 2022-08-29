@@ -259,7 +259,10 @@ public class PersonInfoManager {
     public boolean isRequestSzrmLogin() {
         ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
         if (null != userInfo) { //获取的用户信息不为空
-            if (!TextUtils.isEmpty(userInfo.getUserId())) { //获取的用户id不为空
+            if (!TextUtils.isEmpty(userInfo.getUserId())
+                    || !TextUtils.isEmpty(userInfo.getPhoneNum())
+                    || !TextUtils.isEmpty(userInfo.getNickName())
+                    || !TextUtils.isEmpty(userInfo.getHeadImageUrl())) { //获取的用户id不为空
                 if (!TextUtils.isEmpty(PersonInfoManager.getInstance().getUserId())) {//本地用户id不为空
                     if (TextUtils.equals(userInfo.getUserId(), PersonInfoManager.getInstance().getUserId())) { //比较获取的和本地的userId 是否一致
                         return false;  //已经登录
@@ -283,20 +286,20 @@ public class PersonInfoManager {
         }
     }
 
-        public void callPhone ( final FragmentActivity activity, final String phone){
-            new RxPermissions(activity).request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
-                @Override
-                public void accept(Boolean aBoolean) throws Exception {
-                    if (aBoolean) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        Uri data = Uri.parse(phone);
-                        intent.setData(data);
-                        activity.startActivity(intent);
-                    } else {
-                        ToastUtils.showShort("获取权限失败，请在设置中打开相关权限");
-                    }
+    public void callPhone(final FragmentActivity activity, final String phone) {
+        new RxPermissions(activity).request(Manifest.permission.CALL_PHONE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) throws Exception {
+                if (aBoolean) {
+                    Intent intent = new Intent(Intent.ACTION_CALL);
+                    Uri data = Uri.parse(phone);
+                    intent.setData(data);
+                    activity.startActivity(intent);
+                } else {
+                    ToastUtils.showShort("获取权限失败，请在设置中打开相关权限");
                 }
-            });
+            }
+        });
 
-        }
     }
+}

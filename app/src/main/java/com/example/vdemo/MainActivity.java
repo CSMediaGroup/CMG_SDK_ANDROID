@@ -139,12 +139,14 @@ public class MainActivity extends AppCompatActivity {
                 SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
                     @Override
                     public ThirdUserInfo setThirdUserInfo() {
-                        ThirdUserInfo userInfo = new ThirdUserInfo();
-                        userInfo.setUserId("123");
-                        userInfo.setPhoneNum("123456");
-                        userInfo.setNickName("测试人员");
-                        userInfo.setHeadImageUrl("https://oss.zhcs.csbtv.com/zhcs-prd/icon/WechatIMG180.png");
-                        return userInfo;
+//                        ThirdUserInfo userInfo = new ThirdUserInfo();
+//                        userInfo.setUserId("123");
+//                        userInfo.setPhoneNum("123456");
+//                        userInfo.setNickName("测试人员");
+//                        userInfo.setHeadImageUrl("https://oss.zhcs.csbtv.com/zhcs-prd/icon/WechatIMG180.png");
+                        ThirdUserInfo thirdUserInfo = new ThirdUserInfo();
+                        thirdUserInfo.setUserId("123");
+                        return thirdUserInfo;
                     }
 
                     @Override
