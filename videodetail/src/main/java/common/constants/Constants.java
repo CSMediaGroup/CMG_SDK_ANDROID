@@ -69,7 +69,7 @@ public class Constants {
     /**
      * 超时时间
      */
-    public static final int REQUEST_TIME_OUT = 999999;
+    public static final int REQUEST_TIME_OUT = 60;
 
     /**
      * 上报内容埋点固定传参

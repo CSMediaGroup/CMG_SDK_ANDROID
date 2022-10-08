@@ -40,14 +40,14 @@ public final class AppInit {
      *
      * @param context 上下文
      */
-    public static void init(@NonNull final Context context, Boolean isDebug) {
+    public static void init(@NonNull final Context context, Boolean isDebug, String mAppId) {
         AppInit.mContext = context.getApplicationContext();
 //        if (isDebug) {
 //            appId = Constants.YUEYANG_JGH;
 //        } else {
 //            appId = Constants.LIUYANG_JGH;
 //        }
-        appId = Constants.KUNMING_JGH;
+        appId = mAppId;
         OkGoUtils.initOkGo((Application) AppInit.mContext, appId);
         mIsDebug = isDebug;
 

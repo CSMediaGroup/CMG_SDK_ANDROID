@@ -40,9 +40,9 @@ public class OkGoUtils {
         //builder.addInterceptor(new ChuckInterceptor(this));
 
         //超时时间设置，默认60秒
-        builder.readTimeout(Constants.REQUEST_TIME_OUT, TimeUnit.MILLISECONDS);      //全局的读取超时时间
-        builder.writeTimeout(Constants.REQUEST_TIME_OUT, TimeUnit.MILLISECONDS);     //全局的写入超时时间
-        builder.connectTimeout(Constants.REQUEST_TIME_OUT, TimeUnit.MILLISECONDS);   //全局的连接超时时间
+        builder.readTimeout(Constants.REQUEST_TIME_OUT, TimeUnit.SECONDS);      //全局的读取超时时间
+        builder.writeTimeout(Constants.REQUEST_TIME_OUT, TimeUnit.SECONDS);     //全局的写入超时时间
+        builder.connectTimeout(Constants.REQUEST_TIME_OUT, TimeUnit.SECONDS);   //全局的连接超时时间
 
         // 其他统一的配置
         // 详细说明看GitHub文档：https://github.com/jeasonlzy/

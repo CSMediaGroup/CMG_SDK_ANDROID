@@ -267,10 +267,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
         mAgentWeb = AgentWeb.with(this)
                 .setAgentWebParent(container, new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
-                .useDefaultIndicator(-1, 2)
+                .useDefaultIndicator()
                 .setWebViewClient(getWebViewClient())
                 .setWebView(mBridgeWebView)
-                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
+//                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
 //               .setDownloadListener(mDownloadListener) 4.0.0 删除该API
                 .createAgentWeb()
                 .ready()
@@ -402,7 +402,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.imgBack) {
-            if (!mAgentWeb.back()){
+            if (null != mAgentWeb && !mAgentWeb.back()) {
                 finish();
             }
         } else if (id == R.id.share_wx_btn) {

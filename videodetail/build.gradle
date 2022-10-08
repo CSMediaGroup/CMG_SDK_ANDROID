@@ -52,7 +52,7 @@ android {
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api "com.tencent.liteav:LiteAVSDK_UGC:latest.release"
+    api "com.tencent.liteav:LiteAVSDK_Player:9.5.29006"
     api 'com.github.bumptech.glide:glide:4.10.0'
     api 'com.google.code.gson:gson:2.3.1'
     api 'androidx.appcompat:appcompat:1.1.0'

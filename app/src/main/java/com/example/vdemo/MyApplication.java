@@ -10,12 +10,12 @@ public class MyApplication extends Application {
 
     /**
      * isDebug 是否为测试环境
-     * appkey 你的appKey
+     * appid 机构号id
      */
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInit.init(this, true); //浏阳 2346992 岳阳 1832192
+        AppInit.init(this, false, "6254248"); //浏阳 2346992 岳阳 1832192
 
 //        /* 初始化开始 */
 //        final InitConfig config = new InitConfig("1a333b51a32bf4f75e7f950cb4935236", "huawei"); // appid和渠道，appid如不清楚请联系客户成功经理
