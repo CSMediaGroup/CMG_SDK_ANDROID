@@ -15,6 +15,11 @@ public class Constants {
     public static final String USER_NICKNAME = "nickName";
     public static final String USER_APPID = "appId";
     public static final String SZRM_USER_MODEL = "szrmUserModel";
+    public static final String CFGSTR = "cfgStr";
+    public static final String LOGOURL = "logoUrl";
+    public static final String INTENTURL = "intentUrl";
+    public static final String MECHANISMID = "mechanismId";
+    public static final String APPNAME = "appName";
 
     public static final String KEY_USER = "keyuser";
     public static final String KEY_REFRESH_TOKEN = "refresh_token";
@@ -69,7 +74,7 @@ public class Constants {
     /**
      * 超时时间
      */
-    public static final int REQUEST_TIME_OUT = 999999;
+    public static final int REQUEST_TIME_OUT = 60;
 
     /**
      * 上报内容埋点固定传参

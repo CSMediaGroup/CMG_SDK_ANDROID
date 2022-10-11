@@ -84,12 +84,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private ImageView shareQqBtn;
     private JSONObject dataObject;
     private JumpToNativePageModel param;
-    private String logoUrl;
-    private String intentUrl;
-    private String appName;
-    private String cfgStr; //获取的机构数据json字符串
     private String intent = "0";
-    private String mechanismId; //机构Id
     private boolean isFinish;
 
     @Override
@@ -126,11 +121,15 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         shareQqBtn.setOnClickListener(this);
         mBridgeWebView = new BridgeWebView(this);
         if (TextUtils.equals("1", intent)) {
-            intentUrl = param.getNewsLink();
+            PersonInfoManager.getInstance().setIntentUrl(param.getNewsLink());
+//            intentUrl = param.getNewsLink();
             initBridge();
         } else {
-            intentUrl = getIntent().getStringExtra("newsLink");
-            getCfg();
+            if (TextUtils.isEmpty(PersonInfoManager.getInstance().getMechanismId())) {
+                getCfg();
+            } else {
+                initBridge();
+            }
         }
 
 
@@ -162,11 +161,11 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                         if (response.body().getCode().equals(success_code)) {
                             MechanismModel.DataDTO model = response.body().getData();
                             if (null != model) {
-                                cfgStr = JSON.toJSONString(model);
-                                logoUrl = model.getLogo();
-                                intentUrl = model.getConfig().getListUrl();
-                                mechanismId = model.getId();
-                                appName = model.getConfig().getAppName();
+                                PersonInfoManager.getInstance().setCfgStr(JSON.toJSONString(model));
+                                PersonInfoManager.getInstance().setLogoUrl(model.getLogo());
+                                PersonInfoManager.getInstance().setIntentUrl(model.getConfig().getListUrl());
+                                PersonInfoManager.getInstance().setMechanismId(model.getId());
+                                PersonInfoManager.getInstance().setAppName(model.getConfig().getAppName());
                                 initBridge();
                             }
                         } else {
@@ -226,7 +225,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 mAgentWeb.getJsAccessEntrace().callJs(str1 + PersonInfoManager.getInstance().getSzrmUserModel() + str4);
                 mAgentWeb.getJsAccessEntrace().callJs(str2 + UUIDUtils.deviceUUID() + str4);
                 mAgentWeb.getJsAccessEntrace().callJs(str3 + getAppInfo() + str4);
-                mAgentWeb.getJsAccessEntrace().callJs(str5 + cfgStr + str4);
+                mAgentWeb.getJsAccessEntrace().callJs(str5 + PersonInfoManager.getInstance().getCfgStr() + str4);
             }
 
             @Override
@@ -274,7 +273,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 //               .setDownloadListener(mDownloadListener) 4.0.0 删除该API
                 .createAgentWeb()
                 .ready()
-                .go(intentUrl);
+                .go(PersonInfoManager.getInstance().getIntentUrl());
         if (null != mBridgeWebView) {
             setBridge();
         }
@@ -355,8 +354,8 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_OPENVIDEO)) { //打开视频
                     Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
                     intent.putExtra("contentId", dataObject.getString("contentId"));
-                    intent.putExtra("logoUrl", logoUrl);
-                    intent.putExtra("appName", appName);
+                    intent.putExtra("logoUrl", PersonInfoManager.getInstance().getLogoUrl());
+                    intent.putExtra("appName", PersonInfoManager.getInstance().getAppName());
                     startActivity(intent);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETAPPVERSION)) { //获取设备版本号等信息
                     function.onCallBack(getAppInfo());

@@ -1,6 +1,7 @@
 package common.utils;
 
-import static common.constants.Constants.KUNMING_JGH;
+
+import static common.constants.Constants.success_code;
 
 import android.annotation.SuppressLint;
 import android.app.Application;
@@ -10,14 +11,20 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 
+import com.alibaba.fastjson.JSON;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import common.callback.JsonCallback;
 import common.constants.Constants;
 import common.http.ApiConstants;
+import common.model.MechanismModel;
 
 
 /**
@@ -58,7 +65,56 @@ public final class AppInit {
             //正式环境
             ApiConstants.getInstance().setBaseUrl("https://fuse-api-gw.zhcs.csbtv.com/");
         }
+
+        getCfg();
     }
+
+    /**
+     * 获取机构
+     */
+    private static void getCfg() {
+        OkGo.<MechanismModel>get(ApiConstants.getInstance().getCfg())
+                .tag("cfg")
+                .params("appId", appId)
+                .execute(new JsonCallback<MechanismModel>(MechanismModel.class) {
+                    @Override
+                    public void onSuccess(Response<MechanismModel> response) {
+                        if (null == response.body()) {
+                            ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
+                            return;
+                        }
+
+                        if (response.body().getCode().equals(success_code)) {
+                            MechanismModel.DataDTO model = response.body().getData();
+                            if (null != model) {
+                                PersonInfoManager.getInstance().setCfgStr(JSON.toJSONString(model));
+                                PersonInfoManager.getInstance().setLogoUrl(model.getLogo());
+                                PersonInfoManager.getInstance().setIntentUrl(model.getConfig().getListUrl());
+                                PersonInfoManager.getInstance().setMechanismId(model.getId());
+                                PersonInfoManager.getInstance().setAppName(model.getConfig().getAppName());
+//                                cfgStr = JSON.toJSONString(model);
+//                                logoUrl = model.getLogo();
+//                                intentUrl = model.getConfig().getListUrl();
+//                                appName = model.getConfig().getAppName();
+                            }
+                        } else {
+                            ToastUtils.showShort(response.body().getMessage());
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Response<MechanismModel> response) {
+                        super.onError(response);
+                        if (null != response.body()) {
+                            ToastUtils.showShort(response.body().getMessage());
+                            return;
+                        }
+                        ToastUtils.showShort(com.szrm.videodetail.demo.R.string.net_err);
+                    }
+                });
+    }
+
 
     /**
      * 获取ApplicationContext

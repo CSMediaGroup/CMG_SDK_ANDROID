@@ -196,6 +196,84 @@ public class PersonInfoManager {
     }
 
     /**
+     * 机构字符串
+     */
+    public void setCfgStr(String cfgStr){
+        SPUtils.getInstance().put(Constants.CFGSTR, cfgStr);
+    }
+
+    /**
+     * 获取机构字符串
+     * return
+     */
+    public String getCfgStr() {
+        return SPUtils.getInstance().getString(Constants.CFGSTR, "");
+    }
+
+    /**
+     * 设置机构图标
+     */
+    public void setLogoUrl(String logoUrl){
+        SPUtils.getInstance().put(Constants.LOGOURL, logoUrl);
+    }
+
+    /**
+     * 获取机构图标
+     * return
+     */
+    public String getLogoUrl() {
+        return SPUtils.getInstance().getString(Constants.LOGOURL, "");
+    }
+
+    /**
+     * 设置跳转url
+     */
+    public void setIntentUrl(String intentUrl){
+        SPUtils.getInstance().put(Constants.INTENTURL, intentUrl);
+    }
+
+    /**
+     * 获取跳转url
+     * return
+     */
+    public String getIntentUrl() {
+        return SPUtils.getInstance().getString(Constants.INTENTURL, "");
+    }
+
+    /**
+     * 设置机构id
+     */
+    public void setMechanismId(String mechanismId){
+        SPUtils.getInstance().put(Constants.MECHANISMID, mechanismId);
+    }
+
+    /**
+     * 获取机构id
+     * return
+     */
+    public String getMechanismId() {
+        return SPUtils.getInstance().getString(Constants.MECHANISMID, "");
+    }
+
+    /**
+     * 设置App名称
+     */
+    public void setAppName(String appName){
+        SPUtils.getInstance().put(Constants.APPNAME, appName);
+    }
+
+    /**
+     * 获取App名称
+     * return
+     */
+    public String getAppName() {
+        return SPUtils.getInstance().getString(Constants.APPNAME, "");
+    }
+
+
+
+
+    /**
      * 清空本地token
      */
     public void clearToken() {
