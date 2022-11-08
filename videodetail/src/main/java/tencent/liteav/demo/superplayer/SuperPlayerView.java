@@ -54,8 +54,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import static common.constants.Constants.VIDEOTAG;
-import static common.constants.Constants.success_code;
 import static common.constants.Constants.token_error;
 import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE;
 import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE_REVERSE;
@@ -81,7 +79,7 @@ import tencent.liteav.demo.superplayer.ui.player.FullScreenPlayer;
 import tencent.liteav.demo.superplayer.ui.player.OrientationHelper;
 import tencent.liteav.demo.superplayer.ui.player.Player;
 import tencent.liteav.demo.superplayer.ui.player.WindowPlayer;
-import tencent.liteav.demo.superplayer.ui.view.DanmuView;
+
 import static common.callback.VideoInteractiveParam.param;
 
 /**
@@ -108,7 +106,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
     public FullScreenPlayer mFullScreenPlayer;                         // 全屏模式控制view
     public WindowPlayer mWindowPlayer;                             // 窗口模式控制view
     private FloatPlayer mFloatPlayer;                              // 悬浮窗模式控制view
-    private DanmuView mDanmuView;                                // 弹幕
+//    private DanmuView mDanmuView;                                // 弹幕
 
     private ViewGroup.LayoutParams mLayoutParamWindowMode;          // 窗口播放时SuperPlayerView的布局参数
     private ViewGroup.LayoutParams mLayoutParamFullScreenMode;      // 全屏播放时SuperPlayerView的布局参数
@@ -183,7 +181,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
 
         mWindowPlayer = (WindowPlayer) mRootView.findViewById(R.id.superplayer_controller_small);
         mFloatPlayer = (FloatPlayer) mRootView.findViewById(R.id.superplayer_controller_float);
-        mDanmuView = (DanmuView) mRootView.findViewById(R.id.superplayer_danmuku_view);
+//        mDanmuView = (DanmuView) mRootView.findViewById(R.id.superplayer_danmuku_view);
         if (isMainbool) {
             mWindowPlayer.mIvPause.setVisibility(GONE);
             mWindowPlayer.mIvFullScreen.setVisibility(GONE);
@@ -197,14 +195,14 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
         mFloatPlayer.setCallback(mControllerCallback);
 
         removeAllViews();
-        mRootView.removeView(mDanmuView);
+//        mRootView.removeView(mDanmuView);
         mRootView.removeView(mTXCloudVideoView);
         mRootView.removeView(mWindowPlayer);
         mRootView.removeView(mFullScreenPlayer);
         mRootView.removeView(mFloatPlayer);
 
         addView(mTXCloudVideoView);
-        addView(mDanmuView);
+//        addView(mDanmuView);
 
         noLoginTipsView = View.inflate(mContext, R.layout.fullscreen_no_login_tips, null);
         noLoginTipsCancel = noLoginTipsView.findViewById(R.id.no_login_tips_cancel);
@@ -440,9 +438,9 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
      * resume生命周期回调
      */
     public void onResume() {
-        if (mDanmuView != null && mDanmuView.isPrepared() && mDanmuView.isPaused()) {
-            mDanmuView.resume();
-        }
+//        if (mDanmuView != null && mDanmuView.isPrepared() && mDanmuView.isPaused()) {
+//            mDanmuView.resume();
+//        }
         mSuperPlayer.resume();
     }
 
@@ -450,10 +448,10 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
      * 重置播放器
      */
     public void resetPlayer() {
-        if (mDanmuView != null) {
-            mDanmuView.release();
-            mDanmuView = null;
-        }
+//        if (mDanmuView != null) {
+//            mDanmuView.release();
+//            mDanmuView = null;
+//        }
         stopPlay();
     }
 
@@ -761,9 +759,9 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
 
         @Override
         public void onDanmuToggle(boolean isOpen) {
-            if (mDanmuView != null) {
-                mDanmuView.toggle(isOpen);
-            }
+//            if (mDanmuView != null) {
+//                mDanmuView.toggle(isOpen);
+//            }
         }
 
         @Override
@@ -1085,9 +1083,9 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
             mFullScreenPlayer.updatePlayState(SuperPlayerDef.PlayerState.PLAYING);
             updateTitle(name);
             mWindowPlayer.hideBackground();
-            if (mDanmuView != null && mDanmuView.isPrepared() && mDanmuView.isPaused()) {
-                mDanmuView.resume();
-            }
+//            if (mDanmuView != null && mDanmuView.isPrepared() && mDanmuView.isPaused()) {
+//                mDanmuView.resume();
+//            }
 //            if (mWatcher != null) {
 //                mWatcher.exitLoading();
 //            }

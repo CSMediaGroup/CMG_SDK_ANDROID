@@ -26,7 +26,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInit.init(this, false, "6254248"); //浏阳 2346992 岳阳 1832192
+        AppInit.init(this, false, "6254248");
 
 
     }

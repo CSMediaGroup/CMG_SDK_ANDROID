@@ -85,7 +85,7 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:2.4.0"
     api "com.squareup.retrofit2:converter-gson:2.4.0"
     api "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
-    api 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
+//    api 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
     api 'com.google.zxing:core:3.3.0'
     api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx'
     api 'com.github.lzyzsd:jsbridge:1.0.4'
