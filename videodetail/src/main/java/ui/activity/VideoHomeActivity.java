@@ -54,7 +54,7 @@ import adpter.CommentPopRvAdapter;
 import adpter.VideoViewPagerAdapter;
 import adpter.XkshVideoAdapter;
 import common.callback.JsonCallback;
-import common.callback.VideoInteractiveParam;
+import common.callback.SdkInteractiveParam;
 import common.constants.Constants;
 import common.http.ApiConstants;
 import common.manager.BuriedPointModelManager;
@@ -118,8 +118,8 @@ import static tencent.liteav.demo.superplayer.SuperPlayerView.instance;
 import static tencent.liteav.demo.superplayer.SuperPlayerView.mTargetPlayerMode;
 import static tencent.liteav.demo.superplayer.ui.player.AbsPlayer.formattedTime;
 import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mDuration;
-import static common.callback.VideoInteractiveParam.param;
 import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mProgress;
+import static ui.activity.WebActivity.szrmLoginRequest;
 import static utils.NetworkUtil.setDataWifiState;
 
 public class VideoHomeActivity extends AppCompatActivity implements View.OnClickListener {
@@ -190,7 +190,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     private ImageView videoDetailLikesImage; //点赞图标
     private TextView likesNum; //点赞数
     private String videoType; //视频类型
-    private VideoInteractiveParam param;
     public String playUrl;
     private TextView commentEdittext;
     private String videoTag = "videoTag";
@@ -527,7 +526,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         });
         translateAnimation();
 
-        param = VideoInteractiveParam.getInstance();
         share = findViewById(R.id.share);
         share.setOnClickListener(this);
         mDataDTO = new DataDTO();
@@ -1207,9 +1205,9 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
             getContentState(myContentId);
         }
 
-        if (PersonInfoManager.getInstance().isRequestToken()) {
+        if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             try {
-                getUserToken(VideoInteractiveParam.getInstance().getCode());
+                szrmLoginRequest();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1266,68 +1264,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 Log.e("xksh_md", "埋点事件：" + event + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
             }
         }
-    }
-
-    /**
-     * 使用获取的code去换token
-     */
-    private void getUserToken(String token) {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("token", token);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        OkGo.<TokenModel>post(ApiConstants.getInstance().mycsToken())
-                .tag("userToken")
-                .upJson(jsonObject)
-                .execute(new JsonCallback<TokenModel>(TokenModel.class) {
-                    @Override
-                    public void onSuccess(Response<TokenModel> response) {
-                        if (null == response.body()) {
-                            ToastUtils.showShort(R.string.data_err);
-                            return;
-                        }
-
-                        if (response.body().getCode() == 200) {
-                            if (null == response.body().getData()) {
-                                ToastUtils.showShort(R.string.data_err);
-                                return;
-                            }
-                            Log.d("mycs_token", "转换成功");
-                            try {
-                                PersonInfoManager.getInstance().setToken(VideoInteractiveParam.getInstance().getCode());
-                                PersonInfoManager.getInstance().setGdyToken(response.body().getData().getGdyToken());
-                                PersonInfoManager.getInstance().setUserId(response.body().getData().getLoginSysUserVo().getId());
-                                PersonInfoManager.getInstance().setTgtCode(VideoInteractiveParam.getInstance().getCode());
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            transformationToken = response.body().getData().getToken();
-                            PersonInfoManager.getInstance().setTransformationToken(transformationToken);
-                            if (!TextUtils.isEmpty(myContentId)) {
-                                getContentState(myContentId);
-                            }
-                        } else {
-                            ToastUtils.showShort(response.body().getMessage());
-                        }
-                    }
-
-                    @Override
-                    public void onError(Response<TokenModel> response) {
-                        if (null != response.body()) {
-                            ToastUtils.showShort(response.body().getMessage());
-                            return;
-                        }
-                        ToastUtils.showShort(R.string.net_err);
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                    }
-                });
     }
 
     @Override
@@ -1467,83 +1403,83 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     }
 
 
-    /**
-     * 获取更多数据
-     */
-    private void loadMoreData(String url, String contentId, String panelCode, String removeFirst, String refreshType) {
-        String deviceId = "";
-        try {
-            deviceId = param.getDeviceId();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        OkGo.<VideoOneModel>get(url)
-                .tag(VIDEOTAG)
-                .params("contentId", contentId)
-                .params("pageSize", 10)
-                .params("panelCode", panelCode)
-                .params("removeFirst", removeFirst)
-                .params("ssid", deviceId)
-                .params("refreshType", refreshType)
-                .params("type", "")
-                .cacheMode(CacheMode.NO_CACHE)
-                .execute(new JsonCallback<VideoOneModel>(VideoOneModel.class) {
-                    @Override
-                    public void onSuccess(Response<VideoOneModel> response) {
-                        if (null == response.body()) {
-                            isLoadComplate = true;
-                            ToastUtils.showShort(R.string.data_err);
-                            return;
-                        }
-
-                        if (response.body().getCode().equals(success_code)) {
-                            if (null == response.body().getData()) {
-                                isLoadComplate = true;
-                                ToastUtils.showShort(R.string.data_err);
-                                return;
-                            }
-
-//                            if (response.body().getData() == 0) {
-//                                Log.e("loadMoreData", "没有更多视频了");
-//                                adapter.loadMoreComplete();
-//                                adapter.setOnLoadMoreListener(null, videoDetailRv);
-//                                if (null != footView && null != footView.getParent()) {
-//                                    ((ViewGroup) footView.getParent()).removeView(footView);
-//                                }
-//                                adapter.addFooterView(footView);
+//    /**
+//     * 获取更多数据
+//     */
+//    private void loadMoreData(String url, String contentId, String panelCode, String removeFirst, String refreshType) {
+//        String deviceId = "";
+//        try {
+//            deviceId = param.getDeviceId();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        OkGo.<VideoOneModel>get(url)
+//                .tag(VIDEOTAG)
+//                .params("contentId", contentId)
+//                .params("pageSize", 10)
+//                .params("panelCode", panelCode)
+//                .params("removeFirst", removeFirst)
+//                .params("ssid", deviceId)
+//                .params("refreshType", refreshType)
+//                .params("type", "")
+//                .cacheMode(CacheMode.NO_CACHE)
+//                .execute(new JsonCallback<VideoOneModel>(VideoOneModel.class) {
+//                    @Override
+//                    public void onSuccess(Response<VideoOneModel> response) {
+//                        if (null == response.body()) {
+//                            isLoadComplate = true;
+//                            ToastUtils.showShort(R.string.data_err);
+//                            return;
+//                        }
+//
+//                        if (response.body().getCode().equals(success_code)) {
+//                            if (null == response.body().getData()) {
 //                                isLoadComplate = true;
+//                                ToastUtils.showShort(R.string.data_err);
 //                                return;
-//                            } else {
-//                                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
-//                                isLoadComplate = false;
 //                            }
-                            mDatas.add(response.body().getData());
-                            setDataWifiState(mDatas, VideoHomeActivity.this);
-//                            adapter.setNewData(mDatas);
-                            recordContentId = String.valueOf(mDatas.get(mDatas.size() - 1).getId());
-                            Log.e("loadMoreData", "loadMoreData========" + mDatas.size());
-                            adapter.loadMoreComplete();
-                        } else {
-                            adapter.loadMoreFail();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Response<VideoOneModel> response) {
-                        if (null != response.body()) {
-                            ToastUtils.showShort(response.body().getMessage());
-                            return;
-                        }
-                        ToastUtils.showShort(R.string.net_err);
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                        refreshLayout.setEnableRefresh(true);
-                    }
-                });
-    }
+//
+////                            if (response.body().getData() == 0) {
+////                                Log.e("loadMoreData", "没有更多视频了");
+////                                adapter.loadMoreComplete();
+////                                adapter.setOnLoadMoreListener(null, videoDetailRv);
+////                                if (null != footView && null != footView.getParent()) {
+////                                    ((ViewGroup) footView.getParent()).removeView(footView);
+////                                }
+////                                adapter.addFooterView(footView);
+////                                isLoadComplate = true;
+////                                return;
+////                            } else {
+////                                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
+////                                isLoadComplate = false;
+////                            }
+//                            mDatas.add(response.body().getData());
+//                            setDataWifiState(mDatas, VideoHomeActivity.this);
+////                            adapter.setNewData(mDatas);
+//                            recordContentId = String.valueOf(mDatas.get(mDatas.size() - 1).getId());
+//                            Log.e("loadMoreData", "loadMoreData========" + mDatas.size());
+//                            adapter.loadMoreComplete();
+//                        } else {
+//                            adapter.loadMoreFail();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(Response<VideoOneModel> response) {
+//                        if (null != response.body()) {
+//                            ToastUtils.showShort(response.body().getMessage());
+//                            return;
+//                        }
+//                        ToastUtils.showShort(R.string.net_err);
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        super.onFinish();
+//                        refreshLayout.setEnableRefresh(true);
+//                    }
+//                });
+//    }
 
     /**
      * 浏览量+1
@@ -1948,7 +1884,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                             } else if (code.equals(token_error)) {
                                 Log.e("addComment", "无token 去跳登录");
                                 try {
-                                    param.toLogin();
+                                    SdkInteractiveParam.getInstance().toLogin();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -2016,7 +1952,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 getCommentList("1", String.valueOf(mPageSize), true);
                             } else if (code.equals(token_error)) {
                                 try {
-                                    param.toLogin();
+                                    SdkInteractiveParam.getInstance().toLogin();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -2331,7 +2267,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                             } else if (json.get("code").toString().equals(token_error)) {
                                 Log.e("addOrCancelLike", "无token,跳转登录");
                                 try {
-                                    param.toLogin();
+                                    SdkInteractiveParam.getInstance().toLogin();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -2425,7 +2361,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 noLoginTipsPop.dissmiss();
             }
             try {
-                param.toLogin();
+                SdkInteractiveParam.getInstance().toLogin();
             } catch (Exception e) {
                 e.printStackTrace();
             }

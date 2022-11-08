@@ -454,7 +454,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         OkGo.getInstance().cancelAll();
     }
 
-    private void szrmLoginRequest() {
+    public static void szrmLoginRequest() {
         org.json.JSONObject jsonObject = new org.json.JSONObject();
         ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
         if (null != userInfo) {
