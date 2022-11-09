@@ -9,6 +9,7 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -58,7 +59,9 @@ public class ImageUtils {
             message.what = 1;
             message.obj = function;
             handler.sendMessage(message);
-            //Toast.makeText(context, "保存成功,位置:" + filePic.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            Looper.prepare();
+            ToastUtils.showShort("保存成功,位置:" + filePic.getAbsolutePath());
+            Looper.loop();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -71,7 +74,7 @@ public class ImageUtils {
 //            e.printStackTrace();
 //        }
         // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + savePath+fileName)));
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + savePath + fileName)));
         return true;
     }
 }

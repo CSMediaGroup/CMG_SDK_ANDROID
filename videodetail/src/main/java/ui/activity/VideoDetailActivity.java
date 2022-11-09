@@ -102,11 +102,13 @@ import static common.constants.Constants.success_code;
 import static common.constants.Constants.token_error;
 import static common.utils.AppInit.appId;
 import static tencent.liteav.demo.superplayer.SuperPlayerView.mTargetPlayerMode;
+import static tencent.liteav.demo.superplayer.model.SuperPlayerImpl.mCurrentPlayVideoURL;
 import static tencent.liteav.demo.superplayer.ui.player.AbsPlayer.formattedTime;
 import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mDuration;
 import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mProgress;
 import static ui.activity.VideoHomeActivity.maxPercent;
 import static ui.activity.VideoHomeActivity.uploadBuriedPoint;
+import static ui.activity.WebActivity.szrmLoginRequest;
 import static utils.NetworkUtil.setDataWifiStates;
 
 import common.model.VideoCollectionModel.DataDTO.RecordsDTO;
@@ -492,7 +494,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 //                getThematicCollection(myContentId);
 //                setCollection();
 
-                SuperPlayerImpl.mCurrentPlayVideoURL = mDatas.get(0).getPlayUrl();
+                mCurrentPlayVideoURL = mDatas.get(0).getPlayUrl();
                 currentIndex = 0;
                 mPageIndex = 1;
                 if (mDatas.get(0).getDisableComment()) {
@@ -591,7 +593,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                 playerView.mWindowPlayer.setRecordDuration(0);
                 lsDuration = 0;
                 maxPercent = 0;
-                SuperPlayerImpl.mCurrentPlayVideoURL = mDatas.get(position).getPlayUrl();
+                mCurrentPlayVideoURL = mDatas.get(position).getPlayUrl();
                 playUrl = mDatas.get(position).getPlayUrl();
 //                playerView.mWindowPlayer.setDataDTO(mDataDTO, mDatas.get(currentIndex));
 //                playerView.mFullScreenPlayer.setDataDTO(mDataDTO);
@@ -2023,10 +2025,11 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onResume() {
         super.onResume();
-        if (playerView != null && !SPUtils.isVisibleNoWifiView(this)) {
+        if (playerView != null && null != mDataDTO.getPlayUrl() && !SPUtils.isVisibleNoWifiView(this)) {
             if (playerView.homeVideoIsLoad) {
                 playerView.mSuperPlayer.resume();
             } else {
+                Log.e("sss", mCurrentPlayVideoURL);
                 playerView.mSuperPlayer.reStart();
             }
         }
@@ -2035,9 +2038,9 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
             getContentState(myContentId);
         }
 
-        if (PersonInfoManager.getInstance().isRequestToken()) {
+        if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             try {
-                getUserToken(VideoInteractiveParam.getInstance().getCode());
+                szrmLoginRequest();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -125,11 +125,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 //            intentUrl = param.getNewsLink();
             initBridge();
         } else {
-            if (TextUtils.isEmpty(PersonInfoManager.getInstance().getMechanismId())) {
-                getCfg();
-            } else {
-                initBridge();
-            }
+            getCfg();
         }
 
 
@@ -304,9 +300,17 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 final JSONObject jsonObject = JSON.parseObject(data);
                 String methodName = jsonObject.getString("methodName");
                 dataObject = jsonObject.getJSONObject("data");
+
                 if (TextUtils.equals(methodName, Constants.SDK_JS_SETTITLE)) { //设置标题
-                    String title = dataObject.getString("title");
-                    webTitle.setText(title);
+                    if (null == dataObject) {
+                        if (null != param) {
+                            webTitle.setText(param.getTitle());
+                        }
+                    } else {
+                        String title = dataObject.getString("title");
+                        webTitle.setText(title);
+                    }
+
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_MONITORLIFECYCLE)) { //返回
                     finish();
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETDEVICEID)) { //获取设备id
@@ -319,24 +323,42 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     function.onCallBack(userInfoStr);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_JUMPTONATIVEPAGE)) { //跳转新webView
                     Intent intent = new Intent(WebActivity.this, WebActivity.class);
-                    JumpToNativePageModel model = JSON.parseObject(JSON.toJSONString(dataObject), JumpToNativePageModel.class);
-                    intent.putExtra("param", model);
-                    intent.putExtra("intent", "1");
-                    startActivity(intent);
+                    if (null != dataObject) {
+                        JumpToNativePageModel model = JSON.parseObject(JSON.toJSONString(dataObject), JumpToNativePageModel.class);
+                        intent.putExtra("param", model);
+                        intent.putExtra("intent", "1");
+                        startActivity(intent);
+                    } else {
+                        if (null != param) {
+                            JumpToNativePageModel model = JSON.parseObject(JSON.toJSONString(param), JumpToNativePageModel.class);
+                            intent.putExtra("param", model);
+                            intent.putExtra("intent", "1");
+                            startActivity(intent);
+                        }
+                    }
+
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_SHARE)) { //分享
                     sharePop();
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_SAVEPHOTO)) { //保存图片
-
                     String[] writePerMissionGrop = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
                     new RxPermissions(WebActivity.this).request(writePerMissionGrop).subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
                             if (aBoolean) {
-                                final String url = dataObject.getString("url");
+                                String url = "";
+                                if (null != dataObject) {
+                                    url = dataObject.getString("url");
+                                } else {
+                                    if (null != param) {
+                                        url = param.getImgUrl();
+                                    }
+                                }
+
+                                final String finalUrl = url;
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ImageUtils.saveBitmap2file(SavePhoto.getBitmap(url), WebActivity.this
+                                        ImageUtils.saveBitmap2file(SavePhoto.getBitmap(finalUrl), WebActivity.this
                                                 , handler, function);
                                     }
                                 }).start();
@@ -352,11 +374,13 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 //                    intent.putExtra("mechanismId", mechanismId);
 //                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_OPENVIDEO)) { //打开视频
-                    Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
-                    intent.putExtra("contentId", dataObject.getString("contentId"));
-                    intent.putExtra("logoUrl", PersonInfoManager.getInstance().getLogoUrl());
-                    intent.putExtra("appName", PersonInfoManager.getInstance().getAppName());
-                    startActivity(intent);
+                    if (null != dataObject) {
+                        Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
+                        intent.putExtra("contentId", dataObject.getString("contentId"));
+                        intent.putExtra("logoUrl", PersonInfoManager.getInstance().getLogoUrl());
+                        intent.putExtra("appName", PersonInfoManager.getInstance().getAppName());
+                        startActivity(intent);
+                    }
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETAPPVERSION)) { //获取设备版本号等信息
                     function.onCallBack(getAppInfo());
                 }
@@ -419,7 +443,14 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
      * 分享
      */
     private void toShare(String platform) {
-        String shareStr = JSON.toJSONString(dataObject);
+        String shareStr = "";
+        if (null != dataObject) {
+            shareStr = JSON.toJSONString(dataObject);
+        } else {
+            if (null != param) {
+                shareStr = JSON.toJSONString(param);
+            }
+        }
         ShareInfo shareInfo = JSON.parseObject(shareStr, ShareInfo.class);
         shareInfo.setPlatform(platform);
         SdkInteractiveParam.getInstance().shared(shareInfo);

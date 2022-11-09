@@ -58,6 +58,7 @@ import static common.constants.Constants.token_error;
 import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE;
 import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE_REVERSE;
 
+import common.callback.SdkInteractiveParam;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.ContentStateModel;
@@ -80,7 +81,6 @@ import tencent.liteav.demo.superplayer.ui.player.OrientationHelper;
 import tencent.liteav.demo.superplayer.ui.player.Player;
 import tencent.liteav.demo.superplayer.ui.player.WindowPlayer;
 
-import static common.callback.VideoInteractiveParam.param;
 
 /**
  * 超级播放器view
@@ -346,7 +346,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
 
                             } else if (json.get("code").toString().equals(token_error)) {
                                 try {
-                                    param.toLogin();
+                                    SdkInteractiveParam.getInstance().toLogin();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -515,7 +515,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                 noLoginTipsPop.dissmiss();
             }
             try {
-                param.toLogin();
+                SdkInteractiveParam.getInstance().toLogin();
             } catch (Exception e) {
                 e.printStackTrace();
             }

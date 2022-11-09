@@ -150,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void shared(ShareInfo shareInfo) {
                         Log.e("share", JSON.toJSONString(shareInfo));
+                        if (null != shareInfo) {
+                            ToastUtils.showShort("分享成功");
+                        }
                     }
 
                     @Override
