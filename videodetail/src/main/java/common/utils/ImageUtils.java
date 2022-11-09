@@ -42,7 +42,9 @@ public class ImageUtils {
             message.what = 2;
             message.obj = function;
             handler.sendMessage(message);
-            Toast.makeText(context, "保存失败！", Toast.LENGTH_SHORT).show();
+            Looper.prepare();
+            ToastUtils.showShort("保存失败");
+            Looper.loop();
             return false;
         }
         File filePic = new File(savePath + fileName);
