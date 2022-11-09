@@ -125,7 +125,7 @@ public class XkshVideoAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> 
             if (null != mContext && !((VideoHomeActivity) mContext).isFinishing()
                     && !((VideoHomeActivity) mContext).isDestroyed()) {
                 Glide.with(mContext)
-                        .load(logoUrl)
+                        .load(item.getImagesUrl())
                         .into(coverPicture);
             }
         } else if (TextUtils.equals("1", videoIsNormal(Integer.parseInt(NumberFormatTool.getNumStr(item.getWidth())),
