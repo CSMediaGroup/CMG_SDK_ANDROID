@@ -26,6 +26,7 @@ public class SzrmRecommend {
     public SingleLiveEvent<List<SZContentModel.DataDTO.ContentsDTO>> contentsEvent = new SingleLiveEvent<>();
     public List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS = new ArrayList<>();
     public SingleLiveEvent<List<SZContentModel.DataDTO.ContentsDTO>> loadMoreContentEvent = new SingleLiveEvent<>();
+    public List<SZContentModel.DataDTO.ContentsDTO> loadMoreContentDTOS = new ArrayList<>();
 
     private SzrmRecommend() {
     }
@@ -87,6 +88,7 @@ public class SzrmRecommend {
                     public void onError(Response<SZContentLoadMoreModel> response) {
                         super.onError(response);
                         Log.e("zxs_more_list", response.body().getMessage());
+                        loadMoreContentEvent.setValue(loadMoreContentDTOS);
                     }
                 });
     }
