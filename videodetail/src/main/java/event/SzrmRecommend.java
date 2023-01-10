@@ -16,6 +16,7 @@ import common.callback.SdkInteractiveParam;
 import common.constants.Constants;
 import common.http.ApiConstants;
 import common.utils.PersonInfoManager;
+import model.bean.SZContentLoadMoreModel;
 import model.bean.SZContentModel;
 import ui.activity.VideoHomeActivity;
 import ui.activity.WebActivity;
@@ -24,6 +25,7 @@ public class SzrmRecommend {
     public static SzrmRecommend szrmRecommend;
     public SingleLiveEvent<List<SZContentModel.DataDTO.ContentsDTO>> contentsEvent = new SingleLiveEvent<>();
     public List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS = new ArrayList<>();
+    public SingleLiveEvent<List<SZContentModel.DataDTO.ContentsDTO>> loadMoreContentEvent = new SingleLiveEvent<>();
 
     private SzrmRecommend() {
     }
@@ -42,13 +44,13 @@ public class SzrmRecommend {
     /**
      * 在星沙调用推荐列表数据
      */
-    public void requestContentList(String refreshType) {
+    public void requestContentList(String pageSize) {
         OkGo.<SZContentModel>get(ApiConstants.getInstance().getCategoryCompositeData())
                 .tag("zxs_categoryCompositeData")
                 .params("categoryCode", "zxs.tuijian")
                 .params("personalRec", "1")
-                .params("refreshType", refreshType)
-                .params("pageSize", "20")
+                .params("refreshType", "open")
+                .params("pageSize", pageSize)
                 .params("ssid", PersonInfoManager.getInstance().getANDROID_ID())
                 .execute(new JsonCallback<SZContentModel>() {
                     @Override
@@ -61,6 +63,30 @@ public class SzrmRecommend {
                         super.onError(response);
                         Log.e("zxs_list", response.body().getMessage());
                         contentsEvent.setValue(contentsDTOS);
+                    }
+                });
+    }
+
+    public void requestMoreContentList(SZContentModel.DataDTO.ContentsDTO contentsDTO, String pageSize) {
+        OkGo.<SZContentLoadMoreModel>get(ApiConstants.getInstance().getContentList())
+                .tag("zxs_moreContentList")
+                .params("contentId", contentsDTO.getId())
+                .params("panelId", PersonInfoManager.getInstance().getPanId())
+                .params("pageSize", pageSize)
+                .params("vernier", contentsDTO.getVernier())
+                .params("personalRec", "1")
+                .params("ssid", PersonInfoManager.getInstance().getANDROID_ID())
+                .params("refreshType", "loadmore")
+                .execute(new JsonCallback<SZContentLoadMoreModel>() {
+                    @Override
+                    public void onSuccess(Response<SZContentLoadMoreModel> response) {
+                        loadMoreContentEvent.setValue(response.body().getData());
+                    }
+
+                    @Override
+                    public void onError(Response<SZContentLoadMoreModel> response) {
+                        super.onError(response);
+                        Log.e("zxs_more_list", response.body().getMessage());
                     }
                 });
     }

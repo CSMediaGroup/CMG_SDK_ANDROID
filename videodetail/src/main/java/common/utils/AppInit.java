@@ -62,10 +62,12 @@ public final class AppInit {
             //UAT测试环境
             ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");
             ApiConstants.getInstance().setAdminBaseUrl("https://uat-fuse-admin.zhcs.csbtv.com/");
+            ApiConstants.getInstance().setH5BaseUrl("https://uat-h5.zhcs.csbtv.com/");
         } else {
             //正式环境
             ApiConstants.getInstance().setBaseUrl("https://fuse-api-gw.zhcs.csbtv.com/");
             ApiConstants.getInstance().setAdminBaseUrl("https://fuse-admin.zhcs.csbtv.com/");
+            ApiConstants.getInstance().setH5BaseUrl("https://h5.zhcs.csbtv.com/");
         }
 
         getCfg();
@@ -89,6 +91,7 @@ public final class AppInit {
                         if (response.body().getCode().equals(success_code)) {
                             MechanismModel.DataDTO model = response.body().getData();
                             if (null != model) {
+                                PersonInfoManager.getInstance().setPanId(model.getConfig().getPanId());
                                 PersonInfoManager.getInstance().setCfgStr(JSON.toJSONString(model));
                                 PersonInfoManager.getInstance().setLogoUrl(model.getLogo());
                                 PersonInfoManager.getInstance().setIntentUrl(model.getConfig().getListUrl());

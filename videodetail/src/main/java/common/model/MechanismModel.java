@@ -92,6 +92,7 @@ public class MechanismModel {
 
         @Keep
         public static class ConfigDTO {
+            private String panId;
             private String listUrl;
             private String categoryCode;
             private String detailUrl;
@@ -101,6 +102,14 @@ public class MechanismModel {
             private String recommendScene;
             private String appKey;
             private String appName;
+
+            public String getPanId() {
+                return panId;
+            }
+
+            public void setPanId(String panId) {
+                this.panId = panId;
+            }
 
             public String getListUrl() {
                 return listUrl;

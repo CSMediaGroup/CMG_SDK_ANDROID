@@ -278,6 +278,14 @@ public class PersonInfoManager {
         return SPUtils.getInstance().getString(Constants.CATEGORYCODE, "");
     }
 
+    public void setPanId(String panId){
+        SPUtils.getInstance().put(Constants.PANID, panId);
+    }
+
+    public String getPanId(){
+        return SPUtils.getInstance().getString(Constants.PANID,"");
+    }
+
 
     /**
      * 清空本地token

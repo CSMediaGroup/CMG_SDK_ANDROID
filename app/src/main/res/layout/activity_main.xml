@@ -120,6 +120,19 @@
     </TextView>
 
     <TextView
+        android:id="@+id/load_more_data"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text="加载列表更多信息"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff">
+
+    </TextView>
+
+    <TextView
         android:id="@+id/clear_user_info"
         android:layout_width="200dp"
         android:layout_height="50dp"

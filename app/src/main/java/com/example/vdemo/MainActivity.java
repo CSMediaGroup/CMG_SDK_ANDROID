@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView uuid;
     private TextView test;
     private TextView toPageDetail;
+    private TextView loadMoreData;
     private List<SZContentModel.DataDTO.ContentsDTO> contents = new ArrayList<>();
+    private List<SZContentModel.DataDTO.ContentsDTO> loadMoreContents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,8 +169,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-
-                SzrmRecommend.getInstance().requestContentList("open");
+                /**
+                 * 获取推荐列表
+                 */
+                SzrmRecommend.getInstance().requestContentList("10");
                 SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
                     @Override
                     public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
@@ -176,9 +180,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                SzrmRecommend.getInstance().loadMoreContentEvent.observe(MainActivity.this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
+                    @Override
+                    public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
+                        loadMoreContents = contentsDTOS;
+                    }
+                });
+
             }
         });
 
+        /**
+         * 跳转新闻详情页
+         */
         toPageDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -189,6 +203,19 @@ public class MainActivity extends AppCompatActivity {
                 SzrmRecommend.getInstance().routeToDetailPage(MainActivity.this, contents.get(0));
             }
         });
+
+        /**
+         * 获取更多推荐列表内容
+         */
+        loadMoreData = findViewById(R.id.load_more_data);
+        loadMoreData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SZContentModel.DataDTO.ContentsDTO contentsDTO = contents.get(contents.size() - 1);
+                SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+            }
+        });
+
 
         tv.setOnClickListener(new View.OnClickListener() {
             @Override

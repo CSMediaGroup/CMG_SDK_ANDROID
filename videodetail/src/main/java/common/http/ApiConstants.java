@@ -3,6 +3,7 @@ package common.http;
 public class ApiConstants {
     public String baseUrl = "https://uat-fuse-api-gw.zhcs.csbtv.com/";
     public String adminBaseUrl = "https://uat-fuse-admin.zhcs.csbtv.com/";
+    public String h5BaseUrl;
 
     private static ApiConstants instance;
 
@@ -26,12 +27,20 @@ public class ApiConstants {
         this.baseUrl = baseUrl;
     }
 
-    public String getAdminBaseUrl(){
+    public String getAdminBaseUrl() {
         return adminBaseUrl;
     }
 
     public void setAdminBaseUrl(String adminBaseUrl) {
         this.adminBaseUrl = adminBaseUrl;
+    }
+
+    public void setH5BaseUrl(String h5BaseUrl) {
+        this.h5BaseUrl = h5BaseUrl;
+    }
+
+    public String getH5BaseUrl() {
+        return h5BaseUrl;
     }
 
     /**
@@ -236,6 +245,14 @@ public class ApiConstants {
      */
     public String getCategoryCompositeData() {
         return getAdminBaseUrl() + "api/cms/client/category/getCategoryCompositeData";
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getContentList(){
+        return getH5BaseUrl() + "api/cms/client/content/getContentList";
     }
 
 }

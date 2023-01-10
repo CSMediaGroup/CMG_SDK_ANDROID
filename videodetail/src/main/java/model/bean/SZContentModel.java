@@ -1,6 +1,8 @@
 package model.bean;
 
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 public class SZContentModel {
@@ -668,6 +670,9 @@ public class SZContentModel {
             }
 
             public String getVernier() {
+                if (TextUtils.isEmpty(vernier)) {
+                    return "";
+                }
                 return vernier;
             }
 
