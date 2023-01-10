@@ -12,9 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/video_c9"
-        android:visibility="gone"
         android:padding="50dp"
-        android:text="视频详情页面" />
+        android:text="视频详情页面"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/set_code"
@@ -23,7 +23,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/video_c9"
         android:padding="30dp"
-        android:text="获取token值"></TextView>
+        android:text="获取参数值"></TextView>
 
     <EditText
         android:id="@+id/panelid"
@@ -32,9 +32,9 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:hint="panelid"
-        android:visibility="gone"
         android:textColor="#ffffff"
-        android:textColorHint="#ffffff">
+        android:textColorHint="#ffffff"
+        android:visibility="gone">
 
     </EditText>
 
@@ -45,9 +45,9 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:hint="contentid"
-        android:visibility="gone"
         android:textColor="#ffffff"
-        android:textColorHint="#ffffff">
+        android:textColorHint="#ffffff"
+        android:visibility="gone">
 
     </EditText>
 
@@ -107,6 +107,19 @@
     </TextView>
 
     <TextView
+        android:id="@+id/to_page_detail"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text="跳转新闻详情页"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff">
+
+    </TextView>
+
+    <TextView
         android:id="@+id/clear_user_info"
         android:layout_width="200dp"
         android:layout_height="50dp"
@@ -130,25 +143,25 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:background="@color/video_c9"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text=""
         android:enabled="true"
-        android:textIsSelectable="true"
         android:focusable="true"
+        android:gravity="center"
         android:longClickable="true"
+        android:text=""
         android:textColor="#ffffff"
-        android:textColorHint="#ffffff"></TextView>
+        android:textColorHint="#ffffff"
+        android:textIsSelectable="true"
+        android:visibility="gone"></TextView>
 
     <TextView
         android:id="@+id/test"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="测试页面"
-        android:visibility="gone"
         android:background="@color/video_c9"
-        android:gravity="center">
+        android:gravity="center"
+        android:text="测试页面"
+        android:visibility="gone">
 
     </TextView>
 </LinearLayout>

@@ -198,7 +198,7 @@ public class PersonInfoManager {
     /**
      * 机构字符串
      */
-    public void setCfgStr(String cfgStr){
+    public void setCfgStr(String cfgStr) {
         SPUtils.getInstance().put(Constants.CFGSTR, cfgStr);
     }
 
@@ -213,7 +213,7 @@ public class PersonInfoManager {
     /**
      * 设置机构图标
      */
-    public void setLogoUrl(String logoUrl){
+    public void setLogoUrl(String logoUrl) {
         SPUtils.getInstance().put(Constants.LOGOURL, logoUrl);
     }
 
@@ -228,7 +228,7 @@ public class PersonInfoManager {
     /**
      * 设置跳转url
      */
-    public void setIntentUrl(String intentUrl){
+    public void setIntentUrl(String intentUrl) {
         SPUtils.getInstance().put(Constants.INTENTURL, intentUrl);
     }
 
@@ -243,7 +243,7 @@ public class PersonInfoManager {
     /**
      * 设置机构id
      */
-    public void setMechanismId(String mechanismId){
+    public void setMechanismId(String mechanismId) {
         SPUtils.getInstance().put(Constants.MECHANISMID, mechanismId);
     }
 
@@ -258,7 +258,7 @@ public class PersonInfoManager {
     /**
      * 设置App名称
      */
-    public void setAppName(String appName){
+    public void setAppName(String appName) {
         SPUtils.getInstance().put(Constants.APPNAME, appName);
     }
 
@@ -270,7 +270,13 @@ public class PersonInfoManager {
         return SPUtils.getInstance().getString(Constants.APPNAME, "");
     }
 
+    public void setCategoryCode(String categoryCode) {
+        SPUtils.getInstance().put(Constants.CATEGORYCODE, categoryCode);
+    }
 
+    public String getCategoryCode() {
+        return SPUtils.getInstance().getString(Constants.CATEGORYCODE, "");
+    }
 
 
     /**

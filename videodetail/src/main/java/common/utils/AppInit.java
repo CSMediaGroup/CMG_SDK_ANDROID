@@ -61,9 +61,11 @@ public final class AppInit {
         if (mIsDebug) {
             //UAT测试环境
             ApiConstants.getInstance().setBaseUrl("https://uat-fuse-api-gw.zhcs.csbtv.com/");
+            ApiConstants.getInstance().setAdminBaseUrl("https://uat-fuse-admin.zhcs.csbtv.com/");
         } else {
             //正式环境
             ApiConstants.getInstance().setBaseUrl("https://fuse-api-gw.zhcs.csbtv.com/");
+            ApiConstants.getInstance().setAdminBaseUrl("https://fuse-admin.zhcs.csbtv.com/");
         }
 
         getCfg();
@@ -92,6 +94,7 @@ public final class AppInit {
                                 PersonInfoManager.getInstance().setIntentUrl(model.getConfig().getListUrl());
                                 PersonInfoManager.getInstance().setMechanismId(model.getId());
                                 PersonInfoManager.getInstance().setAppName(model.getConfig().getAppName());
+                                PersonInfoManager.getInstance().setCategoryCode(model.getConfig().getCategoryCode());
 //                                cfgStr = JSON.toJSONString(model);
 //                                logoUrl = model.getLogo();
 //                                intentUrl = model.getConfig().getListUrl();

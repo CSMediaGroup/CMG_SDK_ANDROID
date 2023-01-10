@@ -1,7 +1,6 @@
 package com.example.vdemo;
 
 
-import static common.utils.AppInit.appId;
 import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
 
 import android.content.Intent;
@@ -16,15 +15,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import com.alibaba.fastjson.JSON;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import common.callback.GetGdyTokenCallBack;
 import common.callback.SdkInteractiveParam;
 import common.callback.SdkParamCallBack;
 import common.callback.VideoInteractiveParam;
 import common.callback.VideoParamCallBack;
-import common.constants.Constants;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.SdkUserInfo;
@@ -32,7 +34,8 @@ import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
-import ui.activity.EasyWebActivity;
+import event.SzrmRecommend;
+import model.bean.SZContentModel;
 import ui.activity.LoginActivity;
 import ui.activity.TgtCodeActivity;
 import ui.activity.VideoDetailActivity;
@@ -53,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     private Switch isRealease;
     private TextView uuid;
     private TextView test;
+    private TextView toPageDetail;
+    private List<SZContentModel.DataDTO.ContentsDTO> contents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         isRealease = findViewById(R.id.isRealease);
         uuid = findViewById(R.id.uuid);
         uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
+        toPageDetail = findViewById(R.id.to_page_detail);
         fxsys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,6 +166,27 @@ public class MainActivity extends AppCompatActivity {
                         Log.e("toLogin", "toLogin");
                     }
                 });
+
+
+                SzrmRecommend.getInstance().requestContentList("open");
+                SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
+                    @Override
+                    public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
+                        contents = contentsDTOS;
+                    }
+                });
+
+            }
+        });
+
+        toPageDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (contents.isEmpty()) {
+                    ToastUtils.showShort("先点击获取参数值");
+                    return;
+                }
+                SzrmRecommend.getInstance().routeToDetailPage(MainActivity.this, contents.get(0));
             }
         });
 

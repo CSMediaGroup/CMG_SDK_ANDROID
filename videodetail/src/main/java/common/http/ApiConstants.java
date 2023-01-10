@@ -2,6 +2,7 @@ package common.http;
 
 public class ApiConstants {
     public String baseUrl = "https://uat-fuse-api-gw.zhcs.csbtv.com/";
+    public String adminBaseUrl = "https://uat-fuse-admin.zhcs.csbtv.com/";
 
     private static ApiConstants instance;
 
@@ -23,6 +24,14 @@ public class ApiConstants {
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
+    }
+
+    public String getAdminBaseUrl(){
+        return adminBaseUrl;
+    }
+
+    public void setAdminBaseUrl(String adminBaseUrl) {
+        this.adminBaseUrl = adminBaseUrl;
     }
 
     /**
@@ -211,15 +220,22 @@ public class ApiConstants {
     /**
      * 获取随机视频
      */
-    public String queryRandomVideoList(){
+    public String queryRandomVideoList() {
         return getBaseUrl() + "api/cms/client/video/queryRandomVideoList";
     }
 
     /**
      * 获取机构
      */
-    public String getCfg(){
+    public String getCfg() {
         return getBaseUrl() + "api/sys/client/org/cfg";
+    }
+
+    /**
+     * 在星沙推荐列表
+     */
+    public String getCategoryCompositeData() {
+        return getAdminBaseUrl() + "api/cms/client/category/getCategoryCompositeData";
     }
 
 }

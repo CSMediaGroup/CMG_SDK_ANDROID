@@ -20,6 +20,7 @@ public class Constants {
     public static final String INTENTURL = "intentUrl";
     public static final String MECHANISMID = "mechanismId";
     public static final String APPNAME = "appName";
+    public static final String CATEGORYCODE = "categoryCode";
 
     public static final String KEY_USER = "keyuser";
     public static final String KEY_REFRESH_TOKEN = "refresh_token";
@@ -129,4 +130,12 @@ public class Constants {
     public static final String LIUYANG_JGH = "2346992";
     public static final String YUEYANG_JGH = "1832192";
     public static final String KUNMING_JGH = "1911189";
+
+    /**
+     * 新闻视频标识
+     */
+    public static final String NEWS_VIDEO = "news_video";
+    public static final String SHORT_VIDEO = "short_video";
+    public static final String SPECIAL_NEWS = "special";
+    public static final String NEWS_COMMON = "news_common";
 }
