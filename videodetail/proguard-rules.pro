@@ -42,3 +42,4 @@
 -keep class model.bean.**{*;}
 -keep class ui.**{*;}
 -keep class res.**{*;}
+-keep class event.**{*;}
