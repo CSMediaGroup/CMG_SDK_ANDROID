@@ -434,18 +434,21 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             if (null == shareInfo) {
                 toShare("WX");
             } else {
+                shareInfo.setPlatform("WX");
                 SdkInteractiveParam.getInstance().shared(shareInfo);
             }
         } else if (id == R.id.share_circle_btn) {
             if (null == shareInfo) {
                 toShare("Circle");
             } else {
+                shareInfo.setPlatform("Circle");
                 SdkInteractiveParam.getInstance().shared(shareInfo);
             }
         } else if (id == R.id.share_qq_btn) {
             if (null == shareInfo) {
                 toShare("QQ");
             } else {
+                shareInfo.setPlatform("QQ");
                 SdkInteractiveParam.getInstance().shared(shareInfo);
             }
         } else if (id == R.id.iconShare) {

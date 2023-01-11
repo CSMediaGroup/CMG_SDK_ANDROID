@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                     ToastUtils.showShort("先点击获取参数值");
                     return;
                 }
-                SzrmRecommend.getInstance().routeToDetailPage(MainActivity.this, contents.get(0));
+                SzrmRecommend.getInstance().routeToDetailPage(MainActivity.this, contents.get(3));
             }
         });
 

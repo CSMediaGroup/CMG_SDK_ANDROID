@@ -15,6 +15,7 @@ import common.callback.JsonCallback;
 import common.callback.SdkInteractiveParam;
 import common.constants.Constants;
 import common.http.ApiConstants;
+import common.model.JumpToNativePageModel;
 import common.model.ShareInfo;
 import common.utils.PersonInfoManager;
 import model.bean.SZContentLoadMoreModel;
@@ -109,6 +110,18 @@ public class SzrmRecommend {
             shareInfo.setShareBrief(contentsDTO.getShareBrief());
             shareInfo.setShareTitle(contentsDTO.getShareTitle());
             shareInfo.setShareUrl(contentsDTO.getShareUrl());
+            JumpToNativePageModel jumpToNativePageModel = new JumpToNativePageModel();
+            jumpToNativePageModel.setTitle(contentsDTO.getTitle());
+            jumpToNativePageModel.setImgUrl(contentsDTO.getImagesUrl());
+            jumpToNativePageModel.setLink(contentsDTO.getDetailUrl());
+            jumpToNativePageModel.setNewsLink(contentsDTO.getDetailUrl());
+            if (TextUtils.isEmpty(contentsDTO.getBrief())) {
+                jumpToNativePageModel.setContent(contentsDTO.getTitle());
+            } else {
+                jumpToNativePageModel.setContent(contentsDTO.getBrief());
+            }
+            intent.putExtra("param", jumpToNativePageModel);
+            intent.putExtra("intent", "1");
             intent.putExtra("shareInfo", shareInfo);
             context.startActivity(intent);
         }
