@@ -15,6 +15,7 @@ import common.callback.JsonCallback;
 import common.callback.SdkInteractiveParam;
 import common.constants.Constants;
 import common.http.ApiConstants;
+import common.model.ShareInfo;
 import common.utils.PersonInfoManager;
 import model.bean.SZContentLoadMoreModel;
 import model.bean.SZContentModel;
@@ -99,9 +100,16 @@ public class SzrmRecommend {
     public void routeToDetailPage(Context context, SZContentModel.DataDTO.ContentsDTO contentsDTO) {
         if (TextUtils.equals(contentsDTO.getType(), Constants.NEWS_VIDEO) || TextUtils.equals(contentsDTO.getType(), Constants.SHORT_VIDEO)) {
             Intent intent = new Intent(context, VideoHomeActivity.class);
+            intent.putExtra("contentId", contentsDTO.getId());
             context.startActivity(intent);
         } else {
             Intent intent = new Intent(context, WebActivity.class);
+            ShareInfo shareInfo = new ShareInfo();
+            shareInfo.setShareImage(contentsDTO.getShareImageUrl());
+            shareInfo.setShareBrief(contentsDTO.getShareBrief());
+            shareInfo.setShareTitle(contentsDTO.getShareTitle());
+            shareInfo.setShareUrl(contentsDTO.getShareUrl());
+            intent.putExtra("shareInfo", shareInfo);
             context.startActivity(intent);
         }
     }

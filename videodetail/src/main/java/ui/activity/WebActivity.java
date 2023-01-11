@@ -86,6 +86,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private JumpToNativePageModel param;
     private String intent = "0";
     private boolean isFinish;
+    private ShareInfo shareInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +107,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         ScreenUtils.setStatusBarColor(this, R.color.white);
         param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
         intent = getIntent().getStringExtra("intent");
+        shareInfo = (ShareInfo) getIntent().getSerializableExtra("shareInfo");
         if (null != param && !TextUtils.isEmpty(param.getNewsLink())) {
             iconShare.setVisibility(View.VISIBLE);
         } else {
@@ -429,11 +431,23 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 finish();
             }
         } else if (id == R.id.share_wx_btn) {
-            toShare("WX");
+            if (null == shareInfo) {
+                toShare("WX");
+            } else {
+                SdkInteractiveParam.getInstance().shared(shareInfo);
+            }
         } else if (id == R.id.share_circle_btn) {
-            toShare("Circle");
+            if (null == shareInfo) {
+                toShare("Circle");
+            } else {
+                SdkInteractiveParam.getInstance().shared(shareInfo);
+            }
         } else if (id == R.id.share_qq_btn) {
-            toShare("QQ");
+            if (null == shareInfo) {
+                toShare("QQ");
+            } else {
+                SdkInteractiveParam.getInstance().shared(shareInfo);
+            }
         } else if (id == R.id.iconShare) {
             sharePop();
         }

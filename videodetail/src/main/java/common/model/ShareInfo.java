@@ -2,11 +2,13 @@ package common.model;
 
 import androidx.annotation.Keep;
 
+import java.io.Serializable;
+
 /**
  * 分享四要素
  */
 @Keep
-public class ShareInfo {
+public class ShareInfo implements Serializable {
     /**
      * @param shareH5 分享地址
      * @param shareImageUrl 图片地址
