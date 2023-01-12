@@ -132,16 +132,10 @@ public class PersonInfoManager {
         return SPUtils.getInstance().getString(Constants.USER_NICKNAME, "");
     }
 
-    /**
-     * 设置用户昵称
-     */
     public void setAppId(String nickName) {
         SPUtils.getInstance().put(Constants.USER_APPID, nickName);
     }
 
-    /**
-     * 获取用户昵称
-     */
     public String getAppId() {
         return SPUtils.getInstance().getString(Constants.USER_APPID, "");
     }
@@ -278,12 +272,12 @@ public class PersonInfoManager {
         return SPUtils.getInstance().getString(Constants.CATEGORYCODE, "");
     }
 
-    public void setPanId(String panId){
+    public void setPanId(String panId) {
         SPUtils.getInstance().put(Constants.PANID, panId);
     }
 
-    public String getPanId(){
-        return SPUtils.getInstance().getString(Constants.PANID,"");
+    public String getPanId() {
+        return SPUtils.getInstance().getString(Constants.PANID, "");
     }
 
 
@@ -298,6 +292,39 @@ public class PersonInfoManager {
         PersonInfoManager.getInstance().setGdyToken("");
     }
 
+    public void setThirdUserId(String thirdUserId) {
+        SPUtils.getInstance().put(Constants.THIRDUSERID, thirdUserId);
+    }
+
+    public String getThirdUserId() {
+        return SPUtils.getInstance().getString(Constants.THIRDUSERID, "");
+    }
+
+    public void setThirdUserHead(String thirdUserHead) {
+        SPUtils.getInstance().put(Constants.THIRDUSERHEAD, thirdUserHead);
+    }
+
+    public String getThirdUserHead() {
+        return SPUtils.getInstance().getString(Constants.THIRDUSERHEAD, "");
+    }
+
+    public void setThirdUserNickName(String thirdUserNickName) {
+        SPUtils.getInstance().put(Constants.THIRDUSERNICKNAME, thirdUserNickName);
+    }
+
+    public String getThirdUserNickName() {
+        return SPUtils.getInstance().getString(Constants.THIRDUSERNICKNAME, "");
+    }
+
+    public void setThirdUserPhone(String thirdUserPhone) {
+        SPUtils.getInstance().put(Constants.THIRDUSERPHONE, thirdUserPhone);
+    }
+
+    public String getThirdUserPhone() {
+        return SPUtils.getInstance().getString(Constants.THIRDUSERPHONE, "");
+    }
+
+
     /**
      * 清空本地存的token 和用户信息
      */
@@ -309,6 +336,7 @@ public class PersonInfoManager {
         setNickName("");
         setPhoneNum("");
         setSzrmUserModel("");
+        setThirdUserId("");
     }
 
     /**
@@ -346,15 +374,13 @@ public class PersonInfoManager {
     }
 
     /**
-     * 判断是否要去请求数智融媒登录接口
+     * 判断是否要去请求融媒登录接口
      */
     public boolean isRequestSzrmLogin() {
+        //拿到第三方传过来的用户信息
         ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
         if (null != userInfo) { //获取的用户信息不为空
-            if (!TextUtils.isEmpty(userInfo.getUserId())
-                    || !TextUtils.isEmpty(userInfo.getPhoneNum())
-                    || !TextUtils.isEmpty(userInfo.getNickName())
-                    || !TextUtils.isEmpty(userInfo.getHeadImageUrl())) { //获取的用户id不为空
+            if (!TextUtils.isEmpty(userInfo.getUserId())) { //获取的用户id不为空
                 if (!TextUtils.isEmpty(PersonInfoManager.getInstance().getUserId())) {//本地用户id不为空
                     if (TextUtils.equals(userInfo.getUserId(), PersonInfoManager.getInstance().getUserId())) { //比较获取的和本地的userId 是否一致
                         return false;  //已经登录

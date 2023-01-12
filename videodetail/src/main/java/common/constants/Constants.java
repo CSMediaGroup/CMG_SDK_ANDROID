@@ -22,6 +22,11 @@ public class Constants {
     public static final String APPNAME = "appName";
     public static final String CATEGORYCODE = "categoryCode";
     public static final String PANID = "panId";
+    public static final String THIRDUSERID = "thirdUserId";
+    public static final String THIRDUSERHEAD = "ThirdUserHead";
+    public static final String THIRDUSERNICKNAME = "ThirdUserNickName";
+    public static final String THIRDUSERPHONE = "thirdUserPhone";
+
 
     public static final String KEY_USER = "keyuser";
     public static final String KEY_REFRESH_TOKEN = "refresh_token";

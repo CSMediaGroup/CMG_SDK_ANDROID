@@ -26,7 +26,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInit.init(this, true, "9111184");
+        AppInit.init(this, false, "9111184");
     }
 
 

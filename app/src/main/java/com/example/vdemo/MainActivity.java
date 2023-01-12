@@ -144,31 +144,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
-                    @Override
-                    public ThirdUserInfo setThirdUserInfo() {
-                        ThirdUserInfo userInfo = new ThirdUserInfo();
-                        userInfo.setUserId("123");
-                        userInfo.setPhoneNum("123456");
-                        userInfo.setNickName("测试人员");
-                        userInfo.setHeadImageUrl("https://oss.zhcs.csbtv.com/zhcs-prd/icon/WechatIMG180.png");
-                        return userInfo;
-                    }
-
-                    @Override
-                    public void shared(ShareInfo shareInfo) {
-                        Log.e("share", JSON.toJSONString(shareInfo));
-                        if (null != shareInfo) {
-                            ToastUtils.showShort("分享成功");
-                        }
-                    }
-
-                    @Override
-                    public void toLogin() {
-                        Log.e("toLogin", "toLogin");
-                    }
-                });
-
                 /**
                  * 获取推荐列表
                  */
@@ -280,17 +255,35 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    }
+        SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
+            @Override
+            public ThirdUserInfo setThirdUserInfo() {
+                ThirdUserInfo thirdUserInfo = new ThirdUserInfo();
+                thirdUserInfo.setUserId(PersonInfoManager.getInstance().getThirdUserId());
+                thirdUserInfo.setNickName(PersonInfoManager.getInstance().getThirdUserNickName());
+                thirdUserInfo.setPhoneNum(PersonInfoManager.getInstance().getThirdUserPhone());
+                thirdUserInfo.setHeadImageUrl(PersonInfoManager.getInstance().getThirdUserHead());
+                return thirdUserInfo;
+            }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LOGIN_REQUEST_CODE) {
-            SdkUserInfo.DataDTO userInfo = (SdkUserInfo.DataDTO) data.getExtras().getSerializable("userInfo");
-            PersonInfoManager.getInstance().setTransformationToken(userInfo.getToken());
-            String userInfoStr = JSON.toJSONString(userInfo);
-            PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
-        }
+            @Override
+            public void shared(ShareInfo shareInfo) {
+                Log.e("share", JSON.toJSONString(shareInfo));
+                if (null != shareInfo) {
+                    ToastUtils.showShort("分享成功");
+                }
+            }
+
+            @Override
+            public void toLogin() {
+                Log.e("toLogin", "toLogin");
+                //这里是你跳转你的登录页面 去登录
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivityForResult(intent, LOGIN_REQUEST_CODE);
+            }
+        });
+
+
     }
 
     @Override

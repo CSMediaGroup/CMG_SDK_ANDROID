@@ -5,6 +5,7 @@ import static common.utils.AppInit.appId;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -113,6 +114,27 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         } else {
             iconShare.setVisibility(View.GONE);
         }
+
+        /**
+         * 获取用户信息
+         */
+        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<SdkUserInfo.DataDTO>() {
+            @Override
+            public void onChanged(SdkUserInfo.DataDTO dataDTO) {
+                PersonInfoManager.getInstance().setTransformationToken(dataDTO.getToken());
+                userInfo = dataDTO;
+                PersonInfoManager.getInstance().setThirdUserId(userInfo.getLoginSysUserVo().getId());
+                PersonInfoManager.getInstance().setThirdUserHead(userInfo.getLoginSysUserVo().getHead());
+                PersonInfoManager.getInstance().setThirdUserNickName(userInfo.getLoginSysUserVo().getNickname());
+                PersonInfoManager.getInstance().setThirdUserPhone(userInfo.getLoginSysUserVo().getPhone());
+                String userInfoStr = JSON.toJSONString(userInfo);
+                PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
+                String str1 = "onAppLogin('";
+                String str2 = "')";
+                mAgentWeb.getJsAccessEntrace().callJs(str1 + userInfoStr + str2);
+            }
+        });
+
 
         sharePopView = View.inflate(this, R.layout.share_pop_view, null);
         shareWxBtn = sharePopView.findViewById(R.id.share_wx_btn);

@@ -3,6 +3,7 @@ package ui.activity;
 import static android.widget.RelativeLayout.BELOW;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -32,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.example.zhouwei.library.CustomPopWindow;
@@ -69,6 +71,7 @@ import common.model.ContentStateModel;
 import common.model.DataDTO;
 import common.model.RecommendModel;
 import common.model.ReplyLv2Model;
+import common.model.SdkUserInfo;
 import common.model.TokenModel;
 import common.model.TrackingUploadModel;
 import common.model.VideoChannelModel;
@@ -271,6 +274,23 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         IntentFilter filter = new IntentFilter();
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(netWorkStateReceiver, filter);
+
+
+        /**
+         * 获取用户信息
+         */
+        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<SdkUserInfo.DataDTO>() {
+            @Override
+            public void onChanged(SdkUserInfo.DataDTO dataDTO) {
+                PersonInfoManager.getInstance().setTransformationToken(dataDTO.getToken());
+                PersonInfoManager.getInstance().setThirdUserId(dataDTO.getLoginSysUserVo().getId());
+                PersonInfoManager.getInstance().setThirdUserHead(dataDTO.getLoginSysUserVo().getHead());
+                PersonInfoManager.getInstance().setThirdUserNickName(dataDTO.getLoginSysUserVo().getNickname());
+                PersonInfoManager.getInstance().setThirdUserPhone(dataDTO.getLoginSysUserVo().getPhone());
+                String userInfoStr = JSON.toJSONString(dataDTO);
+                PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
+            }
+        });
 
         //全屏进度条监听
         if (null != playerView && null != playerView.mFullScreenPlayer) {

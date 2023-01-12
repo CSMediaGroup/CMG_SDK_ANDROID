@@ -19,6 +19,8 @@ import com.szrm.videodetail.demo.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import common.callback.JsonCallback;
 import common.callback.SdkInteractiveParam;
 import common.callback.SdkParamCallBack;
@@ -29,6 +31,7 @@ import common.model.TokenModel;
 import common.utils.PersonInfoManager;
 import common.utils.SPUtils;
 import common.utils.ToastUtils;
+import event.SingleLiveEvent;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView login;
@@ -36,12 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText tel;
     private EditText adress;
     private EditText nickNameEtv;
-    private SdkUserInfo sdkUserInfo;
-    private String userId;
-    private String mobile;
-    private String headProfile;
-    private String nickName;
-    private TextView signOutLogin;
+    private TextView changeUserInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                                     return;
                                 }
                                 if (response.body().getCode().equals("200")) {
-                                    String token = response.body().getData().getToken();
-                                    PersonInfoManager.getInstance().setTransformationToken(token);
-                                    Intent intent = new Intent();
-                                    intent.putExtra("userInfo", response.body().getData());
-                                    setResult(RESULT_OK, intent);
+                                    SdkInteractiveParam.getInstance().userInfoEvent.setValue(response.body().getData());
                                     ToastUtils.showShort("登录成功");
                                     finish();
                                 } else {
@@ -109,5 +103,6 @@ public class LoginActivity extends AppCompatActivity {
                 PersonInfoManager.getInstance().clearThirdUserToken();
             }
         });
+
     }
 }

@@ -5,11 +5,13 @@ import android.util.Log;
 import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
+import event.SingleLiveEvent;
 
 public class SdkInteractiveParam {
     private String TAG = "SdkInteractiveParam";
     public SdkParamCallBack callBack;
     public static SdkInteractiveParam sdkParam;
+    public SingleLiveEvent<SdkUserInfo.DataDTO> userInfoEvent = new SingleLiveEvent<>();
 
     private SdkInteractiveParam() {
     }

@@ -143,6 +143,17 @@
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"></TextView>
 
+    <TextView
+        android:id="@+id/change_user_info"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text="切换用户"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"></TextView>
+
     <Switch
         android:id="@+id/isRealease"
         android:layout_width="wrap_content"
