@@ -25,11 +25,8 @@ public class GlideUtil {
         try {
             if (imageView != null) {
                 Glide.with(ctx).load(uri)
-                        .skipMemoryCache(cache ? false : true)
-                        .diskCacheStrategy(cache ? DiskCacheStrategy.RESOURCE : DiskCacheStrategy.NONE)
                         .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                         .thumbnail(0.5f)
-                        .priority(Priority.HIGH)
                         .into(imageView);
             }
         } catch (Exception e) {

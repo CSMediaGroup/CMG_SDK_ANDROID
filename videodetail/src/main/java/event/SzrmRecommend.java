@@ -64,6 +64,13 @@ public class SzrmRecommend {
                     @Override
                     public void onError(Response<SZContentModel> response) {
                         super.onError(response);
+                        if (null == response.body()) {
+                            return;
+                        }
+
+                        if (null == response.body().getMessage()) {
+                            return;
+                        }
                         Log.e("zxs_list", response.body().getMessage());
                         contentsEvent.setValue(contentsDTOS);
                     }
