@@ -1003,18 +1003,18 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         requestLoadMoreListener = new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                if (!isLoadComplate) {
-                    videoDetailRv.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mDatas.isEmpty()) {
-                                adapter.loadMoreFail();
-                                return;
-                            }
-                            getRandomVideoList();
-                        }
-                    });
-                }
+//                if (!isLoadComplate) {
+//                    videoDetailRv.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            if (mDatas.isEmpty()) {
+//                                adapter.loadMoreFail();
+//                                return;
+//                            }
+//                            getRandomVideoList();
+//                        }
+//                    });
+//                }
             }
         };
     }
@@ -1387,21 +1387,24 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 }
 
                                 if (response.body().getData().size() == 0) {
-                                    adapter.loadMoreComplete();
-                                    adapter.setOnLoadMoreListener(null, videoDetailRv);
-                                    if (null != footerView && null != footerView.getParent()) {
-                                        ((ViewGroup) footerView.getParent()).removeView(footerView);
-                                    }
-                                    adapter.addFooterView(footerView);
+                                    adapter.loadMoreEnd(false);
+//                                    adapter.setOnLoadMoreListener(null, videoDetailRv);
+//                                    if (null != footerView && null != footerView.getParent()) {
+//                                        ((ViewGroup) footerView.getParent()).removeView(footerView);
+//                                    }
+//                                    adapter.addFooterView(footerView);
+
                                     isLoadComplate = true;
                                 } else {
                                     adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
                                     isLoadComplate = false;
+                                    mDatas.addAll(response.body().getData());
+                                    setDataWifiState(mDatas, VideoHomeActivity.this);
+                                    adapter.loadMoreComplete();
                                 }
-                                mDatas.addAll(response.body().getData());
-                                setDataWifiState(mDatas, VideoHomeActivity.this);
 //                            adapter.setNewData(mDatas);
                                 adapter.loadMoreComplete();
+
                             } else {
                                 adapter.loadMoreFail();
                             }
