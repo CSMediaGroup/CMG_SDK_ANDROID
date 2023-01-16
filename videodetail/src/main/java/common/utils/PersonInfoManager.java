@@ -374,6 +374,10 @@ public class PersonInfoManager {
         setThirdUserHead("");
         setThirdUserPhone("");
         setThirdUserNickName("");
+        setRequestUserId("");
+        setRequestUserNickName("");
+        setRequestUserPhone("");
+        setRequestUserHead("");
     }
 
     /**
