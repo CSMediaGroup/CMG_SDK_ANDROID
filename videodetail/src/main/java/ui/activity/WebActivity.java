@@ -72,7 +72,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private LinearLayout iconShare;
     private ImageView imgClose;
     public static final int LOGIN_REQUEST_CODE = 315;
-    private AgentWeb mAgentWeb;
+    public static AgentWeb mAgentWeb;
     private LinearLayout container;
     private WebViewClient mWebViewClient;
     private BridgeWebView mBridgeWebView;
@@ -115,25 +115,19 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             iconShare.setVisibility(View.GONE);
         }
 
-        /**
-         * 获取用户信息
-         */
-        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<SdkUserInfo.DataDTO>() {
-            @Override
-            public void onChanged(SdkUserInfo.DataDTO dataDTO) {
-                PersonInfoManager.getInstance().setTransformationToken(dataDTO.getToken());
-                userInfo = dataDTO;
-                PersonInfoManager.getInstance().setThirdUserId(userInfo.getLoginSysUserVo().getId());
-                PersonInfoManager.getInstance().setThirdUserHead(userInfo.getLoginSysUserVo().getHead());
-                PersonInfoManager.getInstance().setThirdUserNickName(userInfo.getLoginSysUserVo().getNickname());
-                PersonInfoManager.getInstance().setThirdUserPhone(userInfo.getLoginSysUserVo().getPhone());
-                String userInfoStr = JSON.toJSONString(userInfo);
-                PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
-                String str1 = "onAppLogin('";
-                String str2 = "')";
-                mAgentWeb.getJsAccessEntrace().callJs(str1 + userInfoStr + str2);
-            }
-        });
+//        /**
+//         * 获取用户信息
+//         */
+//        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<ThirdUserInfo>() {
+//            @Override
+//            public void onChanged(ThirdUserInfo thirdUserInfo) {
+//                PersonInfoManager.getInstance().setThirdUserId(thirdUserInfo.getUserId());
+//                PersonInfoManager.getInstance().setThirdUserHead(thirdUserInfo.getHeadImageUrl());
+//                PersonInfoManager.getInstance().setThirdUserNickName(thirdUserInfo.getNickName());
+//                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
+//
+//            }
+//        });
 
 
         sharePopView = View.inflate(this, R.layout.share_pop_view, null);
@@ -511,7 +505,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         }
         if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             //需要去请求数智融媒的登录
-            szrmLoginRequest();
+            szrmLoginRequest(true);
         }
     }
 
@@ -524,7 +518,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         OkGo.getInstance().cancelAll();
     }
 
-    public static void szrmLoginRequest() {
+    public static void szrmLoginRequest(final boolean isWeb) {
         org.json.JSONObject jsonObject = new org.json.JSONObject();
         ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
         if (null != userInfo) {
@@ -549,12 +543,26 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                             return;
                         }
                         if (response.body().getCode().equals("200")) {
+                            if (null == response.body().getData()) {
+                                return;
+                            }
+
+                            if (isWeb) {
+                                String userInfoStr = JSON.toJSONString(response.body().getData());
+                                PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
+                                String str1 = "onAppLogin('";
+                                String str2 = "')";
+                                mAgentWeb.getJsAccessEntrace().callJs(str1 + userInfoStr + str2);
+                            }
+
+
                             String token = response.body().getData().getToken();
                             SdkUserInfo.DataDTO.LoginSysUserVoDTO loginUserInfo = response.body().getData().getLoginSysUserVo();
                             PersonInfoManager.getInstance().setTransformationToken(token);
                             PersonInfoManager.getInstance().setAppId(response.body().getData().getAppId());
                             if (null != loginUserInfo) {
-                                if (null != SdkInteractiveParam.getInstance().getUserInfo() && !TextUtils.isEmpty(SdkInteractiveParam.getInstance().getUserInfo().getUserId())) {
+                                if (null != SdkInteractiveParam.getInstance().getUserInfo() &&
+                                        !TextUtils.isEmpty(SdkInteractiveParam.getInstance().getUserInfo().getUserId())) {
                                     PersonInfoManager.getInstance().setUserId(SdkInteractiveParam.getInstance().getUserInfo().getUserId());
                                 }
                                 PersonInfoManager.getInstance().setPhoneNum(loginUserInfo.getPhone());

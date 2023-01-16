@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView fxsys;
     private TextView setCode;
     private TextView classList;
-    private TextView login_activity;
     private TextView others_home_page;
     private TextView clear_user_info;
     private Switch isRealease;
@@ -58,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView test;
     private TextView toPageDetail;
     private TextView loadMoreData;
+    private TextView changeUserInfo;
     private List<SZContentModel.DataDTO.ContentsDTO> contents = new ArrayList<>();
     private List<SZContentModel.DataDTO.ContentsDTO> loadMoreContents = new ArrayList<>();
 
@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
         fxsys = findViewById(R.id.fxsys);
         classList = findViewById(R.id.class_list);
         others_home_page = findViewById(R.id.others_home_page);
-        login_activity = findViewById(R.id.login_activity);
         isRealease = findViewById(R.id.isRealease);
         uuid = findViewById(R.id.uuid);
         uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
@@ -216,13 +215,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        login_activity.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivityForResult(intent, LOGIN_REQUEST_CODE);
-            }
-        });
 
         findViewById(R.id.clear_user_info).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,15 +246,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        changeUserInfo = findViewById(R.id.change_user_info);
+        changeUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
             @Override
             public ThirdUserInfo setThirdUserInfo() {
                 ThirdUserInfo thirdUserInfo = new ThirdUserInfo();
-                thirdUserInfo.setUserId(PersonInfoManager.getInstance().getThirdUserId());
-                thirdUserInfo.setNickName(PersonInfoManager.getInstance().getThirdUserNickName());
-                thirdUserInfo.setPhoneNum(PersonInfoManager.getInstance().getThirdUserPhone());
-                thirdUserInfo.setHeadImageUrl(PersonInfoManager.getInstance().getThirdUserHead());
+                thirdUserInfo.setUserId(PersonInfoManager.getInstance().getRequestUserId());
+                thirdUserInfo.setNickName(PersonInfoManager.getInstance().getRequestUserNickName());
+                thirdUserInfo.setPhoneNum(PersonInfoManager.getInstance().getRequestUserPhone());
+                thirdUserInfo.setHeadImageUrl(PersonInfoManager.getInstance().getRequestUserHead());
                 return thirdUserInfo;
             }
 
@@ -279,11 +280,22 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("toLogin", "toLogin");
                 //这里是你跳转你的登录页面 去登录
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivityForResult(intent, LOGIN_REQUEST_CODE);
+                startActivity(intent);
             }
         });
 
-
+//        /**
+//         * 获取用户信息
+//         */
+//        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<ThirdUserInfo>() {
+//            @Override
+//            public void onChanged(ThirdUserInfo thirdUserInfo) {
+//                PersonInfoManager.getInstance().setThirdUserId(thirdUserInfo.getUserId());
+//                PersonInfoManager.getInstance().setThirdUserHead(thirdUserInfo.getHeadImageUrl());
+//                PersonInfoManager.getInstance().setThirdUserNickName(thirdUserInfo.getNickName());
+//                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
+//            }
+//        });
     }
 
     @Override

@@ -13,24 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/login"
+            android:id="@+id/loginA"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/shape_dialog_bg"
             android:gravity="center"
-            android:text="登录"
+            android:text="登录A"
             android:textColor="@color/black"
             android:textSize="18sp"></TextView>
 
         <TextView
-            android:id="@+id/signOutLogin"
+            android:id="@+id/loginB"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/shape_dialog_bg"
             android:gravity="center"
-            android:text="退出登录"
+            android:text="登录B"
             android:textColor="@color/black"
             android:textSize="18sp"></TextView>
 

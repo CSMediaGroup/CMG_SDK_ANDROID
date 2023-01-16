@@ -2040,7 +2040,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
 
         if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             try {
-                szrmLoginRequest();
+                szrmLoginRequest(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

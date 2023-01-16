@@ -11,7 +11,7 @@ public class SdkInteractiveParam {
     private String TAG = "SdkInteractiveParam";
     public SdkParamCallBack callBack;
     public static SdkInteractiveParam sdkParam;
-    public SingleLiveEvent<SdkUserInfo.DataDTO> userInfoEvent = new SingleLiveEvent<>();
+    public SingleLiveEvent<ThirdUserInfo> userInfoEvent = new SingleLiveEvent<>();
 
     private SdkInteractiveParam() {
     }

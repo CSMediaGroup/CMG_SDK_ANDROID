@@ -72,6 +72,7 @@ import common.model.DataDTO;
 import common.model.RecommendModel;
 import common.model.ReplyLv2Model;
 import common.model.SdkUserInfo;
+import common.model.ThirdUserInfo;
 import common.model.TokenModel;
 import common.model.TrackingUploadModel;
 import common.model.VideoChannelModel;
@@ -279,16 +280,13 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         /**
          * 获取用户信息
          */
-        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<SdkUserInfo.DataDTO>() {
+        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<ThirdUserInfo>() {
             @Override
-            public void onChanged(SdkUserInfo.DataDTO dataDTO) {
-                PersonInfoManager.getInstance().setTransformationToken(dataDTO.getToken());
-                PersonInfoManager.getInstance().setThirdUserId(dataDTO.getLoginSysUserVo().getId());
-                PersonInfoManager.getInstance().setThirdUserHead(dataDTO.getLoginSysUserVo().getHead());
-                PersonInfoManager.getInstance().setThirdUserNickName(dataDTO.getLoginSysUserVo().getNickname());
-                PersonInfoManager.getInstance().setThirdUserPhone(dataDTO.getLoginSysUserVo().getPhone());
-                String userInfoStr = JSON.toJSONString(dataDTO);
-                PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
+            public void onChanged(ThirdUserInfo thirdUserInfo) {
+                PersonInfoManager.getInstance().setThirdUserId(thirdUserInfo.getUserId());
+                PersonInfoManager.getInstance().setThirdUserHead(thirdUserInfo.getHeadImageUrl());
+                PersonInfoManager.getInstance().setThirdUserNickName(thirdUserInfo.getNickName());
+                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
             }
         });
 
@@ -1227,7 +1225,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
 
         if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             try {
-                szrmLoginRequest();
+                szrmLoginRequest(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

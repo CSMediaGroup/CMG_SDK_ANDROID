@@ -324,6 +324,40 @@ public class PersonInfoManager {
         return SPUtils.getInstance().getString(Constants.THIRDUSERPHONE, "");
     }
 
+    ///////
+
+    public void setRequestUserId(String requestUserId) {
+        SPUtils.getInstance().put("requestUserId", requestUserId);
+    }
+
+    public String getRequestUserId() {
+        return SPUtils.getInstance().getString("requestUserId", "");
+    }
+
+    public void setRequestUserHead(String requestUserHead) {
+        SPUtils.getInstance().put("requestUserHead", requestUserHead);
+    }
+
+    public String getRequestUserHead() {
+        return SPUtils.getInstance().getString("requestUserHead", "");
+    }
+
+    public void setRequestUserNickName(String requestUserNickName) {
+        SPUtils.getInstance().put("requestUserNickName", requestUserNickName);
+    }
+
+    public String getRequestUserNickName() {
+        return SPUtils.getInstance().getString("requestUserNickName", "");
+    }
+
+    public void setRequestUserPhone(String requestUserPhone) {
+        SPUtils.getInstance().put("requestUserPhone", requestUserPhone);
+    }
+
+    public String getRequestUserPhone() {
+        return SPUtils.getInstance().getString("requestUserPhone", "");
+    }
+
 
     /**
      * 清空本地存的token 和用户信息
@@ -337,6 +371,9 @@ public class PersonInfoManager {
         setPhoneNum("");
         setSzrmUserModel("");
         setThirdUserId("");
+        setThirdUserHead("");
+        setThirdUserPhone("");
+        setThirdUserNickName("");
     }
 
     /**
@@ -378,11 +415,11 @@ public class PersonInfoManager {
      */
     public boolean isRequestSzrmLogin() {
         //拿到第三方传过来的用户信息
-        ThirdUserInfo userInfo = SdkInteractiveParam.getInstance().getUserInfo();
-        if (null != userInfo) { //获取的用户信息不为空
-            if (!TextUtils.isEmpty(userInfo.getUserId())) { //获取的用户id不为空
+        ThirdUserInfo thirdUserInfo = SdkInteractiveParam.getInstance().getUserInfo();
+        if (null != thirdUserInfo) { //获取的用户信息不为空
+            if (!TextUtils.isEmpty(thirdUserInfo.getUserId())) { //获取的用户id不为空
                 if (!TextUtils.isEmpty(PersonInfoManager.getInstance().getUserId())) {//本地用户id不为空
-                    if (TextUtils.equals(userInfo.getUserId(), PersonInfoManager.getInstance().getUserId())) { //比较获取的和本地的userId 是否一致
+                    if (TextUtils.equals(thirdUserInfo.getUserId(), PersonInfoManager.getInstance().getUserId())) { //比较获取的和本地的userId 是否一致
                         return false;  //已经登录
                     } else {
                         clearThirdUserToken(); //userId不一致 表明切换了用户或者已经超时
