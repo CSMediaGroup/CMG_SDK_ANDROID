@@ -86,7 +86,20 @@
         android:layout_marginTop="20dp"
         android:background="@color/video_c9"
         android:gravity="center"
-        android:text="SDK首页"
+        android:text="SDK首页（Activity）"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/others_home_page_fragment"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text="SDK首页（Fragment）"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff">
 
@@ -174,4 +187,11 @@
         android:visibility="gone">
 
     </TextView>
+
+    <RelativeLayout
+        android:id="@+id/addFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </RelativeLayout>
 </LinearLayout>

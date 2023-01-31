@@ -144,4 +144,9 @@ public class Constants {
     public static final String SHORT_VIDEO = "short_video";
     public static final String SPECIAL_NEWS = "special";
     public static final String NEWS_COMMON = "news_common";
+
+    public static final String JUMPTONATIVEPAGEMODEL = "JumpToNativePageModel";
+    public static final String WEBINTENT = "intent";
+    public static final String SHAREINFO = "ShareInfo";
+    public static final String TOOLBARISSHOW = "toolBarIsShow";
 }

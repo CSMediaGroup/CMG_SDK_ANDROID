@@ -87,7 +87,7 @@ dependencies {
     api "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
 //    api 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
     api 'com.google.zxing:core:3.3.0'
-    api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx'
+    api 'com.github.Justson.AgentWeb:agentweb-core:v5.0.6-androidx' // (必选)
     api 'com.github.lzyzsd:jsbridge:1.0.4'
 }
 apply from: '../nexus.gradle'

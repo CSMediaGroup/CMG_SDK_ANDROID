@@ -1,30 +1,31 @@
-package ui.activity;
+package ui.fragment;
 
 import static common.constants.Constants.success_code;
 import static common.utils.AppInit.appId;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -34,12 +35,13 @@ import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.huawei.multimedia.liteav.audiokit.utils.Constant;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.szrm.videodetail.demo.R;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.json.JSONException;
 
@@ -63,10 +65,13 @@ import common.utils.ScreenUtils;
 import common.utils.SystemUtil;
 import common.utils.ToastUtils;
 import io.reactivex.functions.Consumer;
+import ui.activity.VideoHomeActivity;
+import ui.activity.WebActivity;
 import utils.UUIDUtils;
 
-public class WebActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = WebActivity.class.getSimpleName();
+public class WebFragment extends Fragment implements View.OnClickListener {
+    private View view;
+    private static final String TAG = WebFragment.class.getSimpleName();
     private LinearLayout imgBack;
     private TextView webTitle;
     private LinearLayout iconShare;
@@ -88,73 +93,79 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private String intent = "0";
     private boolean isFinish;
     private ShareInfo shareInfo;
+    private boolean toolBarIsShow;
+    private RelativeLayout webToolbar;
+
+    public WebFragment() {
+    }
+
+    public static WebFragment newInstance(JumpToNativePageModel param, String intent, ShareInfo shareInfo, boolean toolBarIsShow) {
+        WebFragment fragment = new WebFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.JUMPTONATIVEPAGEMODEL, param);
+        args.putString(Constants.WEBINTENT, intent);
+        args.putSerializable(Constants.SHAREINFO, shareInfo);
+        args.putBoolean(Constants.TOOLBARISSHOW, toolBarIsShow);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
+        if (getArguments() != null) {
+            param = (JumpToNativePageModel) getArguments().getSerializable(Constants.JUMPTONATIVEPAGEMODEL);
+            intent = getArguments().getString(Constants.WEBINTENT);
+            shareInfo = (ShareInfo) getArguments().getSerializable(Constants.SHAREINFO);
+            toolBarIsShow = getArguments().getBoolean(Constants.TOOLBARISSHOW);
+        }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        view = inflater.inflate(R.layout.fragment_web, container, false);
         initView();
+        return view;
     }
 
     private void initView() {
-        container = findViewById(R.id.container);
-        imgBack = findViewById(R.id.imgBack);
+        container = view.findViewById(R.id.container);
+        webToolbar = view.findViewById(R.id.webToolbar);
+        if (toolBarIsShow) {
+            webToolbar.setVisibility(View.VISIBLE);
+        } else {
+            webToolbar.setVisibility(View.GONE);
+        }
+        imgBack = view.findViewById(R.id.imgBack);
         imgBack.setOnClickListener(this);
-        imgClose = findViewById(R.id.imgClose);
-        webTitle = findViewById(R.id.webTitle);
-        iconShare = findViewById(R.id.iconShare);
+        imgClose = view.findViewById(R.id.imgClose);
+        webTitle = view.findViewById(R.id.webTitle);
+        iconShare = view.findViewById(R.id.iconShare);
         iconShare.setOnClickListener(this);
-        ScreenUtils.fullScreen(this, true);
-        ScreenUtils.setStatusBarColor(this, R.color.white);
-        param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
-        intent = getIntent().getStringExtra("intent");
-        shareInfo = (ShareInfo) getIntent().getSerializableExtra("shareInfo");
+        ScreenUtils.fullScreen(getActivity(), true);
+        ScreenUtils.setStatusBarColor(getActivity(), R.color.white);
         if (null != param && !TextUtils.isEmpty(param.getNewsLink())) {
             iconShare.setVisibility(View.VISIBLE);
         } else {
             iconShare.setVisibility(View.GONE);
         }
 
-//        /**
-//         * 获取用户信息
-//         */
-//        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<ThirdUserInfo>() {
-//            @Override
-//            public void onChanged(ThirdUserInfo thirdUserInfo) {
-//                PersonInfoManager.getInstance().setThirdUserId(thirdUserInfo.getUserId());
-//                PersonInfoManager.getInstance().setThirdUserHead(thirdUserInfo.getHeadImageUrl());
-//                PersonInfoManager.getInstance().setThirdUserNickName(thirdUserInfo.getNickName());
-//                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
-//
-//            }
-//        });
-
-
-        sharePopView = View.inflate(this, R.layout.share_pop_view, null);
+        sharePopView = View.inflate(getActivity(), R.layout.share_pop_view, null);
         shareWxBtn = sharePopView.findViewById(R.id.share_wx_btn);
         shareWxBtn.setOnClickListener(this);
         shareCircleBtn = sharePopView.findViewById(R.id.share_circle_btn);
         shareCircleBtn.setOnClickListener(this);
         shareQqBtn = sharePopView.findViewById(R.id.share_qq_btn);
         shareQqBtn.setOnClickListener(this);
-        mBridgeWebView = new BridgeWebView(this);
+        mBridgeWebView = new BridgeWebView(getActivity());
         if (TextUtils.equals("1", intent)) {
             PersonInfoManager.getInstance().setIntentUrl(param.getNewsLink());
-//            intentUrl = param.getNewsLink();
             initBridge();
         } else {
             getCfg();
         }
-
-
-        //登录
-        findViewById(R.id.toLogin).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WebActivity.this, LoginActivity.class);
-                startActivityForResult(intent, LOGIN_REQUEST_CODE);
-            }
-        });
     }
 
     /**
@@ -252,30 +263,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         };
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (isFinish && null != mAgentWeb && mAgentWeb.handleKeyEvent(keyCode, event)) {
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LOGIN_REQUEST_CODE && null != data) {
-            userInfo = (SdkUserInfo.DataDTO) data.getExtras().getSerializable("userInfo");
-            PersonInfoManager.getInstance().setUserId(userInfo.getLoginSysUserVo().getId());
-            String userInfoStr = JSON.toJSONString(userInfo);
-            PersonInfoManager.getInstance().setSzrmUserModel(userInfoStr);
-            String str1 = "onAppLogin('";
-            String str2 = "')";
-            mAgentWeb.getJsAccessEntrace().callJs(str1 + userInfoStr + str2);
-        }
-    }
-
-
     private void initBridge() {
 
         mAgentWeb = AgentWeb.with(this)
@@ -330,7 +317,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     }
 
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_MONITORLIFECYCLE)) { //返回
-                    finish();
+                    getActivity().finish();
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GETDEVICEID)) { //获取设备id
                     DeviceIdModel model = new DeviceIdModel();
                     model.setDeviceId(UUIDUtils.deviceUUID());
@@ -340,7 +327,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     String userInfoStr = PersonInfoManager.getInstance().getSzrmUserModel();
                     function.onCallBack(userInfoStr);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_JUMPTONATIVEPAGE)) { //跳转新webView
-                    Intent intent = new Intent(WebActivity.this, WebActivity.class);
+                    Intent intent = new Intent(getActivity(), WebActivity.class);
                     if (null != dataObject) {
                         JumpToNativePageModel model = JSON.parseObject(JSON.toJSONString(dataObject), JumpToNativePageModel.class);
                         intent.putExtra("param", model);
@@ -359,7 +346,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     sharePop();
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_SAVEPHOTO)) { //保存图片
                     String[] writePerMissionGrop = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-                    new RxPermissions(WebActivity.this).request(writePerMissionGrop).subscribe(new Consumer<Boolean>() {
+                    new RxPermissions(getActivity()).request(writePerMissionGrop).subscribe(new Consumer<Boolean>() {
                         @Override
                         public void accept(Boolean aBoolean) throws Exception {
                             if (aBoolean) {
@@ -376,7 +363,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                                 new Thread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        ImageUtils.saveBitmap2file(SavePhoto.getBitmap(finalUrl), WebActivity.this
+                                        ImageUtils.saveBitmap2file(SavePhoto.getBitmap(finalUrl), getActivity()
                                                 , handler, function);
                                     }
                                 }).start();
@@ -388,12 +375,12 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     });
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_GOLOGING)) { //跳转登录
                     SdkInteractiveParam.getInstance().toLogin();
-//                    Intent intent = new Intent(WebActivity.this, LoginActivity.class);
+//                    Intent intent = new Intent(getActivity(), LoginActivity.class);
 //                    intent.putExtra("mechanismId", mechanismId);
 //                    startActivityForResult(intent, LOGIN_REQUEST_CODE);
                 } else if (TextUtils.equals(methodName, Constants.SDK_JS_OPENVIDEO)) { //打开视频
                     if (null != dataObject) {
-                        Intent intent = new Intent(WebActivity.this, VideoHomeActivity.class);
+                        Intent intent = new Intent(getActivity(), VideoHomeActivity.class);
                         intent.putExtra("contentId", dataObject.getString("contentId"));
                         intent.putExtra("logoUrl", PersonInfoManager.getInstance().getLogoUrl());
                         intent.putExtra("appName", PersonInfoManager.getInstance().getAppName());
@@ -415,8 +402,8 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         AppSystemModel appSystemModel = new AppSystemModel();
         appSystemModel.setOsName("Android");
         appSystemModel.setBrand(SystemUtil.getDeviceBrand());
-        appSystemModel.setOsVersion(String.valueOf(SystemUtil.getVersionCode(WebActivity.this)));
-        appSystemModel.setAppVersion(SystemUtil.getVersionName(WebActivity.this));
+        appSystemModel.setOsVersion(String.valueOf(SystemUtil.getVersionCode(getActivity())));
+        appSystemModel.setAppVersion(SystemUtil.getVersionName(getActivity()));
         String appInfo = JSON.toJSONString(appSystemModel);
         return appInfo;
     }
@@ -426,7 +413,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
      */
     private void sharePop() {
         if (null == sharePop) {
-            sharePop = new CustomPopWindow.PopupWindowBuilder(this)
+            sharePop = new CustomPopWindow.PopupWindowBuilder(getActivity())
                     .setView(sharePopView)
                     .setOutsideTouchable(true)
                     .setFocusable(true)
@@ -444,7 +431,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         int id = v.getId();
         if (id == R.id.imgBack) {
             if (null != mAgentWeb && !mAgentWeb.back()) {
-                finish();
+                getActivity().finish();
             }
         } else if (id == R.id.share_wx_btn) {
             if (null == shareInfo) {
@@ -490,7 +477,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onPause();
@@ -498,7 +485,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onResume();
@@ -510,7 +497,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onDestroy();
@@ -588,5 +575,4 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     }
                 });
     }
-
 }

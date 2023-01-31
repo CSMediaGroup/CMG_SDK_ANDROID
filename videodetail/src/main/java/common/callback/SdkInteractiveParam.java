@@ -1,11 +1,17 @@
 package common.callback;
 
+import android.content.Context;
 import android.util.Log;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
+
+import common.model.JumpToNativePageModel;
 import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
 import event.SingleLiveEvent;
+import ui.fragment.WebFragment;
 
 public class SdkInteractiveParam {
     private String TAG = "SdkInteractiveParam";
@@ -67,5 +73,18 @@ public class SdkInteractiveParam {
         }
     }
 
-
+    /**
+     * 获取webFragment实例
+     *
+     * @param context
+     * @param widgetId
+     */
+    public WebFragment getWebFragment(Context context, JumpToNativePageModel param,
+                                      String intent, ShareInfo shareInfo, int widgetId, boolean toolbarIsShow) {
+        FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        WebFragment webFragment = WebFragment.newInstance(param, intent, shareInfo, toolbarIsShow);
+        transaction.add(widgetId, webFragment);
+        transaction.commitAllowingStateLoss();
+        return webFragment;
+    }
 }

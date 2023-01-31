@@ -90,4 +90,6 @@
     <string name="superplayer_screenshot_fail">截图失败</string>
     <string name="superplayer_float_play_fail">悬浮播放失败</string>
     <string name="superplayer_enter_setting_fail">进入设置页面失败,请手动开启悬浮窗权限</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

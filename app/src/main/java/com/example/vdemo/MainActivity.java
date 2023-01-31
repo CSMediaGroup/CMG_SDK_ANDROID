@@ -29,6 +29,7 @@ import common.callback.VideoInteractiveParam;
 import common.callback.VideoParamCallBack;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
+import common.model.JumpToNativePageModel;
 import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView setCode;
     private TextView classList;
     private TextView others_home_page;
+    private TextView others_home_page_fragment;
     private TextView clear_user_info;
     private Switch isRealease;
     private TextView uuid;
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         fxsys = findViewById(R.id.fxsys);
         classList = findViewById(R.id.class_list);
         others_home_page = findViewById(R.id.others_home_page);
+        others_home_page_fragment = findViewById(R.id.others_home_page_fragment);
         isRealease = findViewById(R.id.isRealease);
         uuid = findViewById(R.id.uuid);
         uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
@@ -206,12 +209,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, WebActivity.class);
-//                intent.putExtra("newsLink", "https://www.baidu.com/");
-//                intent.putExtra("newsLink", "https://uat-h5.zhcs.csbtv.com/sdk/news/#/");
-//                intent.putExtra("newsLink", "file:///android_asset/jsbridge/demo.html");
-//                intent.putExtra("newsLink", "file:///android_asset/jsbridge/test.html");
-                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
                 startActivity(intent);
+            }
+        });
+
+        /**
+         * 添加Fragment
+         */
+        others_home_page_fragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SdkInteractiveParam.getInstance().getWebFragment(MainActivity.this,
+                        new JumpToNativePageModel(), "", new ShareInfo(), R.id.addFragment, true);
             }
         });
 
