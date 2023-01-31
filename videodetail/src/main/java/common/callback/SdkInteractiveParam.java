@@ -3,6 +3,7 @@ package common.callback;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -86,5 +87,11 @@ public class SdkInteractiveParam {
         transaction.add(widgetId, webFragment);
         transaction.commitAllowingStateLoss();
         return webFragment;
+    }
+
+    public void clearFragment(Context context, Fragment fragment) {
+        FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+        transaction.remove(fragment);
+        transaction.commitAllowingStateLoss();
     }
 }

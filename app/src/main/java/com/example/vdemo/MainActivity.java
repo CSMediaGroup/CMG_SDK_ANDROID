@@ -42,6 +42,7 @@ import ui.activity.TgtCodeActivity;
 import ui.activity.VideoDetailActivity;
 import ui.activity.VideoHomeActivity;
 import ui.activity.WebActivity;
+import ui.fragment.WebFragment;
 import utils.UUIDUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView toPageDetail;
     private TextView loadMoreData;
     private TextView changeUserInfo;
+    private TextView clearFragment;
     private List<SZContentModel.DataDTO.ContentsDTO> contents = new ArrayList<>();
     private List<SZContentModel.DataDTO.ContentsDTO> loadMoreContents = new ArrayList<>();
+    private WebFragment webFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         others_home_page = findViewById(R.id.others_home_page);
         others_home_page_fragment = findViewById(R.id.others_home_page_fragment);
         isRealease = findViewById(R.id.isRealease);
+        clearFragment = findViewById(R.id.clear_fragment);
         uuid = findViewById(R.id.uuid);
         uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
         toPageDetail = findViewById(R.id.to_page_detail);
@@ -188,8 +192,10 @@ public class MainActivity extends AppCompatActivity {
         loadMoreData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SZContentModel.DataDTO.ContentsDTO contentsDTO = contents.get(contents.size() - 1);
-                SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+                if (!contents.isEmpty()) {
+                    SZContentModel.DataDTO.ContentsDTO contentsDTO = contents.get(contents.size() - 1);
+                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+                }
             }
         });
 
@@ -219,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         others_home_page_fragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SdkInteractiveParam.getInstance().getWebFragment(MainActivity.this,
+                webFragment = SdkInteractiveParam.getInstance().getWebFragment(MainActivity.this,
                         new JumpToNativePageModel(), "", new ShareInfo(), R.id.addFragment, true);
             }
         });
@@ -305,6 +311,13 @@ public class MainActivity extends AppCompatActivity {
 //                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
 //            }
 //        });
+
+        clearFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SdkInteractiveParam.getInstance().clearFragment(MainActivity.this, webFragment);
+            }
+        });
     }
 
     @Override

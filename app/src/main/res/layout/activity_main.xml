@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,11 +17,12 @@
 
     <TextView
         android:id="@+id/set_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
         android:background="@color/video_c9"
-        android:padding="30dp"
+        android:gravity="center"
         android:text="获取参数值"></TextView>
 
     <EditText
@@ -83,7 +83,9 @@
         android:id="@+id/others_home_page"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_toRightOf="@+id/set_code"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="SDK首页（Activity）"
@@ -96,7 +98,9 @@
         android:id="@+id/others_home_page_fragment"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/set_code"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="5dp"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="SDK首页（Fragment）"
@@ -109,7 +113,10 @@
         android:id="@+id/to_page_detail"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/set_code"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_toRightOf="@+id/others_home_page_fragment"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="跳转新闻详情页"
@@ -122,7 +129,9 @@
         android:id="@+id/load_more_data"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/others_home_page_fragment"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="加载列表更多信息"
@@ -135,7 +144,8 @@
         android:id="@+id/clear_user_info"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/others_home_page_fragment"
+        android:layout_toRightOf="@+id/load_more_data"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="清除用户信息"
@@ -146,10 +156,23 @@
         android:id="@+id/change_user_info"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/load_more_data"
+        android:layout_marginRight="5dp"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="登录页面切换用户"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"></TextView>
+
+    <TextView
+        android:id="@+id/clear_fragment"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/load_more_data"
+        android:layout_toRightOf="@+id/change_user_info"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text="清空fragment"
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"></TextView>
 
@@ -157,8 +180,11 @@
         android:id="@+id/isRealease"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_below="@+id/change_user_info"
         android:layout_marginLeft="10dp"
         android:text="切换正式环境"></Switch>
+
+
 
     <TextView
         android:id="@+id/uuid"
@@ -191,7 +217,10 @@
     <RelativeLayout
         android:id="@+id/addFragment"
         android:layout_width="match_parent"
+        android:layout_below="@+id/change_user_info"
+        android:layout_marginTop="5dp"
         android:layout_height="wrap_content">
 
+
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>
