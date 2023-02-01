@@ -156,8 +156,13 @@ public class MainActivity extends AppCompatActivity {
 //                SzrmRecommend.getInstance().requestContentList("10");
                 SzrmRecommend.getInstance().requestContentList("10", new SzrmRecommend.ContentListCallBack() {
                     @Override
-                    public void ContentListCallBack(List<SZContentModel.DataDTO.ContentsDTO> response) {
+                    public void ContentListSuccessCallBack(List<SZContentModel.DataDTO.ContentsDTO> response) {
                         contents = response;
+                    }
+
+                    @Override
+                    public void ContentListErrorCallBack(String errorMessage) {
+                        ToastUtils.showShort(errorMessage);
                     }
                 });
                 SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {

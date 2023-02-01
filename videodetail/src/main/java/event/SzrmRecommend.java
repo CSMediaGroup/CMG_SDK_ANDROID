@@ -91,7 +91,11 @@ public class SzrmRecommend {
                 .execute(new JsonCallback<SZContentModel>() {
                     @Override
                     public void onSuccess(Response<SZContentModel> response) {
-                        contentListCallBack.ContentListCallBack(response.body().getData().get(0).getContents());
+                        if (null != response.body().getData()) {
+                            contentListCallBack.ContentListSuccessCallBack(response.body().getData().get(0).getContents());
+                        } else {
+                            contentListCallBack.ContentListErrorCallBack(response.body().message);
+                        }
                     }
 
                     @Override
@@ -105,7 +109,7 @@ public class SzrmRecommend {
                             return;
                         }
                         Log.e("zxs_list", response.body().getMessage());
-                        contentsEvent.setValue(contentsDTOS);
+                        contentListCallBack.ContentListErrorCallBack(response.body().getMessage());
                     }
                 });
     }
@@ -113,7 +117,8 @@ public class SzrmRecommend {
     private ContentListCallBack contentListCallBack;
 
     public interface ContentListCallBack {
-        void ContentListCallBack(List<SZContentModel.DataDTO.ContentsDTO> response);
+        void ContentListSuccessCallBack(List<SZContentModel.DataDTO.ContentsDTO> response);
+        abstract void ContentListErrorCallBack(String errorMessage);
     }
 
     public void setContentListCallBack(ContentListCallBack contentListCallBack) {

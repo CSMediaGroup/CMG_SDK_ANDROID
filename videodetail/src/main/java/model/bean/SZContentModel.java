@@ -31,6 +31,9 @@ public class SZContentModel {
     }
 
     public String getMessage() {
+        if (TextUtils.isEmpty(message)) {
+            return "系统异常";
+        }
         return message;
     }
 
