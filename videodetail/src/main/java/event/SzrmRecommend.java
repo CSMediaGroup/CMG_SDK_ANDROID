@@ -77,6 +77,50 @@ public class SzrmRecommend {
                 });
     }
 
+    /**
+     * 在星沙调用推荐列表数据
+     */
+    public void requestContentList(String pageSize, final ContentListCallBack contentListCallBack) {
+        OkGo.<SZContentModel>get(ApiConstants.getInstance().getCategoryCompositeData())
+                .tag("zxs_categoryCompositeData")
+                .params("categoryCode", "zxs.tuijian")
+                .params("personalRec", "1")
+                .params("refreshType", "open")
+                .params("pageSize", pageSize)
+                .params("ssid", PersonInfoManager.getInstance().getANDROID_ID())
+                .execute(new JsonCallback<SZContentModel>() {
+                    @Override
+                    public void onSuccess(Response<SZContentModel> response) {
+                        contentListCallBack.ContentListCallBack(response.body().getData().get(0).getContents());
+                    }
+
+                    @Override
+                    public void onError(Response<SZContentModel> response) {
+                        super.onError(response);
+                        if (null == response.body()) {
+                            return;
+                        }
+
+                        if (null == response.body().getMessage()) {
+                            return;
+                        }
+                        Log.e("zxs_list", response.body().getMessage());
+                        contentsEvent.setValue(contentsDTOS);
+                    }
+                });
+    }
+
+    private ContentListCallBack contentListCallBack;
+
+    public interface ContentListCallBack {
+        void ContentListCallBack(List<SZContentModel.DataDTO.ContentsDTO> response);
+    }
+
+    public void setContentListCallBack(ContentListCallBack contentListCallBack) {
+        this.contentListCallBack = contentListCallBack;
+    }
+
+
     public void requestMoreContentList(SZContentModel.DataDTO.ContentsDTO contentsDTO, String pageSize) {
         OkGo.<SZContentLoadMoreModel>get(ApiConstants.getInstance().getContentList())
                 .tag("zxs_moreContentList")
