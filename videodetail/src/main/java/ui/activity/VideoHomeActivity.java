@@ -2,16 +2,18 @@ package ui.activity;
 
 import static android.widget.RelativeLayout.BELOW;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+//import androidx.recyclerview.widget.LinearLayoutManager;
+//import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -277,18 +279,18 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         registerReceiver(netWorkStateReceiver, filter);
 
 
-        /**
-         * 获取用户信息
-         */
-        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<ThirdUserInfo>() {
-            @Override
-            public void onChanged(ThirdUserInfo thirdUserInfo) {
-                PersonInfoManager.getInstance().setThirdUserId(thirdUserInfo.getUserId());
-                PersonInfoManager.getInstance().setThirdUserHead(thirdUserInfo.getHeadImageUrl());
-                PersonInfoManager.getInstance().setThirdUserNickName(thirdUserInfo.getNickName());
-                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
-            }
-        });
+//        /**
+//         * 获取用户信息
+//         */
+//        SdkInteractiveParam.getInstance().userInfoEvent.observe(this, new Observer<ThirdUserInfo>() {
+//            @Override
+//            public void onChanged(ThirdUserInfo thirdUserInfo) {
+//                PersonInfoManager.getInstance().setThirdUserId(thirdUserInfo.getUserId());
+//                PersonInfoManager.getInstance().setThirdUserHead(thirdUserInfo.getHeadImageUrl());
+//                PersonInfoManager.getInstance().setThirdUserNickName(thirdUserInfo.getNickName());
+//                PersonInfoManager.getInstance().setThirdUserPhone(thirdUserInfo.getPhoneNum());
+//            }
+//        });
 
         //全屏进度条监听
         if (null != playerView && null != playerView.mFullScreenPlayer) {
@@ -1645,8 +1647,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                             } else {
                                 for (int i = 0; i < collectionList.size(); i++) {
                                     ImageSpan imgSpan = new ImageSpan(VideoHomeActivity.this,
-                                            R.drawable.szrm_sdk_collection_image,
-                                            ImageSpan.ALIGN_CENTER);
+                                            R.drawable.szrm_sdk_collection_image);
                                     final String str = collectionTvList.get(i);
                                     final String strChun = collectionStrList.get(i);
                                     SpannableString sp = new SpannableString(str);

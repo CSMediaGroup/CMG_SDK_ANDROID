@@ -1,12 +1,12 @@
 package common.manager;
 
 import android.content.Context;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class ViewPagerLayoutManager extends LinearLayoutManager {
@@ -36,9 +36,8 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
     }
 
-
     @Override
-    public void onAttachedToWindow(RecyclerView view) {
+    public void onAttachedToWindow(android.support.v7.widget.RecyclerView view) {
         super.onAttachedToWindow(view);
         mPagerSnapHelper.attachToRecyclerView(view);
         view.addOnChildAttachStateChangeListener(mChildAttachStateChangeListener);

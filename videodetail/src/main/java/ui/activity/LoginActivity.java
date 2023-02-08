@@ -2,37 +2,18 @@ package ui.activity;
 
 import static common.utils.AppInit.appId;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
 import com.szrm.videodetail.demo.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
-
-import common.callback.JsonCallback;
-import common.callback.SdkInteractiveParam;
-import common.callback.SdkParamCallBack;
-import common.http.ApiConstants;
-import common.model.SdkUserInfo;
-import common.model.ShareInfo;
-import common.model.ThirdUserInfo;
-import common.model.TokenModel;
 import common.utils.PersonInfoManager;
-import common.utils.SPUtils;
 import common.utils.ToastUtils;
-import event.SingleLiveEvent;
 
 public class LoginActivity extends AppCompatActivity {
     private TextView login;
