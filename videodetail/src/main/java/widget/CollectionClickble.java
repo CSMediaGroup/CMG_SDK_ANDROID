@@ -1,11 +1,11 @@
 package widget;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 
 import com.szrm.videodetail.demo.R;
 

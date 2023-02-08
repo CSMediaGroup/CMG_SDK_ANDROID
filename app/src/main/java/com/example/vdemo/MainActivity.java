@@ -3,8 +3,12 @@ package com.example.vdemo;
 
 import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
 
+import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -12,10 +16,6 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 
 import com.alibaba.fastjson.JSON;
 
@@ -165,9 +165,10 @@ public class MainActivity extends AppCompatActivity {
                         ToastUtils.showShort(errorMessage);
                     }
                 });
+
                 SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
                     @Override
-                    public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
+                    public void onChanged(@Nullable List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
                         contents = contentsDTOS;
                     }
                 });

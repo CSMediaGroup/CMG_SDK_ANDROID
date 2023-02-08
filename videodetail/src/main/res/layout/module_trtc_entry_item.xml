@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_cl"
@@ -7,14 +7,11 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal">
+
     <View
         android:layout_width="150dp"
         android:layout_height="100dp"
-        android:background="@drawable/szrm_sdk_bg_item_gradient"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-        app:layout_constraintEnd_toEndOf="@+id/img_item"
-        app:layout_constraintStart_toStartOf="@+id/img_item"
-        app:layout_constraintTop_toTopOf="@+id/img_item" />
+        android:background="@drawable/szrm_sdk_bg_item_gradient" />
 
     <ImageView
         android:id="@+id/img_item"
@@ -24,11 +21,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:scaleType="fitXY"
-        app:layout_constraintBottom_toTopOf="@+id/tv_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
         tools:src="@drawable/szrm_sdk_live_stream" />
 
     <TextView
@@ -41,10 +33,6 @@
         android:layout_marginBottom="30dp"
         android:textColor="@color/video_white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_item"
         tools:text="@string/item_video_conferencing" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

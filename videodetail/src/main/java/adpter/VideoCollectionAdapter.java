@@ -7,6 +7,7 @@ import static ui.fragment.VideoDetailFragment.videoIsNormal;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -22,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -266,7 +266,7 @@ public class VideoCollectionAdapter extends BaseQuickAdapter<RecordsDTO, BaseVie
             SpannableString sp = new SpannableString(mClassName);
             ImageSpan imgSpan = new ImageSpan(mContext,
                     R.drawable.szrm_sdk_collection_image,
-                    ImageSpan.ALIGN_CENTER);
+                    ImageSpan.ALIGN_BASELINE);
             sp.setSpan(imgSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             sp.setSpan(new ForegroundColorSpan(Color.WHITE), 0, mClassName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             SpannableStringBuilder builder = new SpannableStringBuilder();

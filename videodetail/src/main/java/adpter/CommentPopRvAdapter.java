@@ -5,6 +5,7 @@ import static common.constants.Constants.VIDEOTAG;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.Keep;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Keep;
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

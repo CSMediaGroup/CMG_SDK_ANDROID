@@ -1,6 +1,7 @@
 package common.model;
 
-import androidx.annotation.Keep;
+
+import android.support.annotation.Keep;
 
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
 import com.chad.library.adapter.base.entity.MultiItemEntity;

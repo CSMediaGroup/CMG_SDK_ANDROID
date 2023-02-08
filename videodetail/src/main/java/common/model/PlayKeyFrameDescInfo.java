@@ -1,6 +1,7 @@
 package common.model;
 
-import androidx.annotation.Keep;
+
+import android.support.annotation.Keep;
 
 /**
  * 视频关键帧信息

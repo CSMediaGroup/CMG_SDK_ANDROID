@@ -2,8 +2,7 @@ package common.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import androidx.annotation.NonNull;
+import android.support.annotation.NonNull;
 
 
 import java.util.Collections;

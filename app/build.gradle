@@ -3,18 +3,20 @@ plugins {
 }
 
 android {
-    compileSdk 28
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.example.vdemo"
-        minSdk 21
-        targetSdk 28
+        minSdkVersion 21
+        //noinspection ExpiredTargetSdkVersion
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         manifestPlaceholders = [
                 appAuthRedirectScheme: 'APPLOG_SCHEME'
         ]
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -33,9 +35,8 @@ dependencies {
     implementation project(':videodetail')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.android.support:design:28.0.0'
 //    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.+'
 //    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }

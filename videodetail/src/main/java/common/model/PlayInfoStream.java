@@ -1,6 +1,7 @@
 package common.model;
 
-import androidx.annotation.Keep;
+
+import android.support.annotation.Keep;
 
 /**
  * Created by annidy on 2017/12/20.

@@ -1,7 +1,8 @@
 package adpter;
 
-import androidx.annotation.Keep;
-import androidx.annotation.Nullable;
+
+import android.support.annotation.Keep;
+import android.support.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;

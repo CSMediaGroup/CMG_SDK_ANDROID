@@ -1,7 +1,8 @@
 package common.callback;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import common.model.BuriedPointModel;
 import common.model.ShareInfo;

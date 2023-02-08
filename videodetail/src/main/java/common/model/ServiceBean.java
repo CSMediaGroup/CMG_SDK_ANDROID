@@ -1,6 +1,7 @@
 package common.model;
 
-import androidx.annotation.Keep;
+
+import android.support.annotation.Keep;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -21,12 +21,12 @@
 #-renamesourcefileattribute SourceFile
 -dontskipnonpubliclibraryclassmembers
 -printconfiguration
--keep,allowobfuscation @interface androidx.annotation.Keep
+#-keep,allowobfuscation @interface androidx.annotation.Keep
 
--keep @androidx.annotation.Keep class *
--keepclassmembers class * {
-    @androidx.annotation.Keep *;
-}
+#-keep @androidx.annotation.Keep class *
+#-keepclassmembers class * {
+#    @androidx.annotation.Keep *;
+#}
 
 #-keep class com.tencent.** { *; }
 #-keep class common.model.** {*;}

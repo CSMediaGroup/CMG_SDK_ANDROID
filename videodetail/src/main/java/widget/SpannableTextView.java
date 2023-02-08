@@ -2,6 +2,7 @@ package widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.DynamicLayout;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -11,7 +12,6 @@ import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 
-import androidx.appcompat.widget.AppCompatTextView;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;

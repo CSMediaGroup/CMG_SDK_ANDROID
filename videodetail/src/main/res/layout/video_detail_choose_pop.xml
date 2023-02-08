@@ -29,7 +29,7 @@
         </ImageView>
 
     </RelativeLayout>
-    <androidx.recyclerview.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/video_detail_choose_pop_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,5 +37,5 @@
         android:layout_marginRight="@dimen/video_dp10"
         >
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

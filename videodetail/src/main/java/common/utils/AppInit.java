@@ -6,9 +6,9 @@ import static common.constants.Constants.success_code;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import androidx.annotation.NonNull;
 
 
 import com.alibaba.fastjson.JSON;

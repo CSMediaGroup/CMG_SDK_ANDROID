@@ -2,6 +2,8 @@ package adpter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.Keep;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -12,8 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
-import androidx.annotation.Keep;
-import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;

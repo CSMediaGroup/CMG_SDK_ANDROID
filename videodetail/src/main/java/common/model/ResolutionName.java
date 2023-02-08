@@ -1,6 +1,7 @@
 package common.model;
 
-import androidx.annotation.Keep;
+
+import android.support.annotation.Keep;
 
 /**
  * 自适应码流视频画质别名

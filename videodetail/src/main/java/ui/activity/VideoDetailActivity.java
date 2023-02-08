@@ -1,14 +1,14 @@
 package ui.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -1630,7 +1630,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
                                 for (int i = 0; i < collectionList.size(); i++) {
                                     ImageSpan imgSpan = new ImageSpan(VideoDetailActivity.this,
                                             R.drawable.szrm_sdk_collection_image,
-                                            ImageSpan.ALIGN_CENTER);
+                                            ImageSpan.ALIGN_BASELINE);
                                     final String str = collectionTvList.get(i);
                                     SpannableString sp = new SpannableString(str);
                                     if (i == 0) {
@@ -1711,7 +1711,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
             SpannableString sp = new SpannableString(className);
             ImageSpan imgSpan = new ImageSpan(VideoDetailActivity.this,
                     R.drawable.szrm_sdk_collection_image,
-                    ImageSpan.ALIGN_CENTER);
+                    ImageSpan.ALIGN_BASELINE);
             sp.setSpan(imgSpan, 0, 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             sp.setSpan(new ForegroundColorSpan(Color.WHITE), 0, className.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             SpannableStringBuilder builder = new SpannableStringBuilder();

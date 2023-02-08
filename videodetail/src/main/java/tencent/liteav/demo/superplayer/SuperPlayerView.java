@@ -16,6 +16,7 @@ import android.os.Binder;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,7 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import androidx.annotation.Nullable;
 
 import com.example.zhouwei.library.CustomPopWindow;
 import com.lzy.okgo.OkGo;

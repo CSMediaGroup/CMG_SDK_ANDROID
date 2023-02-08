@@ -3,6 +3,7 @@ package widget;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.zhouwei.library.CustomPopWindow;

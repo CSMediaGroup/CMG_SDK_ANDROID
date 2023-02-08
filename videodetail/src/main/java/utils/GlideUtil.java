@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.widget.ImageView;
 
-import androidx.annotation.DimenRes;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;

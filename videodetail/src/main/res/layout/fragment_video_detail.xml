@@ -32,10 +32,10 @@
             android:layout_height="wrap_content" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/video_detail_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 
         <!--        <com.scwang.smart.refresh.footer.ClassicsFooter-->

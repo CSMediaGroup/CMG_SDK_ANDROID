@@ -3,7 +3,6 @@ package ui.activity;
 import static common.constants.Constants.success_code;
 import static common.utils.AppInit.appId;
 
-import androidx.lifecycle.Observer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;

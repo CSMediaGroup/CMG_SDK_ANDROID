@@ -1,14 +1,14 @@
 package ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -109,6 +109,7 @@ import static ui.activity.VideoHomeActivity.maxPercent;
 import static ui.activity.VideoHomeActivity.uploadBuriedPoint;
 import static utils.NetworkUtil.setDataWifiState;
 
+@SuppressLint("ValidFragment")
 public class VideoDetailFragment extends Fragment implements View.OnClickListener {
     private RecyclerView videoDetailRv;
     public VideoDetailAdapter adapter;
@@ -1657,7 +1658,7 @@ public class VideoDetailFragment extends Fragment implements View.OnClickListene
                                 for (int i = 0; i < collectionList.size(); i++) {
                                     ImageSpan imgSpan = new ImageSpan(getActivity(),
                                             R.drawable.szrm_sdk_collection_image,
-                                            ImageSpan.ALIGN_CENTER);
+                                            ImageSpan.ALIGN_BASELINE);
                                     final String str = collectionTvList.get(i);
                                     SpannableString sp = new SpannableString(str);
                                     if (i == 0) {

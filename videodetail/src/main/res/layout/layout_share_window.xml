@@ -7,14 +7,14 @@
     android:minWidth="180dp"
     android:orientation="vertical">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/ryContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:background="#F8F8F8"
         android:paddingBottom="20dp"
-        binding:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        binding:layoutManager="android.support.v7.widget.GridLayoutManager"
         binding:spanCount="5" />
 
 
