@@ -167,6 +167,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Response<MechanismModel> response) {
                         if (null == response.body()) {
+                            Log.e("getCfg", "cfg获取错误");
                             ToastUtils.showShort(R.string.data_err);
                             return;
                         }
@@ -538,6 +539,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Response<SdkUserInfo> response) {
                         if (null == response.body().getData()) {
+                            Log.e("szrmLoginRequest", "szrmLoginRequest获取错误");
                             ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
                             return;
                         }
