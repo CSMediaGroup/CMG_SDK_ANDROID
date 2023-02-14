@@ -2,6 +2,8 @@ package model.bean;
 
 import java.util.List;
 
+import common.model.SZContentModel;
+
 public class SZContentLoadMoreModel {
 
     private int code;

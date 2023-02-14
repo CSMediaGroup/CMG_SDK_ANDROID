@@ -1,8 +1,6 @@
 package com.example.vdemo;
 
 
-import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
-
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,13 +28,12 @@ import common.callback.VideoParamCallBack;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.JumpToNativePageModel;
-import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import event.SzrmRecommend;
-import model.bean.SZContentModel;
+import common.model.SZContentModel;
 import ui.activity.LoginActivity;
 import ui.activity.TgtCodeActivity;
 import ui.activity.VideoDetailActivity;

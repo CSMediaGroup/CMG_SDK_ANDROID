@@ -19,7 +19,7 @@ import common.model.JumpToNativePageModel;
 import common.model.ShareInfo;
 import common.utils.PersonInfoManager;
 import model.bean.SZContentLoadMoreModel;
-import model.bean.SZContentModel;
+import common.model.SZContentModel;
 import ui.activity.VideoHomeActivity;
 import ui.activity.WebActivity;
 
