@@ -538,11 +538,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 .execute(new JsonCallback<SdkUserInfo>() {
                     @Override
                     public void onSuccess(Response<SdkUserInfo> response) {
-                        if (null == response.body().getData()) {
-                            Log.e("szrmLoginRequest", "szrmLoginRequest获取错误");
-                            ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
-                            return;
-                        }
                         if (response.body().getCode().equals("200")) {
                             if (null == response.body().getData()) {
                                 return;

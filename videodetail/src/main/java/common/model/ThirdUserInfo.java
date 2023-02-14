@@ -2,6 +2,7 @@ package common.model;
 
 
 import android.support.annotation.Keep;
+import android.text.TextUtils;
 
 @Keep
 public class ThirdUserInfo {
@@ -14,6 +15,9 @@ public class ThirdUserInfo {
     private String userId;
 
     public String getHeadImageUrl() {
+        if (TextUtils.isEmpty(headImageUrl)) {
+            return "";
+        }
         return headImageUrl;
     }
 
@@ -22,6 +26,9 @@ public class ThirdUserInfo {
     }
 
     public String getNickName() {
+        if (TextUtils.isEmpty(nickName)) {
+            return "";
+        }
         return nickName;
     }
 
@@ -30,6 +37,9 @@ public class ThirdUserInfo {
     }
 
     public String getPhoneNum() {
+        if (TextUtils.isEmpty(phoneNum)) {
+            return "";
+        }
         return phoneNum;
     }
 
@@ -38,6 +48,9 @@ public class ThirdUserInfo {
     }
 
     public String getUserId() {
+        if (TextUtils.isEmpty(userId)) {
+            return "";
+        }
         return userId;
     }
 
