@@ -88,7 +88,6 @@ SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
     }
 });
 
-----------------------------------------------------------------
 
 ##四、SDK的使用
 
@@ -100,7 +99,7 @@ Android：
 Intent intent = new Intent(MainActivity.this, WebActivity);
 startActivity(intent);
 
-----------------------------------------------------------------
+...
 
 ###2.自定义UI （获取列表数据，自定义列表样式，使用路由方法进入详情页）
 
