@@ -24,6 +24,7 @@
 1.使用Gradle集成SDK
 
 ```
+
 <1>.在模块的build.gradle中添加dependencies {
  implementation 'com.github.CSMediaGroup:CMG_SDK_ANDROID:latest.release'
 }
@@ -41,6 +42,7 @@ repositories {
 allprojects{
 	//...同上
 }
+![img.png](szrm_sdk_app_ic_earphone.png)
 
 ```
 
