@@ -17,13 +17,11 @@
 2.登录功能
 3.用户基本信息	(用户ID，手机号，昵称，头像)
 
-
-
+```
 ##二、Android端集成步骤
 
 1.使用Gradle集成SDK
 
-```
 <1>.在模块的build.gradle中添加dependencies {
  implementation 'com.github.CSMediaGroup:CMG_SDK_ANDROID:latest.release'
 }
