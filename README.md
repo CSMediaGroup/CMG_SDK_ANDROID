@@ -22,6 +22,7 @@
 
 1.使用Gradle集成SDK
 
+```
 <1>.在模块的build.gradle中添加dependencies {
  implementation 'com.github.CSMediaGroup:CMG_SDK_ANDROID:latest.release'
 }
@@ -85,7 +86,7 @@ SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
         //这里是你跳转你的登录页面逻辑 去登录
     }
 });
-
+```
 
 ##四、SDK的使用
 
@@ -93,11 +94,10 @@ SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
 
 Android：
 
+```
 //跳转到资讯首页  
 Intent intent = new Intent(MainActivity.this, WebActivity);
 startActivity(intent);
-
-...
 
 ###2.自定义UI （获取列表数据，自定义列表样式，使用路由方法进入详情页）
 
@@ -121,12 +121,12 @@ SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observe
 <2>调用SDK提供的路由方法，进入详情页
 
 SzrmRecommend.getInstance().routeToDetailPage(SZContentModel);
-
+```
 
 ##五、其他说明
 
 ###1.字段说明
-```
+
 【列表样式】 listStyle
 
 null     左文右图
