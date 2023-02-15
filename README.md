@@ -27,6 +27,7 @@
 <1>.在模块的build.gradle中添加dependencies {
  implementation 'com.github.CSMediaGroup:CMG_SDK_ANDROID:latest.release'
 }
+如果使用的support包版本，请依赖 implementation 'com.github.CSMediaGroup:CMG_SDK_ANDROID:support_1.0.6' 对应的support包版本号
 
 
 <2>.在app级别的 build.gradle 中 
