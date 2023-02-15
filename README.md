@@ -139,9 +139,9 @@ null     左文右图
 
 
 
-【封面图】thumbnailUrl    (多图新闻格式需要单独转化，如 
-"https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb71e484115300016b9600.jpeg,\<br> 
-https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb720684115300016b9602.jpeg,\<br> 
+【封面图】thumbnailUrl    (多图新闻格式需要单独转化，如<br> 
+"https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb71e484115300016b9600.jpeg,<br> 
+https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb720684115300016b9602.jpeg,<br> 
 https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb721284115300016b9604.jpeg”）
 
 【标题】title
