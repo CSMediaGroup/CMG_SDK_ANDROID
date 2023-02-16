@@ -17,14 +17,12 @@
 2.登录功能
 3.用户基本信息	(用户ID，手机号，昵称，头像)
 
-
-
+```
 ##二、Android端集成步骤
 
 1.使用Gradle集成SDK
 
 ```
-
 <1>.在模块的build.gradle中添加dependencies {
  implementation 'com.github.CSMediaGroup:CMG_SDK_ANDROID:latest.release'
 }
@@ -42,7 +40,6 @@ repositories {
 allprojects{
 	//...同上
 }
-![img.png](szrm_sdk_app_ic_earphone.png)
 
 ```
 
@@ -89,8 +86,7 @@ SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
         //这里是你跳转你的登录页面逻辑 去登录
     }
 });
-
-----------------------------------------------------------------
+```
 
 ##四、SDK的使用
 
@@ -98,11 +94,10 @@ SdkInteractiveParam.getInstance().setSdkCallBack(new SdkParamCallBack() {
 
 Android：
 
+```
 //跳转到资讯首页  
 Intent intent = new Intent(MainActivity.this, WebActivity);
 startActivity(intent);
-
-----------------------------------------------------------------
 
 ###2.自定义UI （获取列表数据，自定义列表样式，使用路由方法进入详情页）
 
@@ -126,12 +121,12 @@ SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observe
 <2>调用SDK提供的路由方法，进入详情页
 
 SzrmRecommend.getInstance().routeToDetailPage(SZContentModel);
-
+```
 
 ##五、其他说明
 
 ###1.字段说明
-```
+
 【列表样式】 listStyle
 
 null     左文右图
@@ -144,7 +139,10 @@ null     左文右图
 
 
 
-【封面图】thumbnailUrl    (多图新闻格式需要单独转化，如 "https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb71e484115300016b9600.jpeg,https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb720684115300016b9602.jpeg,https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb721284115300016b9604.jpeg”）
+【封面图】thumbnailUrl    (多图新闻格式需要单独转化，如<br>
+"https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb71e484115300016b9600.jpeg,<br>
+https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb720684115300016b9602.jpeg,<br>
+https://cdn-oss.zhcs.csbtv.com/zhcs-prd/images/63bb721284115300016b9604.jpeg”）
 
 【标题】title
 

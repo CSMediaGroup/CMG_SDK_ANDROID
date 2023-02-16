@@ -26,6 +26,7 @@ public class Constants {
     public static final String THIRDUSERHEAD = "ThirdUserHead";
     public static final String THIRDUSERNICKNAME = "ThirdUserNickName";
     public static final String THIRDUSERPHONE = "thirdUserPhone";
+    public static final String SAVE_PATH_NAME = "ZXS_PATH";
 
 
     public static final String KEY_USER = "keyuser";

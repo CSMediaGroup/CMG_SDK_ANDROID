@@ -491,31 +491,40 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onPause() {
-        super.onPause();
-        if (null != mAgentWeb) {
-            mAgentWeb.getWebLifeCycle().onPause();
+//        if (null != mAgentWeb) {
+//            mAgentWeb.getWebLifeCycle().onPause();
+//        }
+        if (Build.VERSION.SDK_INT >= 11){
+            mBridgeWebView.onPause();
         }
+
+        mBridgeWebView.pauseTimers();
+        super.onPause();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
-        if (null != mAgentWeb) {
-            mAgentWeb.getWebLifeCycle().onResume();
+//        if (null != mAgentWeb) {
+//            mAgentWeb.getWebLifeCycle().onResume();
+//        }
+        if (Build.VERSION.SDK_INT >= 11){
+            mBridgeWebView.onResume();
         }
+        mBridgeWebView.resumeTimers();
         if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             //需要去请求数智融媒的登录
             szrmLoginRequest(true);
         }
+        super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onDestroy();
         }
         OkGo.getInstance().cancelAll();
+        super.onDestroy();
     }
 
     public static void szrmLoginRequest(final boolean isWeb) {
