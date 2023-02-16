@@ -1,8 +1,8 @@
 package common.http;
 
 public class ApiConstants {
-    public String baseUrl = "https://uat-fuse-api-gw.zhcs.csbtv.com/";
-    public String adminBaseUrl = "https://uat-fuse-admin.zhcs.csbtv.com/";
+    public String baseUrl = "https://fuse-api-gw.zhcs.csbtv.com/";
+    public String adminBaseUrl = "https://fuse-admin.zhcs.csbtv.com/";
     public String h5BaseUrl;
 
     private static ApiConstants instance;
