@@ -197,7 +197,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     private String videoTag = "videoTag";
     private String recommendTag = "recommend";
     private boolean isLoadComplate = false;
-    private BaseQuickAdapter.RequestLoadMoreListener requestLoadMoreListener;
+//    private BaseQuickAdapter.RequestLoadMoreListener requestLoadMoreListener;
     public View decorView;
     private SoftKeyBoardListener softKeyBoardListener;
     private LinearLayout share;
@@ -422,7 +422,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 if (playerMode.equals(SuperPlayerDef.PlayerMode.FULLSCREEN)) {
                     xkshManager.setCanScoll(false);
                     refreshLayout.setEnableRefresh(false);
-                    adapter.setEnableLoadMore(false);
+//                    adapter.setEnableLoadMore(false);
 
                     videoBack.setVisibility(View.GONE);
                     if (null != popupWindow) {
@@ -474,7 +474,8 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 } else if (playerMode.equals(SuperPlayerDef.PlayerMode.WINDOW)) {
                     xkshManager.setCanScoll(true);
                     refreshLayout.setEnableRefresh(true);
-                    adapter.setEnableLoadMore(true);
+                    //先注释，不加载更多
+//                    adapter.setEnableLoadMore(true);
                     videoBack.setVisibility(View.VISIBLE);
                     setLikeCollection(playerView.contentStateModel);
                     if (null != videoDetailCommentBtn) {
@@ -813,10 +814,12 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         videoDetailWhiteCommentRl.setOnClickListener(this);
         adapter = new XkshVideoAdapter(R.layout.xksh_video_item_layout, mDatas, this,
                 playerView, refreshLayout, videoDetailCommentBtn, xkshManager, logoUrl);
-        adapter.setLoadMoreView(new CustomLoadMoreView());
-        adapter.setPreLoadNumber(2);
-        adapter.openLoadAnimation();
-        adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
+        adapter.bindToRecyclerView(videoDetailRv);
+//        adapter.setLoadMoreView(new CustomLoadMoreView());
+//        adapter.setPreLoadNumber(2);
+//        adapter.openLoadAnimation();
+//        adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
+
         /**
          * 无wifi 继续播放点击
          */
@@ -988,7 +991,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                     playerView.mSuperPlayer.pause();
                 }
                 isLoadComplate = false;
-                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
+//                adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
                 getOneVideo();
                 //重置重播标识
                 if (null != playerView && null != playerView.buriedPointModel) {
@@ -996,9 +999,10 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                 }
             }
         });
-        requestLoadMoreListener = new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
+//        requestLoadMoreListener = new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+                //先注释，不加载更多
 //                if (!isLoadComplate) {
 //                    videoDetailRv.post(new Runnable() {
 //                        @Override
@@ -1011,8 +1015,8 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
 //                        }
 //                    });
 //                }
-            }
-        };
+//            }
+//        };
     }
 
     /**
@@ -1392,14 +1396,14 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
 
                                     isLoadComplate = true;
                                 } else {
-                                    adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
+//                                    adapter.setOnLoadMoreListener(requestLoadMoreListener, videoDetailRv);
                                     isLoadComplate = false;
                                     mDatas.addAll(response.body().getData());
                                     setDataWifiState(mDatas, VideoHomeActivity.this);
-                                    adapter.loadMoreComplete();
+//                                    adapter.loadMoreComplete();
                                 }
 //                            adapter.setNewData(mDatas);
-                                adapter.loadMoreComplete();
+//                                adapter.loadMoreComplete();
 
                             } else {
                                 adapter.loadMoreFail();
@@ -1657,13 +1661,14 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                     sp.setSpan(new CollectionClickble(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
+                                            //因为接口查不到数据，先注释
                                             //合集标签点击事件
-                                            Intent intent = new Intent(VideoHomeActivity.this, VideoDetailActivity.class);
-                                            intent.putExtra("classId", classId);
-                                            intent.putExtra("className", strChun.trim());
-                                            intent.putExtra("logoUrl", logoUrl);
-                                            intent.putExtra("appName", appName);
-                                            startActivity(intent);
+//                                            Intent intent = new Intent(VideoHomeActivity.this, VideoDetailActivity.class);
+//                                            intent.putExtra("classId", classId);
+//                                            intent.putExtra("className", strChun.trim());
+//                                            intent.putExtra("logoUrl", logoUrl);
+//                                            intent.putExtra("appName", appName);
+//                                            startActivity(intent);
                                         }
                                     }, VideoHomeActivity.this), 0, sp.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                                     if (i == collectionList.size() - 1) {
