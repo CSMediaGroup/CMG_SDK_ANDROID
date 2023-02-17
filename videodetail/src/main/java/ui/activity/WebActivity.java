@@ -168,6 +168,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onSuccess(Response<MechanismModel> response) {
                         if (null == response.body()) {
+                            Log.e("getCfg", "cfg获取错误");
                             ToastUtils.showShort(R.string.data_err);
                             return;
                         }
@@ -491,31 +492,34 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onPause() {
-        super.onPause();
-        if (null != mAgentWeb) {
-            mAgentWeb.getWebLifeCycle().onPause();
+        if (Build.VERSION.SDK_INT >= 11){
+            mBridgeWebView.onPause();
         }
+
+        mBridgeWebView.pauseTimers();
+        super.onPause();
     }
 
     @Override
     protected void onResume() {
-        super.onResume();
-        if (null != mAgentWeb) {
-            mAgentWeb.getWebLifeCycle().onResume();
+        if (Build.VERSION.SDK_INT >= 11){
+            mBridgeWebView.onResume();
         }
+        mBridgeWebView.resumeTimers();
         if (PersonInfoManager.getInstance().isRequestSzrmLogin()) {
             //需要去请求数智融媒的登录
             szrmLoginRequest(true);
         }
+        super.onResume();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (null != mAgentWeb) {
             mAgentWeb.getWebLifeCycle().onDestroy();
         }
         OkGo.getInstance().cancelAll();
+        super.onDestroy();
     }
 
     public static void szrmLoginRequest(final boolean isWeb) {
@@ -538,10 +542,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 .execute(new JsonCallback<SdkUserInfo>() {
                     @Override
                     public void onSuccess(Response<SdkUserInfo> response) {
-                        if (null == response.body().getData()) {
-                            ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
-                            return;
-                        }
                         if (response.body().getCode().equals("200")) {
                             if (null == response.body().getData()) {
                                 return;

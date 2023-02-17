@@ -23,12 +23,15 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import common.constants.Constants;
+
 public class ImageUtils {
     private static String generateFileName() {
         return UUID.randomUUID().toString();
     }
 
-    private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath() + "/智慧浏阳/";
+    private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
+    public final static String SAVE_REAL_PATH =  SDCardUtils.getSDCardPath() + "/DCIM";
 
     public static boolean saveBitmap2file(Bitmap bmp, Context context, Handler handler, CallBackFunction function) {
 
@@ -36,7 +39,7 @@ public class ImageUtils {
         String fileName = generateFileName() + ".JPEG";
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
-            savePath = SD_PATH;
+            savePath = SAVE_REAL_PATH;
         } else {
             Message message = new Message();
             message.what = 2;

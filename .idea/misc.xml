@@ -8,7 +8,12 @@
         <entry key="videodetail/src/main/res/drawable/anthology_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/app_content_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/bg_font_window.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/brief_introduction_bg.xml" value="0.13" />
         <entry key="videodetail/src/main/res/drawable/choose_pop_bg.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/choose_pop_rv_item_check.xml" value="0.13" />
+        <entry key="videodetail/src/main/res/drawable/choose_pop_rv_item_choose.xml" value="0.13" />
+        <entry key="videodetail/src/main/res/drawable/choose_pop_rv_item_unchoose.xml" value="0.13" />
+        <entry key="videodetail/src/main/res/drawable/comment_bg.xml" value="0.13" />
         <entry key="videodetail/src/main/res/drawable/comment_input_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/corners_radius_button.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/follow_bg.xml" value="0.1953125" />
@@ -17,6 +22,7 @@
         <entry key="videodetail/src/main/res/drawable/keyword_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/layer_list_progress_drawable.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/line_small.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/progressbar.xml" value="0.13" />
         <entry key="videodetail/src/main/res/drawable/publisher_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/seek_bar_thumb_font.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/shape_dialog_bg.xml" value="0.1953125" />
@@ -26,6 +32,7 @@
         <entry key="videodetail/src/main/res/drawable/superplayer_biz_video_progressbar.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/superplayer_gray_thumb.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/superplayer_gray_track.xml" value="0.1953125" />
+        <entry key="videodetail/src/main/res/drawable/superplayer_green_thumb.xml" value="0.13" />
         <entry key="videodetail/src/main/res/drawable/superplayer_green_track.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/superplayer_layer_list_progress_bar.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/superplayer_laylist_vod_video_progress.xml" value="0.1953125" />
@@ -42,32 +49,65 @@
         <entry key="videodetail/src/main/res/drawable/video_flipper_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/drawable/video_tab_tips_bg.xml" value="0.1953125" />
         <entry key="videodetail/src/main/res/layout/activity_base_web.xml" value="0.165" />
+        <entry key="videodetail/src/main/res/layout/activity_container.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/activity_custom_web_view.xml" value="0.1503623188405797" />
         <entry key="videodetail/src/main/res/layout/activity_easy_web.xml" value="0.1852355072463768" />
         <entry key="videodetail/src/main/res/layout/activity_login.xml" value="0.335" />
+        <entry key="videodetail/src/main/res/layout/activity_main.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/activity_tgt_code.xml" value="0.16927083333333334" />
+        <entry key="videodetail/src/main/res/layout/activity_trtc_main.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/activity_upload.xml" value="0.11372847011144883" />
         <entry key="videodetail/src/main/res/layout/activity_video_detail.xml" value="0.1852355072463768" />
         <entry key="videodetail/src/main/res/layout/activity_video_main.xml" value="0.335" />
         <entry key="videodetail/src/main/res/layout/activity_web.xml" value="0.165" />
         <entry key="videodetail/src/main/res/layout/comment_list_empty.xml" value="0.1852355072463768" />
+        <entry key="videodetail/src/main/res/layout/comment_pop_lv2_item.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/comment_pop_rv_item.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/custom_load_more_view.xml" value="0.15760869565217392" />
+        <entry key="videodetail/src/main/res/layout/customer_viewflipper_item.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/footer_view.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/fragment_live.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/fragment_video_comment_pop.xml" value="0.12864583333333332" />
         <entry key="videodetail/src/main/res/layout/fragment_video_detail.xml" value="0.1852355072463768" />
         <entry key="videodetail/src/main/res/layout/fragment_web.xml" value="0.2346014492753623" />
         <entry key="videodetail/src/main/res/layout/fragment_xksh.xml" value="0.14175724637681159" />
+        <entry key="videodetail/src/main/res/layout/fullscreen_no_login_tips.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/item_tag_layout.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/keyword_layout_item.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/layout_input_window.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/layout_share_window.xml" value="0.25" />
+        <entry key="videodetail/src/main/res/layout/layout_tab.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/layout_tab_bottom.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/layout_tab_left.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/layout_tab_right.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/layout_tab_segment.xml" value="0.10520833333333333" />
+        <entry key="videodetail/src/main/res/layout/layout_tab_top.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/layout_view_loading.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/live_rv_item_layout.xml" value="0.21331521739130435" />
         <entry key="videodetail/src/main/res/layout/mine_layout_bottomtipdialog.xml" value="0.165" />
         <entry key="videodetail/src/main/res/layout/mine_layout_clearcachedialog.xml" value="0.335" />
         <entry key="videodetail/src/main/res/layout/mine_layout_imagetype.xml" value="0.335" />
+        <entry key="videodetail/src/main/res/layout/module_entry_child_item.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/module_entry_item.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/module_trtc_entry_item.xml" value="0.128125" />
         <entry key="videodetail/src/main/res/layout/no_login_tips.xml" value="0.1852355072463768" />
+        <entry key="videodetail/src/main/res/layout/share_pop_view.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/share_popwindow.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/speed_popwindow.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/superplayer_item_new_vod.xml" value="0.21331521739130435" />
+        <entry key="videodetail/src/main/res/layout/superplayer_layout_new_vod_snap.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/superplayer_more_popup_view.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/superplayer_quality_item_view.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/superplayer_quality_popup_view.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/superplayer_video_progress_layout.xml" value="0.21331521739130435" />
+        <entry key="videodetail/src/main/res/layout/superplayer_video_volume_brightness_progress_layout.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/superplayer_vod_player_float.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_player_fullscreen.xml" value="0.125" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_player_window.xml" value="0.1" />
         <entry key="videodetail/src/main/res/layout/superplayer_vod_view.xml" value="0.14895833333333333" />
+        <entry key="videodetail/src/main/res/layout/video_detail_choose_pop.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/video_detail_choose_pop_rv_item.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/video_detail_comment_pop.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/video_detail_item.xml" value="0.2" />
         <entry key="videodetail/src/main/res/layout/video_fragment_item.xml" value="0.1" />
         <entry key="videodetail/src/main/res/layout/xksh_video_item_layout.xml" value="0.1852355072463768" />

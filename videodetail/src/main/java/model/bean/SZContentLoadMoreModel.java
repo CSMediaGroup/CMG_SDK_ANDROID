@@ -1,7 +1,10 @@
 package model.bean;
 
+import androidx.annotation.Keep;
+
 import java.util.List;
 
+@Keep
 public class SZContentLoadMoreModel {
 
     private int code;

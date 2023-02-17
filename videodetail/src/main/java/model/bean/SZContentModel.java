@@ -3,8 +3,11 @@ package model.bean;
 
 import android.text.TextUtils;
 
+import androidx.annotation.Keep;
+
 import java.util.List;
 
+@Keep
 public class SZContentModel {
 
     public int code;
@@ -65,6 +68,7 @@ public class SZContentModel {
         this.time = time;
     }
 
+    @Keep
     public static class DataDTO {
         public String id;
         public String categoryId;
@@ -166,6 +170,7 @@ public class SZContentModel {
             this.subCategories = subCategories;
         }
 
+        @Keep
         public static class ConfigDTO {
             public String name;
             public String code;
@@ -223,6 +228,7 @@ public class SZContentModel {
             }
         }
 
+        @Keep
         public static class ContentsDTO {
             public String shareTitle;
             public String shareUrl;
@@ -939,6 +945,7 @@ public class SZContentModel {
                 this.pid = pid;
             }
 
+            @Keep
             public static class ExtendDTO {
             }
         }
