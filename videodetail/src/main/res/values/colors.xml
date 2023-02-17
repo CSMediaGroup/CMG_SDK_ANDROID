@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="tencent_tls_ui_deepgray">#777777</color>
 
     <color name="video_c8">#FFFFFF</color>
@@ -7,8 +7,8 @@
     <color name="video_c6">#666666</color>
     <color name="comment_pop_user_nam">#3E3A39</color>
 
-    <color name="colorPrimaryDark">#21a3f5</color>
-    <color name="colorAccent">#0accac</color>
+    <color name="video_colorPrimaryDark" tools:ignore="MissingDefaultResource">#21a3f5</color>
+    <color name="video_colorAccent" tools:ignore="MissingDefaultResource">#0accac</color>
     <color name="transparent">#00000000</color>
 
     <color name="colorTransparentBlack">#44777777</color>
