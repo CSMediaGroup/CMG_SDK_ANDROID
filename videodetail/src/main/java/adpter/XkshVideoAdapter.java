@@ -19,7 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 //import com.chad.library.adapter.base.BaseQuickAdapter;
 //import com.chad.library.adapter.base.BaseViewHolder;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+//import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.szrm.videodetail.demo.R;
 
 import java.util.ArrayList;
@@ -36,6 +36,7 @@ import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.ScreenUtils;
 import common.utils.AppInit;
+import smartrefresh.layout.SmartRefreshLayout;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
 import ui.activity.VideoHomeActivity;

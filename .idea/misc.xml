@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../.gradle/caches/transforms-2/files-2.1/1562b3aaa97e2f59017d3984c8e8ef85/refresh-header-classics-2.0.3/res/layout/srl_classics_header.xml" value="0.10764944275582573" />
+        <entry key="../../.gradle/caches/transforms-2/files-2.1/ddabf0c293d04b9292963bdde75fde8d/refresh-footer-classics-2.0.3/res/layout/srl_classics_footer.xml" value="0.13958333333333334" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="videodetail/src/main/res/drawable/anthology_bg.xml" value="0.1953125" />
@@ -95,6 +97,8 @@
         <entry key="videodetail/src/main/res/layout/share_pop_view.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/share_popwindow.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/speed_popwindow.xml" value="0.165625" />
+        <entry key="videodetail/src/main/res/layout/srl_classics_footer.xml" value="0.13958333333333334" />
+        <entry key="videodetail/src/main/res/layout/srl_classics_header.xml" value="0.10764944275582573" />
         <entry key="videodetail/src/main/res/layout/superplayer_item_new_vod.xml" value="0.21331521739130435" />
         <entry key="videodetail/src/main/res/layout/superplayer_layout_new_vod_snap.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/superplayer_more_popup_view.xml" value="0.165625" />

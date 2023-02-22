@@ -20,10 +20,10 @@ import android.widget.TextView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Response;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
-import com.scwang.smart.refresh.layout.api.RefreshLayout;
-import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+//import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+//import com.scwang.smart.refresh.layout.api.RefreshLayout;
+//import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+//import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
@@ -47,6 +47,10 @@ import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import common.utils.AppInit;
 import custompop.CustomPopWindow;
+import smartrefresh.layout.SmartRefreshLayout;
+import smartrefresh.layout.api.RefreshLayout;
+import smartrefresh.layout.listener.OnLoadMoreListener;
+import smartrefresh.layout.listener.OnRefreshListener;
 
 import static common.callback.VideoInteractiveParam.param;
 import static common.constants.Constants.PANELCODE;
