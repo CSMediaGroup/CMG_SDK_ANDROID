@@ -15,14 +15,16 @@ import android.widget.ViewFlipper;
 
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
+//import com.chad.library.adapter.base.BaseQuickAdapter;
+//import com.chad.library.adapter.base.BaseViewHolder;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.szrm.videodetail.demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import brvah.BaseQuickAdapter;
+import brvah.BaseViewHolder;
 import common.constants.Constants;
 import common.manager.ViewPagerLayoutManager;
 import common.model.DataDTO;

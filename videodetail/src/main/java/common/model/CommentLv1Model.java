@@ -3,11 +3,14 @@ package common.model;
 
 import android.support.annotation.Keep;
 
-import com.chad.library.adapter.base.entity.AbstractExpandableItem;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
+//import com.chad.library.adapter.base.entity.AbstractExpandableItem;
+//import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import brvah.entity.AbstractExpandableItem;
+import brvah.entity.MultiItemEntity;
 
 @Keep
 public class CommentLv1Model {

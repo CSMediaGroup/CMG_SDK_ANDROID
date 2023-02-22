@@ -2,7 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_40">
+    android:layout_height="@dimen/video_dp40">
 
     <LinearLayout
         android:id="@+id/load_more_loading_view"
@@ -15,8 +15,8 @@
             android:id="@+id/loading_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_4"
-            android:text="@string/brvah_loading"
+            android:layout_marginLeft="@dimen/video_dp5"
+            android:text="@string/cmg_brvah_loading"
             android:textColor="@color/white"
             android:textSize="@dimen/sp_14"/>
     </LinearLayout>
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:text="@string/brvah_load_failed"/>
+            android:text="@string/cmg_brvah_load_failed"/>
 
     </FrameLayout>
 

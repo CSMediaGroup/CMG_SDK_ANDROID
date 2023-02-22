@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.example.zhouwei.library.CustomPopWindow;
+//import com.example.zhouwei.library.CustomPopWindow;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Progress;
@@ -60,6 +60,7 @@ import common.utils.DataCleanUtils;
 import common.utils.FileUtils;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
+import custompop.CustomPopWindow;
 import io.reactivex.functions.Consumer;
 import model.bean.ResponseBean;
 import model.bean.UploadVideoBean;

@@ -1,7 +1,9 @@
 package widget;
 
-import com.chad.library.adapter.base.loadmore.LoadMoreView;
+//import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.szrm.videodetail.demo.R;
+
+import brvah.loadmore.LoadMoreView;
 
 public final class CustomLoadMoreView extends LoadMoreView {
 

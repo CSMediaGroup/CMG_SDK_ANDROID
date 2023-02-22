@@ -92,6 +92,8 @@
     <string name="superplayer_enter_setting_fail" translatable="false">进入设置页面失败,请手动开启悬浮窗权限</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
-    <string name="brvah_loading" formatted="false" translatable="false">正在加载中...</string>
-    <string name="brvah_load_failed" formatted="false" translatable="false">加载失败，请点我重试</string>
+    <string name="cmg_brvah_app_name" tools:ignore="ExtraTranslation">Library</string>
+    <string name="cmg_brvah_load_end" tools:ignore="ExtraTranslation">没有更多数据</string>
+    <string name="cmg_brvah_load_failed" tools:ignore="ExtraTranslation">加载失败，请点我重试</string>
+    <string name="cmg_brvah_loading" tools:ignore="ExtraTranslation">正在加载中...</string>
 </resources>

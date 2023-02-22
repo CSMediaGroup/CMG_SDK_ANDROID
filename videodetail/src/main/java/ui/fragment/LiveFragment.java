@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.zhouwei.library.CustomPopWindow;
+//import com.chad.library.adapter.base.BaseQuickAdapter;
+//import com.example.zhouwei.library.CustomPopWindow;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Response;
@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adpter.LiveRvAdapter;
+import brvah.BaseQuickAdapter;
 import common.callback.JsonCallback;
 import common.callback.VideoInteractiveParam;
 import common.constants.Constants;
@@ -45,6 +46,7 @@ import common.model.VideoDetailModel;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import common.utils.AppInit;
+import custompop.CustomPopWindow;
 
 import static common.callback.VideoInteractiveParam.param;
 import static common.constants.Constants.PANELCODE;
