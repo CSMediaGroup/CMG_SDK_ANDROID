@@ -104,4 +104,7 @@
     <string name="cmg_srl_header_release" tools:ignore="ExtraTranslation">释放立即刷新</string>
     <string name="cmg_srl_header_secondary" tools:ignore="ExtraTranslation">释放进入二楼</string>
     <string name="cmg_srl_header_update" tools:ignore="ExtraTranslation">上次更新 M-d HH:mm</string>
+    <string name="gravity_center" tools:ignore="ExtraTranslation">center</string>
+    <string name="gravity_left" tools:ignore="ExtraTranslation">left</string>
+    <string name="gravity_right" tools:ignore="ExtraTranslation">right</string>
 </resources>

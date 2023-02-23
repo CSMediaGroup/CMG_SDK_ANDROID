@@ -37,7 +37,7 @@ import com.just.agentweb.AgentWeb;
 import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+//import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
@@ -63,6 +63,7 @@ import common.utils.SystemUtil;
 import common.utils.ToastUtils;
 import custompop.CustomPopWindow;
 import io.reactivex.functions.Consumer;
+import rxpermission.RxPermissions;
 import utils.UUIDUtils;
 
 public class WebActivity extends AppCompatActivity implements View.OnClickListener {

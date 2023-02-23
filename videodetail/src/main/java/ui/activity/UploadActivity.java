@@ -28,7 +28,7 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+//import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.szrm.videodetail.demo.R;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -37,9 +37,9 @@ import com.zhihu.matisse.filter.Filter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zhihu.matisse.internal.entity.IncapableCause;
 import com.zhihu.matisse.internal.entity.Item;
-import com.zhy.view.flowlayout.FlowLayout;
-import com.zhy.view.flowlayout.TagAdapter;
-import com.zhy.view.flowlayout.TagFlowLayout;
+//import com.zhy.view.flowlayout.FlowLayout;
+//import com.zhy.view.flowlayout.TagAdapter;
+//import com.zhy.view.flowlayout.TagFlowLayout;
 
 
 import org.json.JSONException;
@@ -61,10 +61,14 @@ import common.utils.FileUtils;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import custompop.CustomPopWindow;
+import flowlayout.FlowLayout;
+import flowlayout.TagAdapter;
+import flowlayout.TagFlowLayout;
 import io.reactivex.functions.Consumer;
 import model.bean.ResponseBean;
 import model.bean.UploadVideoBean;
 import common.model.TopicModel.DataDTO.RecordsDTO;
+import rxpermission.RxPermissions;
 
 public class UploadActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "UploadActivity";

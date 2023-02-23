@@ -85,7 +85,7 @@
                         android:textSize="13sp"></TextView>
                 </LinearLayout>
 
-                <com.zhy.view.flowlayout.TagFlowLayout
+                <flowlayout.TagFlowLayout
                     android:id="@+id/uploadTagFlow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                     app:max_select="1"
                     android:visibility="gone">
 
-                </com.zhy.view.flowlayout.TagFlowLayout>
+                </flowlayout.TagFlowLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

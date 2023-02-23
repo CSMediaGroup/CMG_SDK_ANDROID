@@ -39,7 +39,7 @@ import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.szrm.videodetail.demo.R;
-import com.tbruyelle.rxpermissions2.RxPermissions;
+//import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import common.callback.JsonCallback;
 import common.constants.Constants;
@@ -58,6 +58,7 @@ import common.utils.SystemUtil;
 import common.utils.ToastUtils;
 import custompop.CustomPopWindow;
 import io.reactivex.functions.Consumer;
+import rxpermission.RxPermissions;
 import ui.activity.LoginActivity;
 import ui.activity.VideoHomeActivity;
 import ui.activity.WebActivity;
