@@ -327,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
                 SdkInteractiveParam.getInstance().clearFragment(MainActivity.this, webFragment);
             }
         });
+
     }
 
     @Override
