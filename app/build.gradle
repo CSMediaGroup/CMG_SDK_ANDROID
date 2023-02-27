@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', includes: ['*.jar','*.aar'], exclude: ['android-support-v4.jar','android.appcompat-v7'])
     implementation project(':videodetail')
     //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'

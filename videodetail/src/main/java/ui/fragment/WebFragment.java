@@ -35,7 +35,7 @@ import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.huawei.multimedia.liteav.audiokit.utils.Constant;
+//import com.huawei.multimedia.liteav.audiokit.utils.Constant;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
