@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -31,9 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.example.zhouwei.library.CustomPopWindow;
@@ -46,14 +43,12 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.szrm.videodetail.demo.R;
 import com.tencent.rtmp.TXLiveConstants;
-import com.szrm.videodetail.demo.R;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import adpter.CommentPopRvAdapter;
-import adpter.VideoViewPagerAdapter;
 import adpter.XkshVideoAdapter;
 import common.callback.JsonCallback;
 import common.callback.SdkInteractiveParam;
@@ -65,15 +60,12 @@ import common.manager.OnViewPagerListener;
 import common.manager.ViewPagerLayoutManager;
 import common.model.CategoryModel;
 import common.model.CollectionLabelModel;
-import common.model.ColumnModel;
 import common.model.CommentLv1Model;
 import common.model.ContentStateModel;
 import common.model.DataDTO;
 import common.model.RecommendModel;
 import common.model.ReplyLv2Model;
-import common.model.SdkUserInfo;
 import common.model.ThirdUserInfo;
-import common.model.TokenModel;
 import common.model.TrackingUploadModel;
 import common.model.VideoChannelModel;
 import common.model.VideoDetailModel;
@@ -81,7 +73,6 @@ import common.model.VideoOneModel;
 import common.utils.ButtonSpan;
 import common.utils.DateUtils;
 import common.utils.KeyboardUtils;
-import common.utils.NoScrollViewPager;
 import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.SPUtils;
@@ -90,7 +81,6 @@ import common.utils.SoftKeyBoardListener;
 import common.utils.ToastUtils;
 import common.utils.AppInit;
 import flyco.tablayout.SlidingTabLayout;
-import flyco.tablayout.listener.OnTabSelectListener;
 import model.bean.ActivityRuleBean;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.SuperPlayerModel;
@@ -99,8 +89,6 @@ import tencent.liteav.demo.superplayer.contants.Contants;
 import tencent.liteav.demo.superplayer.model.SuperPlayerImpl;
 import tencent.liteav.demo.superplayer.model.utils.SystemUtils;
 import tencent.liteav.demo.superplayer.ui.view.PointSeekBar;
-import ui.fragment.VideoDetailFragment;
-import ui.fragment.XkshFragment;
 import utils.NetworkUtil;
 import widget.CollectionClickble;
 import widget.CustomLoadMoreView;
@@ -128,7 +116,6 @@ import static utils.NetworkUtil.setDataWifiState;
 
 public class VideoHomeActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView videoBack;
-    private RelativeLayout videoTitleView;
     private SuperPlayerView playerView;
 
     private TranslateAnimation translateAniLeftShow, translateAniLeftHide;
@@ -253,7 +240,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         appName = getIntent().getStringExtra("appName");
         videoBack = findViewById(R.id.video_back);
         videoBack.setOnClickListener(this);
-        videoTitleView = findViewById(R.id.video_title_view);
         noLoginTipsView = View.inflate(this, R.layout.no_login_tips, null);
         noLoginTipsCancel = noLoginTipsView.findViewById(R.id.no_login_tips_cancel);
         noLoginTipsOk = noLoginTipsView.findViewById(R.id.no_login_tips_ok);
@@ -452,9 +438,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                         videoDetailCommentBtn.setVisibility(View.GONE);
                     }
 
-                    if (null != videoTitleView) {
-                        videoTitleView.setVisibility(View.GONE);
-                    }
                     if (null != adapter.getViewByPosition(currentIndex, R.id.introduce_lin)) {
                         adapter.getViewByPosition(currentIndex, R.id.introduce_lin).setVisibility(View.GONE);
                     }
@@ -500,9 +483,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                         adapter.getViewByPosition(currentIndex, R.id.cover_picture).setVisibility(View.VISIBLE);
                     }
 
-                }
-                if (null != videoTitleView) {
-                    videoTitleView.setVisibility(View.VISIBLE);
                 }
             }
         };

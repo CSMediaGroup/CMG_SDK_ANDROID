@@ -1,8 +1,6 @@
 package adpter;
 
 import android.text.TextUtils;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,9 +14,6 @@ import java.util.List;
 import common.model.VideoChannelModel;
 import flyco.tablayout.SlidingTabLayout;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
-import ui.fragment.LiveFragment;
-import ui.fragment.VideoDetailFragment;
-import ui.fragment.XkshFragment;
 
 public class VideoViewPagerAdapter extends FragmentPagerAdapter {
     public List<Fragment> fragmentList = new ArrayList<>();
