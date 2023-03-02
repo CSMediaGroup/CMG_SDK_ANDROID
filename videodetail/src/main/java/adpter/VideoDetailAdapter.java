@@ -41,7 +41,7 @@ import widget.EllipsizeTextView;
 import static common.constants.Constants.BLUE_V;
 import static common.constants.Constants.YELLOW_V;
 import static common.utils.SPUtils.isVisibleNoWifiView;
-import static ui.fragment.VideoDetailFragment.videoIsNormal;
+import static ui.activity.VideoHomeActivity.videoIsNormal;
 import static common.callback.VideoInteractiveParam.param;
 
 public class VideoDetailAdapter extends BaseQuickAdapter<DataDTO, BaseViewHolder> {

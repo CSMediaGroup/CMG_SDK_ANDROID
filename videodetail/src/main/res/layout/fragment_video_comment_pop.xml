@@ -60,13 +60,13 @@
     </android.support.v7.widget.RecyclerView>
 
     <LinearLayout
+        android:id="@+id/comment_pop_rl"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/comment_pop_rl"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -81,7 +81,7 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/szrm_sdk_white_comment_icon"></ImageView>
+                android:src="@drawable/szrm_sdk_edit_comment_icon"></ImageView>
 
             <TextView
                 android:id="@+id/comment_edtInput"

@@ -255,4 +255,11 @@ public class ApiConstants {
         return getH5BaseUrl() + "api/cms/client/content/getContentList";
     }
 
+    /**
+     * 获取广电云token
+     */
+    public String gdyToken(){
+        return getBaseUrl() + "api/sys/getTokenGdyByTgt";
+    }
+
 }

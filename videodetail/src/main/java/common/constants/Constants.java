@@ -1,9 +1,9 @@
 package common.constants;
 
-
 public class Constants {
     public static final String success_code = "200";
     public static final String token_error = "401";
+    public static final String LOGIN_ERROR_CODE = "666666"; //没有绑定手机号
     public static final String USER_ID = "user_id";
     public static final String LOCAL_USER_ID = "local_user_id";
     public static final String TYPE_TOKEN = "token";
@@ -42,11 +42,25 @@ public class Constants {
     public static final String QQ_STRING = "qq";
     public static final String PARAME_VIDEO_CHANNEL = "videochannletype";
     public static final String PANELCODE = "panelCode";
+    public static final String VIDEOTAB = "videoTab";
+    public static final String CONTENTID = "contentId";
+    public static final String TOCURRENTTAB = "toCurrentTab";
+    public static final String CATEGORYNAME = "categoryName";
+    public static final String REQUESTID = "requestId";
+    public static final String MODULE_SOURCE = "module_source";
+    public static final String TABNAME = "tabName";
     public static final String VIDEOTAG = "videoTag";
+    public static final String VIDEODETAILTAG = "videoDetailTag";
     public static final String TRACKINGUPLOAD = "TrackingUpload";
     public static final String BLUE_V = "blue-v";
     public static final String YELLOW_V = "yellow-v";
     public static final String RED_V = "red-v";
+    public static final String UPLOAD_AGREEMENT = "upload_agreement";
+    public static final String PORTRAIT_STR = "Portrait";
+    public static final String CERTIFICATED = "certificated";
+    public static final String FROMHOMETAB = "fromHomeTab";
+    public static final String FROMXKSHTAB = "fromXkshTab";
+
     /**
      * 1.排行榜https://uat-h5.zhcs.csbtv.com/act/xksh/#/ranking
      * 2.话题详情https://uat-h5.zhcs.csbtv.com/act/xksh/#/topicDetails?id=215403
@@ -57,19 +71,23 @@ public class Constants {
     public static final String RANKING_LIST = "https://uat-h5.zhcs.csbtv.com/act/xksh/#/ranking";
     public static final String TOPIC_DETAILS = "https://uat-h5.zhcs.csbtv.com/act/xksh/#/topicDetails?id=";
     public static final String PERSONAL_CENTER = "https://uat-h5.zhcs.csbtv.com/act/xksh/#/me";
-    public static final String HEAD_OTHER = "https://uat-h5.zhcs.csbtv.com/act/xksh/#/others?id=";
+    public static final String HEAD_OTHER = "https://uat-h5.zhcs.csbtv.com/act/xksh/index.html#/me?id=";
     public static final String SEARCHPLUS = "https://uat-h5.zhcs.csbtv.com/fuse/news/#/searchPlus";
 
     public static final String RANKING_LIST_ZS = "https://h5.zhcs.csbtv.com/act/xksh/#/ranking";
     public static final String TOPIC_DETAILS_ZS = "https://h5.zhcs.csbtv.com/act/xksh/#/topicDetails?id=";
     public static final String PERSONAL_CENTER_ZS = "https://h5.zhcs.csbtv.com/act/xksh/#/me";
-    public static final String HEAD_OTHER_ZS = "https://h5.zhcs.csbtv.com/act/xksh/#/others?id=";
+    public static final String HEAD_OTHER_ZS = "https://h5.zhcs.csbtv.com/act/xksh/index.html#/me?id=";
     public static final String SEARCHPLUS_ZS = "https://h5.zhcs.csbtv.com/fuse/news/#/searchPlus";
 
 //    /**
 //     * ssid 火山需要传入的设备id (暂时先固定填上测试  后续需从万达拿)
 //     */
 //    public static final String SSID = param.getYmSSid();
+    /**
+     * 双击点击相隔时间
+     */
+    public static final long CLICK_INTERVAL_TIME = 300;
     /**
      * 刷新操作标识
      */
@@ -88,8 +106,14 @@ public class Constants {
      * 上报内容埋点固定传参
      */
     public static final String ENTER_FROM = "click_category";
-    //    public static final String CATEGORY_NAME = "c2402539";
+//    public static final String CATEGORY_NAME = "c2402539";
     public static final String PARAMS_FOR_SPECIAL = "content_manager_system";
+
+    /**
+     * 数智融媒错误码
+     */
+    public static final String SZRM_LOGIN_ERROR_CODE = "szrm_login_error_code";
+
 
     /**
      * 内容上报事件event
@@ -104,17 +128,10 @@ public class Constants {
      */
     public static final String SHORT_VIDEO_HOME_CLICK = "short_video_home_click"; //短视频首页上的点击事件
     public static final String WELL_LIFE_HOME_CLICK = "well_life_home_click"; //我的小康生活页面上的点击事件
-    public static final String SHORT_VIDEO_START_MAKE = "short_video_start_make"; //点击视频发布 （点击发布那个加号时触发）
     public static final String SHORT_VIDEO_START_UPLOAD = "short_video_start_upload"; //点击上传作品 （点击上传作品按钮时触发）
-    public static final String SHORT_VIDEO_SUBMIT = "short_video_submit"; //编辑视频发布 （提交发布成功时触发）
-    public static final String SHORT_VIDEO_LIKE_RANKING = "short_video_like_ranking"; //点赞排行榜按钮点击 (搜索页面右上角排行榜标志点击时触发)
     public static final String SHORT_VIDEO_TOPIC_LISTPAGE = "short_video_topic_listpage"; //热门话题列表页点击
-    public static final String CLICK_USER = "click_user"; //点击其他用户（非自己）
-    public static final String NOTICE_USER = "notice_user"; //关注用户
     public static final String SHORT_VIDEO_PERSONAL_BUTTON = "short_video_personal_button"; //视频个人中心页点击（非视频按钮）
-    public static final String CONTENT_VIDEO_PLAY = "content_video_play";  //视频开始播放
-    public static final String CONTENT_VIDEO_FINISH = "content_video_finish"; //视频播放完成
-    public static final String CONTENT_VIDEO_DURATION = "content_video_duration"; //视频播放时长
+
     public static final String CONTENT_LIVE_LIST_PAGE = "content_live_list_page"; //浏览直播专区
     public static final String CONTENT_LIVE_CLICK_LIST = "content_live_click_list"; //点击直播列表页
     public static final String CONTENT_LIVE_ENTER_PAGE = "content_live_enter_page"; //进入直播页

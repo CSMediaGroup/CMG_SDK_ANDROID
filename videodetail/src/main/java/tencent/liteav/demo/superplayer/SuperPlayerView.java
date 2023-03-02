@@ -1,5 +1,13 @@
 package tencent.liteav.demo.superplayer;
 
+import static common.callback.VideoInteractiveParam.param;
+import static common.constants.Constants.VIDEOTAG;
+import static common.constants.Constants.success_code;
+import static common.constants.Constants.token_error;
+import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE;
+import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE_REVERSE;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AppOpsManager;
 import android.content.ContentResolver;
@@ -32,16 +40,15 @@ import android.widget.Toast;
 
 
 
-//import com.example.zhouwei.library.CustomPopWindow;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.szrm.videodetail.demo.R;
 import com.tencent.liteav.basic.log.TXCLog;
 import com.tencent.rtmp.TXLivePlayer;
 import com.tencent.rtmp.TXVodPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
-import com.szrm.videodetail.demo.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,11 +61,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.List;
 
-import static common.constants.Constants.token_error;
-import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE;
-import static tencent.liteav.demo.superplayer.SuperPlayerDef.Orientation.LANDSCAPE_REVERSE;
-
-import common.callback.SdkInteractiveParam;
+import common.constants.Constants;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.ContentStateModel;
@@ -66,10 +69,14 @@ import common.model.PlayImageSpriteInfo;
 import common.model.PlayKeyFrameDescInfo;
 import common.model.VideoQuality;
 import common.utils.ButtonSpan;
+import common.utils.DebugLogUtils;
 import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import custompop.CustomPopWindow;
+import tencent.liteav.demo.superplayer.SuperPlayerDef;
+import tencent.liteav.demo.superplayer.SuperPlayerGlobalConfig;
+import tencent.liteav.demo.superplayer.SuperPlayerModel;
 import tencent.liteav.demo.superplayer.model.SuperPlayer;
 import tencent.liteav.demo.superplayer.model.SuperPlayerImpl;
 import tencent.liteav.demo.superplayer.model.SuperPlayerObserver;
@@ -81,7 +88,6 @@ import tencent.liteav.demo.superplayer.ui.player.FullScreenPlayer;
 import tencent.liteav.demo.superplayer.ui.player.OrientationHelper;
 import tencent.liteav.demo.superplayer.ui.player.Player;
 import tencent.liteav.demo.superplayer.ui.player.WindowPlayer;
-
 
 /**
  * 超级播放器view
@@ -107,7 +113,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
     public FullScreenPlayer mFullScreenPlayer;                         // 全屏模式控制view
     public WindowPlayer mWindowPlayer;                             // 窗口模式控制view
     private FloatPlayer mFloatPlayer;                              // 悬浮窗模式控制view
-//    private DanmuView mDanmuView;                                // 弹幕
 
     private ViewGroup.LayoutParams mLayoutParamWindowMode;          // 窗口播放时SuperPlayerView的布局参数
     private ViewGroup.LayoutParams mLayoutParamFullScreenMode;      // 全屏播放时SuperPlayerView的布局参数
@@ -142,6 +147,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
     public boolean homeVideoIsLoad;
     public BuriedPointModel buriedPointModel;
     public static SuperPlayerView instance;
+    public String mCurrentPlayVideoURL;    // 当前播放的URL
 
     public static SuperPlayerView getInstance(Context context, View decorView, Boolean isMain) {
         if (instance == null) {
@@ -182,7 +188,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
 
         mWindowPlayer = (WindowPlayer) mRootView.findViewById(R.id.superplayer_controller_small);
         mFloatPlayer = (FloatPlayer) mRootView.findViewById(R.id.superplayer_controller_float);
-//        mDanmuView = (DanmuView) mRootView.findViewById(R.id.superplayer_danmuku_view);
         if (isMainbool) {
             mWindowPlayer.mIvPause.setVisibility(GONE);
             mWindowPlayer.mIvFullScreen.setVisibility(GONE);
@@ -196,14 +201,12 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
         mFloatPlayer.setCallback(mControllerCallback);
 
         removeAllViews();
-//        mRootView.removeView(mDanmuView);
         mRootView.removeView(mTXCloudVideoView);
         mRootView.removeView(mWindowPlayer);
         mRootView.removeView(mFullScreenPlayer);
         mRootView.removeView(mFloatPlayer);
 
         addView(mTXCloudVideoView);
-//        addView(mDanmuView);
 
         noLoginTipsView = View.inflate(mContext, R.layout.fullscreen_no_login_tips, null);
         noLoginTipsCancel = noLoginTipsView.findViewById(R.id.no_login_tips_cancel);
@@ -255,6 +258,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
         this.mContentId = contentId;
         this.mVideoType = videoType;
 
+
         if (contentStateModel.getWhetherLike().equals("true")) {
             mFullScreenPlayer.mLike.setImageResource(R.drawable.szrm_sdk_favourite_select);
         } else {
@@ -274,7 +278,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                 }
             }
         });
-
     }
 
     public ContentStateModel.DataDTO getContentStateModel() {
@@ -346,8 +349,9 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                                 }
 
                             } else if (json.get("code").toString().equals(token_error)) {
+                                DebugLogUtils.DebugLog("无token,跳转登录");
                                 try {
-                                    SdkInteractiveParam.getInstance().toLogin();
+                                    param.toLogin();
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -439,9 +443,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
      * resume生命周期回调
      */
     public void onResume() {
-//        if (mDanmuView != null && mDanmuView.isPrepared() && mDanmuView.isPaused()) {
-//            mDanmuView.resume();
-//        }
         mSuperPlayer.resume();
     }
 
@@ -449,10 +450,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
      * 重置播放器
      */
     public void resetPlayer() {
-//        if (mDanmuView != null) {
-//            mDanmuView.release();
-//            mDanmuView = null;
-//        }
         stopPlay();
     }
 
@@ -516,7 +513,7 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                 noLoginTipsPop.dissmiss();
             }
             try {
-                SdkInteractiveParam.getInstance().toLogin();
+                param.toLogin();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -549,51 +546,55 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
      * 初始化controller回调
      */
     public Player.Callback mControllerCallback = new Player.Callback() {
+        @SuppressLint("WrongConstant")
         @Override
         public void onSwitchPlayMode(SuperPlayerDef.PlayerMode playerMode) {
-            playModeCallBack.getPlayMode(playerMode);
-            mWindowPlayer.getLayoutParams();
-            if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.FULLSCREEN && playerMode == SuperPlayerDef.PlayerMode.WINDOW) {
-                // 全屏到窗口
-                sensorEnable = true;
-                mTargetPlayerMode = SuperPlayerDef.PlayerMode.WINDOW;
-                showBottomUIMenu();
-            } else if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.WINDOW && playerMode == SuperPlayerDef.PlayerMode.FULLSCREEN) {
-                // 窗口到全屏
-                sensorEnable = false;
-                mTargetPlayerMode = SuperPlayerDef.PlayerMode.FULLSCREEN;
-            }
-            if (playerMode == SuperPlayerDef.PlayerMode.FULLSCREEN) {
-                fullScreen(true);
-            } else {
-                fullScreen(false);
-            }
-            mFullScreenPlayer.hide();
-            mWindowPlayer.hide();
-            mFloatPlayer.hide();
-            //请求全屏模式
-            if (playerMode == SuperPlayerDef.PlayerMode.FULLSCREEN) {
-                mOrientationHelper.disable();
-                if (mLayoutParamFullScreenMode == null) {
-                    return;
+            try {
+                playModeCallBack.getPlayMode(playerMode);
+                mWindowPlayer.getLayoutParams();
+                if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.FULLSCREEN && playerMode == SuperPlayerDef.PlayerMode.WINDOW) {
+                    // 全屏到窗口
+                    sensorEnable = true;
+                    mTargetPlayerMode = SuperPlayerDef.PlayerMode.WINDOW;
+                    showBottomUIMenu();
+                } else if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.WINDOW && playerMode == SuperPlayerDef.PlayerMode.FULLSCREEN) {
+                    // 窗口到全屏
+                    sensorEnable = false;
+                    mTargetPlayerMode = SuperPlayerDef.PlayerMode.FULLSCREEN;
                 }
-                removeView(mWindowPlayer);
-                addView(mFullScreenPlayer, mVodControllerFullScreenParams);
-                setLayoutParams(mLayoutParamFullScreenMode);
-                //从窗口到全屏始终是横屏展示
-                if (mDesiredOrientation == LANDSCAPE_REVERSE) {
-                    rotateScreenOrientation(LANDSCAPE_REVERSE);
+                if (playerMode == SuperPlayerDef.PlayerMode.FULLSCREEN) {
+                    fullScreen(true);
                 } else {
-                    rotateScreenOrientation(LANDSCAPE);
+                    fullScreen(false);
                 }
-                if (mPlayerViewCallback != null) {
-                    mPlayerViewCallback.onStartFullScreenPlay();
-                }
-            } else if (playerMode == SuperPlayerDef.PlayerMode.WINDOW) {// 请求窗口模式
-                mOrientationHelper.disable();
-                // 当前是悬浮窗
-                if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.FLOAT) {
-                    try {
+                mFullScreenPlayer.hide();
+                mWindowPlayer.hide();
+                mFloatPlayer.hide();
+                //请求全屏模式
+                if (playerMode == SuperPlayerDef.PlayerMode.FULLSCREEN) {
+                    mOrientationHelper.disable();
+                    if (mLayoutParamFullScreenMode == null) {
+                        return;
+                    }
+                    removeView(mWindowPlayer);
+                    if (null != mFullScreenPlayer && null != mFullScreenPlayer.getParent()) {
+                        ((ViewGroup) mFullScreenPlayer.getParent()).removeView(mFullScreenPlayer);
+                    }
+                    addView(mFullScreenPlayer, mVodControllerFullScreenParams);
+                    setLayoutParams(mLayoutParamFullScreenMode);
+                    //从窗口到全屏始终是横屏展示
+                    if (mDesiredOrientation == LANDSCAPE_REVERSE) {
+                        rotateScreenOrientation(LANDSCAPE_REVERSE);
+                    } else {
+                        rotateScreenOrientation(LANDSCAPE);
+                    }
+                    if (mPlayerViewCallback != null) {
+                        mPlayerViewCallback.onStartFullScreenPlay();
+                    }
+                } else if (playerMode == SuperPlayerDef.PlayerMode.WINDOW) {// 请求窗口模式
+                    mOrientationHelper.disable();
+                    // 当前是悬浮窗
+                    if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.FLOAT) {
                         Context viewContext = getContext();
                         Intent intent = null;
                         if (viewContext instanceof Activity) {
@@ -610,76 +611,82 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
                         mWindowManager.removeView(mFloatPlayer);
                         mSuperPlayer.setPlayerView(mTXCloudVideoView);
                         mSuperPlayer.resume();
+                    } else if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.FULLSCREEN) { // 当前是全屏模式
+                        if (mLayoutParamWindowMode == null) {
+                            return;
+                        }
+                        removeView(mFullScreenPlayer);
+                        if (null != mWindowPlayer && null != mWindowPlayer.getParent()) {
+                            ((ViewGroup) mWindowPlayer.getParent()).removeView(mWindowPlayer);
+                        }
+                        addView(mWindowPlayer, mVodControllerWindowParams);
+                        setLayoutParams(mLayoutParamWindowMode);
+
+                        rotateScreenOrientation(SuperPlayerDef.Orientation.PORTRAIT);
+                        if (mPlayerViewCallback != null) {
+                            mPlayerViewCallback.onStopFullScreenPlay();
+                        }
+                    }
+                } else if (playerMode == SuperPlayerDef.PlayerMode.FLOAT) {//请求悬浮窗模式
+                    TXCLog.i(TAG, "requestPlayMode Float :" + Build.MANUFACTURER);
+                    SuperPlayerGlobalConfig prefs = SuperPlayerGlobalConfig.getInstance();
+                    if (!prefs.enableFloatWindow) {
+                        return;
+                    }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // 6.0动态申请悬浮窗权限
+                        if (!Settings.canDrawOverlays(mContext)) {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                            intent.setData(Uri.parse("package:" + mContext.getPackageName()));
+                            mContext.startActivity(intent);
+                            return;
+                        }
+                    } else {
+                        if (!checkOp(mContext, OP_SYSTEM_ALERT_WINDOW)) {
+                            showToast(R.string.superplayer_enter_setting_fail);
+                            return;
+                        }
+                    }
+                    mSuperPlayer.pause();
+
+                    mWindowManager = (WindowManager) mContext.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+                    mWindowParams = new WindowManager.LayoutParams();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        mWindowParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                    } else {
+                        mWindowParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+                    }
+                    mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                            | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+                    mWindowParams.format = PixelFormat.TRANSLUCENT;
+                    mWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
+
+                    SuperPlayerGlobalConfig.TXRect rect = prefs.floatViewRect;
+                    mWindowParams.x = rect.x;
+                    mWindowParams.y = rect.y;
+                    mWindowParams.width = rect.width;
+                    mWindowParams.height = rect.height;
+                    try {
+                        if (null != mFloatPlayer && null != mFloatPlayer.getParent()) {
+                            ((ViewGroup) mFloatPlayer.getParent()).removeView(mFloatPlayer);
+                        }
+                        mWindowManager.addView(mFloatPlayer, mWindowParams);
                     } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (mSuperPlayer.getPlayerMode() == SuperPlayerDef.PlayerMode.FULLSCREEN) { // 当前是全屏模式
-                    if (mLayoutParamWindowMode == null) {
+                        showToast(R.string.superplayer_float_play_fail);
                         return;
                     }
-                    removeView(mFullScreenPlayer);
-                    addView(mWindowPlayer, mVodControllerWindowParams);
-                    setLayoutParams(mLayoutParamWindowMode);
 
-                    rotateScreenOrientation(SuperPlayerDef.Orientation.PORTRAIT);
-                    if (mPlayerViewCallback != null) {
-                        mPlayerViewCallback.onStopFullScreenPlay();
+                    TXCloudVideoView videoView = mFloatPlayer.getFloatVideoView();
+                    if (videoView != null) {
+                        mSuperPlayer.setPlayerView(videoView);
+                        mSuperPlayer.resume();
                     }
+                    // 悬浮窗上报
+                    LogReport.getInstance().uploadLogs(LogReport.ELK_ACTION_FLOATMOE, 0, 0);
                 }
-            } else if (playerMode == SuperPlayerDef.PlayerMode.FLOAT) {//请求悬浮窗模式
-                TXCLog.i(TAG, "requestPlayMode Float :" + Build.MANUFACTURER);
-                SuperPlayerGlobalConfig prefs = SuperPlayerGlobalConfig.getInstance();
-                if (!prefs.enableFloatWindow) {
-                    return;
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) { // 6.0动态申请悬浮窗权限
-                    if (!Settings.canDrawOverlays(mContext)) {
-                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                        intent.setData(Uri.parse("package:" + mContext.getPackageName()));
-                        mContext.startActivity(intent);
-                        return;
-                    }
-                } else {
-                    if (!checkOp(mContext, OP_SYSTEM_ALERT_WINDOW)) {
-                        showToast(R.string.superplayer_enter_setting_fail);
-                        return;
-                    }
-                }
-                mSuperPlayer.pause();
-
-                mWindowManager = (WindowManager) mContext.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-                mWindowParams = new WindowManager.LayoutParams();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    mWindowParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
-                } else {
-                    mWindowParams.type = WindowManager.LayoutParams.TYPE_PHONE;
-                }
-                mWindowParams.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
-                        | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
-                mWindowParams.format = PixelFormat.TRANSLUCENT;
-                mWindowParams.gravity = Gravity.LEFT | Gravity.TOP;
-
-                SuperPlayerGlobalConfig.TXRect rect = prefs.floatViewRect;
-                mWindowParams.x = rect.x;
-                mWindowParams.y = rect.y;
-                mWindowParams.width = rect.width;
-                mWindowParams.height = rect.height;
-                try {
-                    mWindowManager.addView(mFloatPlayer, mWindowParams);
-                } catch (Exception e) {
-                    showToast(R.string.superplayer_float_play_fail);
-                    return;
-                }
-
-                TXCloudVideoView videoView = mFloatPlayer.getFloatVideoView();
-                if (videoView != null) {
-                    mSuperPlayer.setPlayerView(videoView);
-                    mSuperPlayer.resume();
-                }
-                // 悬浮窗上报
-                LogReport.getInstance().uploadLogs(LogReport.ELK_ACTION_FLOATMOE, 0, 0);
+                mSuperPlayer.switchPlayMode(playerMode);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            mSuperPlayer.switchPlayMode(playerMode);
         }
 
         /**
@@ -760,9 +767,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
 
         @Override
         public void onDanmuToggle(boolean isOpen) {
-//            if (mDanmuView != null) {
-//                mDanmuView.toggle(isOpen);
-//            }
         }
 
         @Override
@@ -906,9 +910,10 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
     public void onOrientationChanged(int orientation) {
 
         if (!isOrientation) {
+            Log.e("是否能旋转：","不能");
             return;
         }
-
+        Log.e("是否能旋转：","可以");
         if (mFullScreenPlayer == null) {
             return;
         }
@@ -1084,9 +1089,6 @@ public class SuperPlayerView extends RelativeLayout implements OrientationHelper
             mFullScreenPlayer.updatePlayState(SuperPlayerDef.PlayerState.PLAYING);
             updateTitle(name);
             mWindowPlayer.hideBackground();
-//            if (mDanmuView != null && mDanmuView.isPrepared() && mDanmuView.isPaused()) {
-//                mDanmuView.resume();
-//            }
 //            if (mWatcher != null) {
 //                mWatcher.exitLoading();
 //            }

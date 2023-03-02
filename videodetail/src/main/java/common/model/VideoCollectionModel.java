@@ -1,6 +1,5 @@
 package common.model;
 
-
 import android.support.annotation.Keep;
 
 import java.util.List;
@@ -100,6 +99,7 @@ public class VideoCollectionModel {
         public void setPageSize(String pageSize) {
             this.pageSize = pageSize;
         }
+
         @Keep
         public static class RecordsDTO {
             private String shareTitle;
@@ -141,7 +141,7 @@ public class VideoCollectionModel {
             private boolean disableComment;
             private String label;
             private String orientation;
-            private String whetherLike;
+            private boolean whetherLike;
             private String whetherFavor;
             private String whetherFollow;
             private String isTop;
@@ -176,6 +176,9 @@ public class VideoCollectionModel {
             private String spaceStr;
             private String requestId;
             private String className;
+            private List<String> keywordsShow;
+            private List<String> tagsShow;
+            private String createTime;
 
             public String getShareTitle() {
                 return shareTitle;
@@ -282,6 +285,9 @@ public class VideoCollectionModel {
             }
 
             public Integer getViewCountShow() {
+                if (null == viewCountShow) {
+                    return 0;
+                }
                 return viewCountShow;
             }
 
@@ -489,11 +495,11 @@ public class VideoCollectionModel {
                 this.orientation = orientation;
             }
 
-            public String isWhetherLike() {
+            public boolean getWhetherLike() {
                 return whetherLike;
             }
 
-            public void setWhetherLike(String whetherLike) {
+            public void setWhetherLike(boolean whetherLike) {
                 this.whetherLike = whetherLike;
             }
 
@@ -771,6 +777,30 @@ public class VideoCollectionModel {
 
             public void setClassName(String className) {
                 this.className = className;
+            }
+
+            public List<String> getKeywordsShow() {
+                return keywordsShow;
+            }
+
+            public void setKeywordsShow(List<String> keywordsShow) {
+                this.keywordsShow = keywordsShow;
+            }
+
+            public List<String> getTagsShow() {
+                return tagsShow;
+            }
+
+            public void setTagsShow(List<String> tagsShow) {
+                this.tagsShow = tagsShow;
+            }
+
+            public String getCreateTime() {
+                return createTime;
+            }
+
+            public void setCreateTime(String createTime) {
+                this.createTime = createTime;
             }
 
             public static class ExtendDTO {

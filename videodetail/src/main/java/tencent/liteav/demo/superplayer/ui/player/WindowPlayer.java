@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.szrm.videodetail.demo.R;
@@ -25,11 +26,11 @@ import common.utils.NoScrollViewPager;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.contants.Contants;
 import tencent.liteav.demo.superplayer.model.utils.VideoGestureDetector;
+import tencent.liteav.demo.superplayer.ui.player.AbsPlayer;
 import tencent.liteav.demo.superplayer.ui.view.PointSeekBar;
 import tencent.liteav.demo.superplayer.ui.view.VideoProgressLayout;
 import tencent.liteav.demo.superplayer.ui.view.VolumeBrightnessProgressLayout;
 import common.model.VideoCollectionModel.DataDTO.RecordsDTO;
-
 
 /**
  * 窗口模式播放控件
@@ -58,6 +59,7 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
     private TextView mTvCurrent;                             // 当前进度文本
     private TextView mTvDuration;                            // 总时长文本
     public PointSeekBar mSeekBarProgress;                       // 播放进度条
+    public PointSeekBar xSeekBarProgress;                       //细的播放进度条
     public ProgressBar mLoadBar;
     public LinearLayout mLayoutReplay;                          // 重播按钮所在布局
     private ProgressBar mPbLiveLoading;                         // 加载圈
@@ -96,6 +98,7 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
     private ViewPagerLayoutManager myManager;
     private NoScrollViewPager mViewpager;
     private boolean mIsFragmentShow;
+    private RelativeLayout windowPlayerRoot;
 
     public WindowPlayer(Context context) {
         super(context);
@@ -112,6 +115,36 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
         initialize(context);
     }
 
+    public DoubleClick mDoubleClick;
+
+    public interface DoubleClick {
+        void onDoubleClick(DataDTO item);
+    }
+
+    public void setOnDoubleClick(DoubleClick doubleClick) {
+        this.mDoubleClick = doubleClick;
+    }
+
+    public DoubleClickxksh mDoubleClickxksh;
+
+    public interface DoubleClickxksh {
+        void onDoubleClickxksh(DataDTO item);
+    }
+
+    public void setOnDoubleClickxksh(DoubleClickxksh doubleClick) {
+        this.mDoubleClickxksh = doubleClick;
+    }
+
+    public DoubleClickDetail mDoubleClickDetail;
+
+    public interface DoubleClickDetail {
+        void onDoubleClickDetail(DataDTO item);
+    }
+
+    public void setOnDoubleClickDetail(DoubleClickDetail doubleClick) {
+        this.mDoubleClickDetail = doubleClick;
+    }
+
 
     /**
      * 初始化控件、手势检测监听器、亮度/音量/播放进度的回调
@@ -124,12 +157,12 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
                 if (mCurrentPlayState == SuperPlayerDef.PlayerState.LOADING) {
                     return false;
                 }
-                togglePlayState();
-//                show();
-                if (mHideViewRunnable != null) {
-                    removeCallbacks(mHideViewRunnable);
-                    postDelayed(mHideViewRunnable, Contants.delayMillis);
-                }
+//                togglePlayState();
+////                show();
+//                if (mHideViewRunnable != null) {
+//                    removeCallbacks(mHideViewRunnable);
+//                    postDelayed(mHideViewRunnable, Contants.delayMillis);
+//                }
                 return true;
             }
 
@@ -138,7 +171,9 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
                 if (mCurrentPlayState == SuperPlayerDef.PlayerState.LOADING) {
                     return false;
                 }
-                toggle();
+
+                togglePlayState();
+//                toggle();
 //                togglePlayState();
 //                show();
 //                if (mHideViewRunnable != null) {
@@ -245,12 +280,62 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
         zdyIvPause = findViewById(R.id.zdy_iv_pause);
         mTvCurrent = (TextView) findViewById(R.id.superplayer_tv_current);
         mTvDuration = (TextView) findViewById(R.id.superplayer_tv_duration);
-        mSeekBarProgress = (PointSeekBar) findViewById(R.id.superplayer_seekbar_progress);
+        mSeekBarProgress = (PointSeekBar) findViewById(R.id.superplayer_seekbar_progress_crude);
+        xSeekBarProgress = findViewById(R.id.superplayer_seekbar_progress);
         mSeekBarProgress.setProgress(0);
         mSeekBarProgress.setMax(100);
+        mSeekBarProgress.setAlpha(0);
+        xSeekBarProgress.setProgress(0);
+        xSeekBarProgress.setMax(100);
+
+        mSeekBarProgress.setMoveEventListener(new PointSeekBar.MoveEventListener() {
+            @Override
+            public void moveEvent() {
+                mSeekBarProgress.setAlpha(1);
+                xSeekBarProgress.setAlpha(0);
+            }
+        });
+
+        mSeekBarProgress.setUpEventListener(new PointSeekBar.UpEventListener() {
+            @Override
+            public void upEvent() {
+                new Thread(){
+                    @Override
+                    public void run() {
+                        try {
+                            sleep(300);
+                            mSeekBarProgress.setAlpha(0);
+                            xSeekBarProgress.setAlpha(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }
+        });
+
         mLoadBar = findViewById(R.id.superplayer_loadbar_progress);
         mLoadBar.setProgress(100);
         mLoadBar.setMax(100);
+        windowPlayerRoot = findViewById(R.id.window_player_root);
+
+        windowPlayerRoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //双击点赞
+                if (null != mDoubleClick) {
+                    mDoubleClick.onDoubleClick(item);
+                }
+
+                if (null != mDoubleClickxksh) {
+                    mDoubleClickxksh.onDoubleClickxksh(item);
+                }
+
+                if (null != mDoubleClickDetail) {
+                    mDoubleClickDetail.onDoubleClickDetail(item);
+                }
+            }
+        });
 
         mIvFullScreen = (ImageView) findViewById(R.id.superplayer_iv_fullscreen);
         mTvBackToLive = (TextView) findViewById(R.id.superplayer_tv_back_to_live);
@@ -284,16 +369,11 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
         return item;
     }
 
-    public void setRecordsDTO(RecordsDTO mRecordsDTO, RecordsDTO previousRecordsDTO) {
-        this.recordsDTO = mRecordsDTO;
-        this.mPreviousRecordsDTO = previousRecordsDTO;
-    }
-
     public void setIsTurnPages(boolean isTurnPages) {
         this.mIsTurnPage = isTurnPages;
     }
 
-    public void setIsVideoDetailTurnPage(boolean isVideoDetailTurnPage){
+    public void setIsVideoDetailTurnPage(boolean isVideoDetailTurnPage) {
         this.mIsVideoDetailTurnPage = isVideoDetailTurnPage;
     }
 
@@ -414,8 +494,8 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
     @Override
     public void show() {
         isShowing = true;
-        mLayoutTop.setVisibility(View.VISIBLE);
-        mLayoutBottom.setVisibility(View.VISIBLE);
+//        mLayoutTop.setVisibility(View.VISIBLE);
+//        mLayoutBottom.setVisibility(View.VISIBLE);
 
         if (mPlayType == SuperPlayerDef.PlayerType.LIVE_SHIFT) {
             mTvBackToLive.setVisibility(View.VISIBLE);
@@ -428,8 +508,8 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
     @Override
     public void hide() {
         isShowing = false;
-        mLayoutTop.setVisibility(View.GONE);
-        mLayoutBottom.setVisibility(View.GONE);
+//        mLayoutTop.setVisibility(View.GONE);
+//        mLayoutBottom.setVisibility(View.GONE);
 
         if (mPlayType == SuperPlayerDef.PlayerType.LIVE_SHIFT) {
             mTvBackToLive.setVisibility(View.GONE);
@@ -574,8 +654,10 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
             if (!mIsChangingSeekBarProgress) {
                 if (mPlayType == SuperPlayerDef.PlayerType.LIVE) {
                     mSeekBarProgress.setProgress(mSeekBarProgress.getMax());
+                    xSeekBarProgress.setProgress(xSeekBarProgress.getMax());
                 } else {
                     mSeekBarProgress.setProgress(progress);
+                    xSeekBarProgress.setProgress(progress);
                 }
             }
             mTvDuration.setText(formattedTime(mDuration));
@@ -588,18 +670,19 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
         switch (type) {
             case VOD:
                 mTvBackToLive.setVisibility(View.GONE);
-                mTvDuration.setVisibility(View.VISIBLE);
+//                mTvDuration.setVisibility(View.VISIBLE);
                 break;
             case LIVE:
                 mTvBackToLive.setVisibility(View.GONE);
-                mTvDuration.setVisibility(View.GONE);
+//                mTvDuration.setVisibility(View.GONE);
                 mSeekBarProgress.setProgress(100);
+                xSeekBarProgress.setProgress(100);
                 break;
             case LIVE_SHIFT:
                 if (mLayoutBottom.getVisibility() == VISIBLE) {
                     mTvBackToLive.setVisibility(View.VISIBLE);
                 }
-                mTvDuration.setVisibility(View.GONE);
+//                mTvDuration.setVisibility(View.GONE);
                 break;
         }
     }
@@ -709,6 +792,7 @@ public class WindowPlayer extends AbsPlayer implements View.OnClickListener {
                 progress = 0;
             }
             mSeekBarProgress.setProgress(progress);
+            xSeekBarProgress.setProgress(progress);
 
             int seekTime;
             float percentage = progress * 1.0f / mSeekBarProgress.getMax();

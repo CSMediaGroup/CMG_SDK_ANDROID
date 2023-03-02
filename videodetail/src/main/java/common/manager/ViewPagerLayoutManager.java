@@ -15,6 +15,9 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
     private OnViewPagerListener mOnViewPagerListener;
     private int mDrift;//位移，用来判断移动方向
     private boolean isScoll = true; //是否可以垂直滑动
+    private int currentPageIndex;
+    public int firstDy = 0;
+    public boolean isToDown = true;
 
     public ViewPagerLayoutManager(Context context) {
         super(context);
@@ -36,22 +39,31 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
 
     }
 
+    public void setCurrentPageIndex(int currentPageIndex) {
+        this.currentPageIndex = currentPageIndex;
+    }
+
+
     @Override
-    public void onAttachedToWindow(android.support.v7.widget.RecyclerView view) {
+    public void onAttachedToWindow(RecyclerView view) {
         super.onAttachedToWindow(view);
-        mPagerSnapHelper.attachToRecyclerView(view);
-        view.addOnChildAttachStateChangeListener(mChildAttachStateChangeListener);
+        try {
+            view.setOnFlingListener(null);
+            mPagerSnapHelper.attachToRecyclerView(view);
+            view.addOnChildAttachStateChangeListener(mChildAttachStateChangeListener);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
         try {
             super.onLayoutChildren(recycler, state);
-        } catch (IndexOutOfBoundsException e) {
-            Log.e("bug", "crash in RecyclerView");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-//
 
     /**
      * 滑动状态的改变
@@ -70,6 +82,11 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
                     return;
                 }
                 int positionIdle = getPosition(viewIdle);
+                if (currentPageIndex == positionIdle) {
+                    return;
+                } else {
+                    currentPageIndex = positionIdle;
+                }
                 if (getItemCount() > 0) {
                     if (mOnViewPagerListener != null && getChildCount() == 1) {
                         mOnViewPagerListener.onPageSelected(positionIdle, positionIdle == getItemCount() - 1);
@@ -90,7 +107,6 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
                 }
                 int positionSettling = getPosition(viewSettling);
                 break;
-
         }
     }
 
@@ -106,6 +122,15 @@ public class ViewPagerLayoutManager extends LinearLayoutManager {
     @Override
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
         this.mDrift = dy;
+        if (firstDy == 0) {
+            if (dy >= 0) {
+                isToDown = true;
+                firstDy++;
+            } else {
+                isToDown = false;
+                firstDy++;
+            }
+        }
         return super.scrollVerticallyBy(dy, recycler, state);
     }
 
