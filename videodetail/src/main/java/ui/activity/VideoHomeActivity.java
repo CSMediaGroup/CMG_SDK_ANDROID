@@ -435,6 +435,10 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                         adapter.getViewByPosition(currentIndex, R.id.introduce_lin).setVisibility(View.GONE);
                     }
 
+                    if (null != adapter.getViewByPosition(currentIndex, R.id.user_todo)) {
+                        adapter.getViewByPosition(currentIndex, R.id.user_todo).setVisibility(View.GONE);
+                    }
+
                     if (null != fullLin) {
                         fullLin.setVisibility(View.GONE);
                     }
@@ -464,6 +468,9 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                         adapter.getViewByPosition(currentIndex, R.id.introduce_lin).setVisibility(View.VISIBLE);
                     }
 
+                    if (null != adapter.getViewByPosition(currentIndex, R.id.user_todo)) {
+                        adapter.getViewByPosition(currentIndex, R.id.user_todo).setVisibility(View.VISIBLE);
+                    }
 
                     if (null != adapter.getViewByPosition(currentIndex, R.id.horizontal_video_wdcs_logo)) {
                         adapter.getViewByPosition(currentIndex, R.id.horizontal_video_wdcs_logo).setVisibility(View.VISIBLE);
