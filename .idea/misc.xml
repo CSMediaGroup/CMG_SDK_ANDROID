@@ -110,7 +110,7 @@
         <entry key="videodetail/src/main/res/layout/video_detail_comment_pop.xml" value="0.165625" />
         <entry key="videodetail/src/main/res/layout/video_detail_item.xml" value="0.2" />
         <entry key="videodetail/src/main/res/layout/video_fragment_item.xml" value="0.1" />
-        <entry key="videodetail/src/main/res/layout/xksh_video_item_layout.xml" value="0.165" />
+        <entry key="videodetail/src/main/res/layout/xksh_video_item_layout.xml" value="0.335" />
       </map>
     </option>
   </component>

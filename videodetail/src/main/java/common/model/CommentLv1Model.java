@@ -1,5 +1,7 @@
 package common.model;
 
+import android.text.TextUtils;
+
 import androidx.annotation.Keep;
 
 import com.chad.library.adapter.base.entity.AbstractExpandableItem;
@@ -7,6 +9,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import common.model.ReplyLv2Model;
 
 @Keep
 public class CommentLv1Model {
@@ -142,6 +146,8 @@ public class CommentLv1Model {
             private String official;
             private int position;
             private boolean isShow;
+            private boolean whetherLike; //当前用户是否已经点赞过
+            private Integer likeCount; //当前评论的点赞数量
             private List<ReplyLv2Model.ReplyListDTO> replyLv2CacheList = new ArrayList<>();
             private List<ReplyLv2Model.ReplyListDTO> replyLv2Alllist = new ArrayList<>();
 
@@ -170,6 +176,9 @@ public class CommentLv1Model {
             }
 
             public String getContent() {
+                if (TextUtils.isEmpty(content)) {
+                    return "";
+                }
                 return content;
             }
 
@@ -178,6 +187,9 @@ public class CommentLv1Model {
             }
 
             public String getCreateTime() {
+                if (TextUtils.isEmpty(createTime)) {
+                    return "";
+                }
                 return createTime;
             }
 
@@ -186,6 +198,9 @@ public class CommentLv1Model {
             }
 
             public String getCreateBy() {
+                if (TextUtils.isEmpty(createBy)) {
+                    return "";
+                }
                 return createBy;
             }
 
@@ -194,6 +209,9 @@ public class CommentLv1Model {
             }
 
             public String getTitle() {
+                if (TextUtils.isEmpty(title)) {
+                    return "";
+                }
                 return title;
             }
 
@@ -202,6 +220,9 @@ public class CommentLv1Model {
             }
 
             public String getEditor() {
+                if (TextUtils.isEmpty(editor)) {
+                    return "";
+                }
                 return editor;
             }
 
@@ -210,6 +231,9 @@ public class CommentLv1Model {
             }
 
             public String getNickname() {
+                if (TextUtils.isEmpty(nickname)) {
+                    return "";
+                }
                 return nickname;
             }
 
@@ -218,6 +242,9 @@ public class CommentLv1Model {
             }
 
             public String getHead() {
+                if (TextUtils.isEmpty(head)) {
+                    return "";
+                }
                 return head;
             }
 
@@ -226,6 +253,9 @@ public class CommentLv1Model {
             }
 
             public String getTimeDif() {
+                if (TextUtils.isEmpty(timeDif)) {
+                    return "";
+                }
                 return timeDif;
             }
 
@@ -234,6 +264,9 @@ public class CommentLv1Model {
             }
 
             public String getIssueTimeStamp() {
+                if (TextUtils.isEmpty(issueTimeStamp)) {
+                    return "";
+                }
                 return issueTimeStamp;
             }
 
@@ -250,6 +283,9 @@ public class CommentLv1Model {
             }
 
             public String isIsTop() {
+                if (TextUtils.isEmpty(isTop)) {
+                    return "";
+                }
                 return isTop;
             }
 
@@ -258,6 +294,9 @@ public class CommentLv1Model {
             }
 
             public String getScore() {
+                if (TextUtils.isEmpty(score)) {
+                    return "";
+                }
                 return score;
             }
 
@@ -266,6 +305,9 @@ public class CommentLv1Model {
             }
 
             public String getPrizeId() {
+                if (TextUtils.isEmpty(prizeId)) {
+                    return "";
+                }
                 return prizeId;
             }
 
@@ -274,6 +316,9 @@ public class CommentLv1Model {
             }
 
             public String getPrizeOrderId() {
+                if (TextUtils.isEmpty(prizeOrderId)) {
+                    return "";
+                }
                 return prizeOrderId;
             }
 
@@ -282,6 +327,9 @@ public class CommentLv1Model {
             }
 
             public String getOnShelve() {
+                if (TextUtils.isEmpty(onShelve)) {
+                    return "";
+                }
                 return onShelve;
             }
 
@@ -298,6 +346,9 @@ public class CommentLv1Model {
             }
 
             public String getRnikeName() {
+                if (TextUtils.isEmpty(rnikeName)) {
+                    return "";
+                }
                 return rnikeName;
             }
 
@@ -306,6 +357,9 @@ public class CommentLv1Model {
             }
 
             public String getRcommentId() {
+                if (TextUtils.isEmpty(rcommentId)) {
+                    return "";
+                }
                 return rcommentId;
             }
 
@@ -314,6 +368,9 @@ public class CommentLv1Model {
             }
 
             public String getPcommentId() {
+                if (TextUtils.isEmpty(pcommentId)) {
+                    return "";
+                }
                 return pcommentId;
             }
 
@@ -322,6 +379,9 @@ public class CommentLv1Model {
             }
 
             public String getRuserId() {
+                if (TextUtils.isEmpty(ruserId)) {
+                    return "";
+                }
                 return ruserId;
             }
 
@@ -338,6 +398,9 @@ public class CommentLv1Model {
             }
 
             public String getOfficial() {
+                if (TextUtils.isEmpty(official)) {
+                    return "";
+                }
                 return official;
             }
 
@@ -357,6 +420,24 @@ public class CommentLv1Model {
                 isShow = show;
             }
 
+            public boolean getWhetherLike() {
+                return whetherLike;
+            }
+
+            public void setWhetherLike(Boolean whetherLike) {
+                this.whetherLike = whetherLike;
+            }
+
+            public Integer getLikeCount() {
+                if (null == likeCount) {
+                    return 0;
+                }
+                return likeCount;
+            }
+
+            public void setLikeCount(Integer likeCount) {
+                this.likeCount = likeCount;
+            }
 
             public List<ReplyLv2Model.ReplyListDTO> getReplyLv2CacheList() {
                 return replyLv2CacheList;

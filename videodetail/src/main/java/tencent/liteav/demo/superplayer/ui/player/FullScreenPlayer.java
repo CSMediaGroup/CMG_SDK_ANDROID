@@ -1,7 +1,5 @@
 package tencent.liteav.demo.superplayer.ui.player;
 
-
-
 import static common.utils.ShareUtils.toShare;
 
 import android.app.Activity;
@@ -27,13 +25,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.zhouwei.library.CustomPopWindow;
+import com.szrm.videodetail.demo.R;
 import com.tencent.rtmp.TXImageSprite;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import com.szrm.videodetail.demo.R;
-
 
 import common.constants.Constants;
 import common.manager.BuriedPointModelManager;
@@ -150,8 +147,8 @@ public class FullScreenPlayer extends AbsPlayer implements View.OnClickListener,
     private ImageView fullscreenShareWx;
     private ImageView fullscreenShareCircle;
     private ImageView fullscreenShareQq;
-    private DataDTO item;
-    private RecordsDTO recordsDTO;
+    public DataDTO item;
+    public RecordsDTO recordsDTO;
     private boolean mIsTurnPage;
 
     private TranslateAnimation translateAniRightShow, translateAniRightHide, translateAniBottomShow, translateAniBottomHide;
@@ -1114,7 +1111,7 @@ public class FullScreenPlayer extends AbsPlayer implements View.OnClickListener,
 
                 int marginLeft = viewX - width / 2;
 
-                LayoutParams params = (LayoutParams) mTvVttText.getLayoutParams();
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mTvVttText.getLayoutParams();
                 params.leftMargin = marginLeft;
 
                 if (marginLeft < 0) {

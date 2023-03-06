@@ -1,7 +1,11 @@
 package common.callback;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
+
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
@@ -10,6 +14,7 @@ import org.json.JSONObject;
 
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
+import common.model.GdyTokenModel;
 import common.model.ShareInfo;
 import common.model.TokenModel;
 import common.utils.PersonInfoManager;
@@ -21,8 +26,10 @@ import common.utils.ToastUtils;
 public class VideoInteractiveParam {
     public VideoParamCallBack callBack;
     public GetGdyTokenCallBack gdyTokenCallBack;
+    public ApplicationIsAgreeCallBack applicationIsAgreeCallBack;
     public static VideoInteractiveParam param;
     private String transformationToken;
+    private Context context;
 
     private VideoInteractiveParam() {
     }
@@ -42,8 +49,12 @@ public class VideoInteractiveParam {
         this.callBack = callBack;
     }
 
-    public void setGdyTokenCallBack(GetGdyTokenCallBack callBack){
+    public void setGdyTokenCallBack(GetGdyTokenCallBack callBack) {
         this.gdyTokenCallBack = callBack;
+    }
+
+    public void setApplicationIsAgreeCallBack(ApplicationIsAgreeCallBack isAgreeCallBack) {
+        this.applicationIsAgreeCallBack = isAgreeCallBack;
     }
 
 
@@ -55,7 +66,7 @@ public class VideoInteractiveParam {
      */
     public void shared(ShareInfo shareInfo) throws Exception {
         if (callBack == null) {
-            throw new Exception("获取失败,请重试");
+            Log.e("shared", "获取失败，请重试");
         } else {
             callBack.shared(shareInfo);
         }
@@ -66,7 +77,7 @@ public class VideoInteractiveParam {
      */
     public void toLogin() throws Exception {
         if (callBack == null) {
-            throw new Exception("请求失败,请重试");
+            Log.e("toLogin", "获取失败，请重试");
         } else {
             callBack.Login();
         }
@@ -80,10 +91,10 @@ public class VideoInteractiveParam {
      */
     public String getCode() throws Exception {
         if (callBack == null) {
-            throw new Exception("获取失败,请重试");
-        } else {
-            return callBack.setCode();
+            Log.e("getCode", "获取失败，请重试");
+            return "";
         }
+        return callBack.setCode();
     }
 
     /**
@@ -91,7 +102,7 @@ public class VideoInteractiveParam {
      */
     public void recommendUrl(String url, ShareInfo shareInfo) throws Exception {
         if (callBack == null) {
-            throw new Exception("获取失败,请重试");
+            Log.e("recommendUrl", "获取失败，请重试");
         } else {
             callBack.recommedUrl(url, shareInfo);
         }
@@ -102,7 +113,7 @@ public class VideoInteractiveParam {
      */
     public void trackingPoint(BuriedPointModel buriedPointModel) throws Exception {
         if (callBack == null) {
-            throw new Exception("获取失败,请重试");
+            Log.e("trackingPoint", "获取失败，请重试");
         } else {
             callBack.trackingPoint(buriedPointModel);
         }
@@ -112,9 +123,9 @@ public class VideoInteractiveParam {
     /**
      * 获取设备id
      */
-    public String getDeviceId() throws Exception {
+    public String getDeviceId() {
         if (callBack == null) {
-            throw new Exception("获取失败,请重试");
+            return "";
         } else {
             return callBack.setDeviceId();
         }
@@ -127,11 +138,24 @@ public class VideoInteractiveParam {
      */
     public void checkLoginStatus() {
         if (gdyTokenCallBack == null) {
-            Log.e("VideoInteractiveParam", "获取失败，请重试");
+            Log.e("checkLoginStatus", "获取失败，请重试");
         } else {
             getUserToken();
         }
     }
+
+    /**
+     * 获取app是否同意了隐私协议
+     */
+    public String getApplicationIsAgree() {
+        if (applicationIsAgreeCallBack == null) {
+            Log.e("ApplicationIsAgree", "获取失败,请重试");
+        } else {
+            return applicationIsAgreeCallBack.setIsAgreePrivacy();
+        }
+        return "";
+    }
+
 
     /**
      * 使用获取的code去换token
@@ -141,6 +165,7 @@ public class VideoInteractiveParam {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("token", VideoInteractiveParam.getInstance().getCode());
+                jsonObject.put("ignoreGdy", 1);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -165,7 +190,6 @@ public class VideoInteractiveParam {
                                 }
                                 try {
                                     PersonInfoManager.getInstance().setToken(VideoInteractiveParam.getInstance().getCode());
-                                    PersonInfoManager.getInstance().setGdyToken(response.body().getData().getGdyToken());
                                     PersonInfoManager.getInstance().setUserId(response.body().getData().getLoginSysUserVo().getId());
                                     PersonInfoManager.getInstance().setTgtCode(VideoInteractiveParam.getInstance().getCode());
                                 } catch (Exception e) {
@@ -173,21 +197,18 @@ public class VideoInteractiveParam {
                                 }
                                 transformationToken = response.body().getData().getToken();
                                 PersonInfoManager.getInstance().setTransformationToken(transformationToken);
-                                if (null != gdyTokenCallBack) {
-                                    gdyTokenCallBack.checkLoginStatus(transformationToken);
-                                }
+                                getGdyToken(PersonInfoManager.getInstance().getTransformationToken());
                             } else {
-                                ToastUtils.showShort(response.body().getMessage());
+                                Log.e("getUserToken",response.body().getMessage());
                             }
                         }
 
                         @Override
                         public void onError(Response<TokenModel> response) {
                             if (null != response.body()) {
-                                ToastUtils.showShort(response.body().getMessage());
+                                Log.e("getUserToken",response.body().getMessage());
                                 return;
                             }
-                            ToastUtils.showShort("请求失败,请检查网络");
                         }
 
                         @Override
@@ -196,10 +217,52 @@ public class VideoInteractiveParam {
                         }
                     });
         } else {
-            //本地有的时候
-            if (null != gdyTokenCallBack) {
-                gdyTokenCallBack.checkLoginStatus(PersonInfoManager.getInstance().getGdyToken());
-            }
+            getGdyToken(PersonInfoManager.getInstance().getTransformationToken());
         }
+    }
+
+    /**
+     * 换取广电云token
+     * token 融媒token
+     */
+    private void getGdyToken(String token) {
+        JSONObject jsonObject = new JSONObject();
+        OkGo.<GdyTokenModel>post(ApiConstants.getInstance().gdyToken())
+                .tag("getGdyToken")
+                .headers("token", token)
+                .upJson(jsonObject)
+                .execute(new JsonCallback<GdyTokenModel>(GdyTokenModel.class) {
+                    @Override
+                    public void onSuccess(Response<GdyTokenModel> response) {
+                        try {
+                            if (response.body().getCode() == 200) {
+                                if (null == response.body().getData()) {
+                                    ToastUtils.showShort("系统数据错误，请重试");
+                                    return;
+                                }
+                                PersonInfoManager.getInstance().setGdyToken(response.body().getData());
+                                //本地有的时候
+                                if (null != gdyTokenCallBack) {
+                                    gdyTokenCallBack.checkLoginStatus(PersonInfoManager.getInstance().getGdyToken());
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<GdyTokenModel> response) {
+                        if (null != response.body()) {
+                            Log.e("getGdyToken",response.body().getMessage());
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
     }
 }
