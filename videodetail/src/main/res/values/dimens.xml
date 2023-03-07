@@ -6,6 +6,7 @@
     <dimen name="icon_height">40dp</dimen>
     <dimen name="layout_margin_left">10dp</dimen>
     <dimen name="chooseimage_heigt">160dp</dimen>
+    <dimen name="video_dp4">4dp</dimen>
     <dimen name="video_dp5">5dp</dimen>
     <dimen name="video_dp10">10dp</dimen>
     <dimen name="video_dp15">15dp</dimen>
@@ -33,5 +34,5 @@
     <dimen name="sp_14">14sp</dimen>
     <dimen name="sp_15">15sp</dimen>
     <dimen name="sp_16">16sp</dimen>
-
+    <dimen name="def_height">50dp</dimen>
 </resources>

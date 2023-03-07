@@ -28,14 +28,13 @@ import android.widget.ViewFlipper;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.szrm.videodetail.demo.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import brvah.BaseQuickAdapter;
+import brvah.BaseViewHolder;
 import common.constants.Constants;
 import common.manager.ViewPagerLayoutManager;
 import common.model.RecommendModel;
@@ -44,6 +43,7 @@ import common.utils.AppInit;
 import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.ScreenUtils;
+import smartrefresh.layout.SmartRefreshLayout;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
 import ui.activity.VideoDetailActivity;

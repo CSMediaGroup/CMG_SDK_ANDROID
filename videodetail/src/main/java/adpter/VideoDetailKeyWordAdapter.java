@@ -3,11 +3,13 @@ package adpter;
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.szrm.videodetail.demo.R;
 
 import java.util.List;
+
+import brvah.BaseQuickAdapter;
+import brvah.BaseViewHolder;
+
 @Keep
 public class VideoDetailKeyWordAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
     public VideoDetailKeyWordAdapter(int layoutResId, @Nullable List<String> data) {

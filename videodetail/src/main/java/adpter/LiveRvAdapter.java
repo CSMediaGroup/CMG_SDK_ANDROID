@@ -8,12 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.szrm.videodetail.demo.R;
 
 import java.util.List;
 
+import brvah.BaseQuickAdapter;
+import brvah.BaseViewHolder;
 import common.model.DataDTO;
 import ui.activity.VideoHomeActivity;
 

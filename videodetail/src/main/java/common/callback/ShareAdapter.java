@@ -2,11 +2,11 @@ package common.callback;
 
 import androidx.annotation.Nullable;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
+import brvah.BaseQuickAdapter;
+import brvah.BaseViewHolder;
 import common.model.ShareModel;
 
 public class ShareAdapter extends BaseQuickAdapter<ShareModel, BaseViewHolder> {

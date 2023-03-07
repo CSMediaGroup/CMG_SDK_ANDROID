@@ -28,7 +28,6 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.zhouwei.library.CustomPopWindow;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
@@ -39,7 +38,6 @@ import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.szrm.videodetail.demo.R;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import common.callback.JsonCallback;
 import common.constants.Constants;
@@ -56,7 +54,9 @@ import common.utils.PersonInfoManager;
 import common.utils.SavePhoto;
 import common.utils.SystemUtil;
 import common.utils.ToastUtils;
+import custompop.CustomPopWindow;
 import io.reactivex.functions.Consumer;
+import rxpermission.RxPermissions;
 import ui.activity.LoginActivity;
 import ui.activity.VideoHomeActivity;
 import ui.activity.WebActivity;

@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.zhouwei.library.CustomPopWindow;
 import com.szrm.videodetail.demo.R;
 
 import java.util.List;

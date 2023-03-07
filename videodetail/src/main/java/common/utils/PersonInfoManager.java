@@ -9,7 +9,6 @@ import android.text.TextUtils;
 
 import androidx.fragment.app.FragmentActivity;
 
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +19,7 @@ import common.constants.Constants;
 import common.model.SdkUserInfo;
 import common.model.ThirdUserInfo;
 import io.reactivex.functions.Consumer;
+import rxpermission.RxPermissions;
 
 
 public class PersonInfoManager {

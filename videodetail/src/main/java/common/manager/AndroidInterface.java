@@ -16,8 +16,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.just.agentweb.AgentWeb;
-import com.tbruyelle.rxpermissions2.Permission;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import common.callback.SdkInteractiveParam;
 import common.callback.SdkParamCallBack;

@@ -24,7 +24,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.zhouwei.library.CustomPopWindow;
 import com.szrm.videodetail.demo.R;
 import com.tencent.rtmp.TXImageSprite;
 
@@ -38,6 +37,7 @@ import common.model.DataDTO;
 import common.model.PlayImageSpriteInfo;
 import common.model.PlayKeyFrameDescInfo;
 import common.model.VideoQuality;
+import custompop.CustomPopWindow;
 import tencent.liteav.demo.superplayer.SuperPlayerDef;
 import tencent.liteav.demo.superplayer.contants.Contants;
 import tencent.liteav.demo.superplayer.model.net.LogReport;

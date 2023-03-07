@@ -40,7 +40,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.example.zhouwei.library.CustomPopWindow;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
@@ -73,6 +72,7 @@ import common.utils.DebugLogUtils;
 import common.utils.NumberFormatTool;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
+import custompop.CustomPopWindow;
 import tencent.liteav.demo.superplayer.model.SuperPlayer;
 import tencent.liteav.demo.superplayer.model.SuperPlayerImpl;
 import tencent.liteav.demo.superplayer.model.SuperPlayerObserver;

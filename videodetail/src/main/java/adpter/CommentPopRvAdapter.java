@@ -17,9 +17,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Keep;
 
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Response;
@@ -31,6 +28,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import brvah.BaseMultiItemQuickAdapter;
+import brvah.BaseViewHolder;
+import brvah.entity.MultiItemEntity;
 import common.callback.JsonCallback;
 import common.http.ApiConstants;
 import common.model.CommentLv1Model;

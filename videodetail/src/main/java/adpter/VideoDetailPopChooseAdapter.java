@@ -8,12 +8,12 @@ import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 
 
 import java.util.List;
 
+import brvah.BaseQuickAdapter;
+import brvah.BaseViewHolder;
 import common.model.DataDTO;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
 

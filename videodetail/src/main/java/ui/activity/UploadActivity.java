@@ -23,12 +23,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.zhouwei.library.CustomPopWindow;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.model.Progress;
 import com.lzy.okgo.model.Response;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.szrm.videodetail.demo.R;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -60,10 +58,12 @@ import common.utils.DataCleanUtils;
 import common.utils.FileUtils;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
+import custompop.CustomPopWindow;
 import io.reactivex.functions.Consumer;
 import model.bean.ResponseBean;
 import model.bean.UploadVideoBean;
 import common.model.TopicModel.DataDTO.RecordsDTO;
+import rxpermission.RxPermissions;
 
 public class UploadActivity extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "UploadActivity";

@@ -4,12 +4,12 @@ import android.text.TextUtils;
 
 import androidx.annotation.Keep;
 
-import com.chad.library.adapter.base.entity.AbstractExpandableItem;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import brvah.entity.AbstractExpandableItem;
+import brvah.entity.MultiItemEntity;
 import common.model.ReplyLv2Model;
 
 @Keep
