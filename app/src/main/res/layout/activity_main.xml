@@ -99,8 +99,8 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_below="@+id/set_code"
-        android:layout_marginBottom="2dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="SDK首页（Fragment）"
@@ -176,14 +176,27 @@
         android:textColor="#ffffff"
         android:textColorHint="#ffffff"></TextView>
 
+    <TextView
+        android:id="@+id/get_list_data"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/change_user_info"
+        android:layout_marginTop="@dimen/video_dp5"
+        android:layout_marginRight="5dp"
+        android:background="@color/video_c9"
+        android:gravity="center"
+        android:text="获取推荐列表"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"></TextView>
+
     <Switch
         android:id="@+id/isRealease"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_below="@+id/change_user_info"
         android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/get_list_data"
         android:text="切换正式环境"></Switch>
-
 
 
     <TextView
@@ -214,12 +227,20 @@
 
     </TextView>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/test">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <RelativeLayout
         android:id="@+id/addFragment"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/change_user_info"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="5dp">
 
 
     </RelativeLayout>

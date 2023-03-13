@@ -31,7 +31,7 @@ public class ImageUtils {
     }
 
     private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
-    public final static String SAVE_REAL_PATH =  SDCardUtils.getSDCardPath() + "/DCIM";
+    public final static String SAVE_REAL_PATH =  SDCardUtils.getSDCardPath() + "DCIM";
 
     public static boolean saveBitmap2file(Bitmap bmp, Context context, Handler handler, CallBackFunction function) {
 

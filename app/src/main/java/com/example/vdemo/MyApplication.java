@@ -1,21 +1,7 @@
 package com.example.vdemo;
-
-import static common.constants.Constants.success_code;
-import static common.utils.AppInit.appId;
-
 import android.app.Application;
 
-import com.alibaba.fastjson.JSON;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
-
-import common.callback.JsonCallback;
-import common.constants.Constants;
-import common.http.ApiConstants;
-import common.model.MechanismModel;
-import common.utils.OkGoUtils;
 import common.utils.AppInit;
-import common.utils.ToastUtils;
 
 public class MyApplication extends Application {
 
@@ -26,7 +12,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInit.init(this, false, "9111184");
+        AppInit.init(this, true, "1960205"); //1960205 uat   9111184 生产
     }
 
 

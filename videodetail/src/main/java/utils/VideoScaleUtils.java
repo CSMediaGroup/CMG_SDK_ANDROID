@@ -1,4 +1,4 @@
-package common.utils;
+package utils;
 
 import android.app.Activity;
 import android.text.TextUtils;
@@ -6,6 +6,7 @@ import android.view.animation.AnimationSet;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 
+import common.utils.ScreenUtils;
 import tencent.liteav.demo.superplayer.SuperPlayerView;
 
 

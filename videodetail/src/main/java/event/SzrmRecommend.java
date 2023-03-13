@@ -58,7 +58,9 @@ public class SzrmRecommend {
                 .execute(new JsonCallback<SZContentModel>() {
                     @Override
                     public void onSuccess(Response<SZContentModel> response) {
-                        contentsEvent.setValue(response.body().getData().get(0).getContents());
+                        if (!response.body().getData().isEmpty()) {
+                            contentsEvent.setValue(response.body().getData().get(0).getContents());
+                        }
                     }
 
                     @Override
@@ -118,6 +120,7 @@ public class SzrmRecommend {
 
     public interface ContentListCallBack {
         void ContentListSuccessCallBack(List<SZContentModel.DataDTO.ContentsDTO> response);
+
         abstract void ContentListErrorCallBack(String errorMessage);
     }
 
@@ -155,7 +158,7 @@ public class SzrmRecommend {
      * 进入新闻详情页
      */
     public void routeToDetailPage(Context context, SZContentModel.DataDTO.ContentsDTO contentsDTO) {
-        if (TextUtils.equals(contentsDTO.getType(), Constants.NEWS_VIDEO) || TextUtils.equals(contentsDTO.getType(), Constants.SHORT_VIDEO)) {
+        if (TextUtils.equals(contentsDTO.getType(), Constants.SHORT_VIDEO)) {
             Intent intent = new Intent(context, VideoHomeActivity.class);
             intent.putExtra("contentId", contentsDTO.getId());
             context.startActivity(intent);
@@ -167,10 +170,12 @@ public class SzrmRecommend {
             shareInfo.setShareTitle(contentsDTO.getShareTitle());
             shareInfo.setShareUrl(contentsDTO.getShareUrl());
             JumpToNativePageModel jumpToNativePageModel = new JumpToNativePageModel();
+            jumpToNativePageModel.setContentId(contentsDTO.getId());
             jumpToNativePageModel.setTitle(contentsDTO.getTitle());
             jumpToNativePageModel.setImgUrl(contentsDTO.getImagesUrl());
             jumpToNativePageModel.setLink(contentsDTO.getDetailUrl());
             jumpToNativePageModel.setNewsLink(contentsDTO.getDetailUrl());
+            jumpToNativePageModel.setType(contentsDTO.getType());
             if (TextUtils.isEmpty(contentsDTO.getBrief())) {
                 jumpToNativePageModel.setContent(contentsDTO.getTitle());
             } else {

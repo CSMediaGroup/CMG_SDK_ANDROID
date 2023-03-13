@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Keep
 public class JumpToNativePageModel implements Serializable {
-
+    private String contentId;
     private String pageName;
     private String newsLink;
     private String title;
@@ -14,6 +14,16 @@ public class JumpToNativePageModel implements Serializable {
     private String imgUrl;
     private String link;
     private String version;
+    private String type;
+    private String disableComment;
+
+    public String getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
 
     public String getPageName() {
         return pageName;
@@ -69,5 +79,21 @@ public class JumpToNativePageModel implements Serializable {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDisableComment() {
+        return disableComment;
+    }
+
+    public void setDisableComment(String disableComment) {
+        this.disableComment = disableComment;
     }
 }

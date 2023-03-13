@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 
@@ -65,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     private List<SZContentModel.DataDTO.ContentsDTO> contents = new ArrayList<>();
     private List<SZContentModel.DataDTO.ContentsDTO> loadMoreContents = new ArrayList<>();
     private WebFragment webFragment;
+    private RecyclerView recyclerview;
+    private RvAdatper adatper;
+    private TextView getListData;
+    private List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         uuid = findViewById(R.id.uuid);
         uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
         toPageDetail = findViewById(R.id.to_page_detail);
+        recyclerview = findViewById(R.id.recyclerview);
+        getListData = findViewById(R.id.get_list_data);
+        initRecyclerView();
         fxsys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -334,6 +343,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void initRecyclerView() {
+        recyclerview = findViewById(R.id.recyclerview);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        adatper = new RvAdatper(this, R.layout.rv_item_layout, contentsDTOS);
+        recyclerview.setAdapter(adatper);
+
+        getListData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SzrmRecommend.getInstance().requestContentList("10");
+            }
+        });
+
+        SzrmRecommend.getInstance().contentsEvent.observe(this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
+            @Override
+            public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contents) {
+                contentsDTOS = contents;
+                adatper.setNewData(contentsDTOS);
+            }
+        });
     }
 
 }
