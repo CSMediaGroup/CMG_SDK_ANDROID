@@ -31,7 +31,7 @@ public class ImageUtils {
     }
 
     private static final String SD_PATH = Environment.getExternalStorageDirectory().getPath();
-    public final static String SAVE_REAL_PATH =  SDCardUtils.getSDCardPath() + "/DCIM";
+    public final static String SAVE_REAL_PATH =  SDCardUtils.getSDCardPath() + "DCIM/";
 
     public static boolean saveBitmap2file(Bitmap bmp, Context context, Handler handler, CallBackFunction function) {
 
@@ -64,6 +64,7 @@ public class ImageUtils {
             message.what = 1;
             message.obj = function;
             handler.sendMessage(message);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + savePath + fileName)));
             Looper.prepare();
             ToastUtils.showShort("保存成功,位置:" + filePic.getAbsolutePath());
             Looper.loop();
@@ -78,8 +79,9 @@ public class ImageUtils {
 //        } catch (FileNotFoundException e) {
 //            e.printStackTrace();
 //        }
-        // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + savePath + fileName)));
+//        // 最后通知图库更新
+//        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + savePath + fileName)));
+//        ToastUtils.showShort("保存成功,位置:" + filePic.getAbsolutePath());
         return true;
     }
 }

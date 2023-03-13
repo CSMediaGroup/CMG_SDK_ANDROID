@@ -1,12 +1,16 @@
 package com.example.vdemo;
 
 
+import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
+
 import android.arch.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -28,12 +32,13 @@ import common.callback.VideoParamCallBack;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.JumpToNativePageModel;
+import common.model.SZContentModel;
+import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
 import common.utils.PersonInfoManager;
 import common.utils.ToastUtils;
 import event.SzrmRecommend;
-import common.model.SZContentModel;
 import ui.activity.LoginActivity;
 import ui.activity.TgtCodeActivity;
 import ui.activity.VideoDetailActivity;
@@ -62,6 +67,10 @@ public class MainActivity extends AppCompatActivity {
     private List<SZContentModel.DataDTO.ContentsDTO> contents = new ArrayList<>();
     private List<SZContentModel.DataDTO.ContentsDTO> loadMoreContents = new ArrayList<>();
     private WebFragment webFragment;
+    private RecyclerView recyclerview;
+    private RvAdapter adatper;
+    private TextView getListData;
+    private List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
         uuid = findViewById(R.id.uuid);
         uuid.setText("当前设备的uuid：" + UUIDUtils.deviceUUID());
         toPageDetail = findViewById(R.id.to_page_detail);
+        recyclerview = findViewById(R.id.recyclerview);
+        getListData = findViewById(R.id.get_list_data);
+        initRecyclerView();
         fxsys.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,10 +174,9 @@ public class MainActivity extends AppCompatActivity {
                         ToastUtils.showShort(errorMessage);
                     }
                 });
-
                 SzrmRecommend.getInstance().contentsEvent.observe(MainActivity.this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
                     @Override
-                    public void onChanged(@Nullable List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
+                    public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS) {
                         contents = contentsDTOS;
                     }
                 });
@@ -327,12 +338,33 @@ public class MainActivity extends AppCompatActivity {
                 SdkInteractiveParam.getInstance().clearFragment(MainActivity.this, webFragment);
             }
         });
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private void initRecyclerView() {
+        recyclerview = findViewById(R.id.recyclerview);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        adatper = new RvAdapter(this, R.layout.rv_item_layout, contentsDTOS);
+        recyclerview.setAdapter(adatper);
+
+        getListData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SzrmRecommend.getInstance().requestContentList("10");
+            }
+        });
+
+        SzrmRecommend.getInstance().contentsEvent.observe(this, new Observer<List<SZContentModel.DataDTO.ContentsDTO>>() {
+            @Override
+            public void onChanged(List<SZContentModel.DataDTO.ContentsDTO> contents) {
+                contentsDTOS = contents;
+                adatper.setNewData(contentsDTOS);
+            }
+        });
     }
 
 }

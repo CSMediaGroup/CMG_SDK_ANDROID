@@ -121,6 +121,7 @@ import static tencent.liteav.demo.superplayer.ui.player.WindowPlayer.mProgress;
 import static ui.activity.WebActivity.szrmLoginRequest;
 import static utils.NetworkUtil.setDataWifiState;
 
+
 public class VideoHomeActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView videoBack;
     private SuperPlayerView playerView;
@@ -157,7 +158,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     private RelativeLayout dismissPop;
     private RecyclerView commentPopRv;
     private TextView commentEdtInput;
-    private LinearLayout commentPop;
+    private RelativeLayout commentPop;
     //附着在软键盘上的输入弹出窗
     public CustomPopWindow inputAndSendPop;
     private View sendPopContentView;

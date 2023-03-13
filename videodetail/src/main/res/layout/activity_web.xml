@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mv="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/web_frame"
     android:layout_width="match_parent"
@@ -8,7 +10,7 @@
     android:fitsSystemWindows="true"
     tools:context="ui.activity.WebActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -68,53 +70,154 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_gravity="center"
+                    android:layout_marginRight="20dp"
                     android:src="@drawable/szrm_sdk_icon_share_more_black" />
             </LinearLayout>
 
         </RelativeLayout>
 
+    </RelativeLayout>
 
-        <TextView
-            android:id="@+id/toLogin"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/choose_pop_bg"
-            android:gravity="center"
-            android:text="登录"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:visibility="gone"></TextView>
 
-        <!--        <RelativeLayout-->
-        <!--            android:id="@+id/rlyt_web"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent">-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/web_comment_ll"
+        android:background="@color/colorGray4"></View>
 
-        <!--            <com.just.agentweb.AgentWebView-->
-        <!--                android:id="@+id/webView"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent" />-->
+    <LinearLayout
+        android:id="@+id/web_comment_ll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-        <!--            <widget.LoadingView-->
-        <!--                android:id="@+id/webViewLoading"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="match_parent" />-->
+        <RelativeLayout
+            android:id="@+id/web_comment_pop_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/video_dp10"
+            android:layout_weight="1"
+            android:background="@drawable/comment_input_bg"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
 
-        <!--            <widget.CustomSeekBar-->
-        <!--                android:id="@+id/seekBar"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_alignParentBottom="true"-->
-        <!--                android:layout_marginLeft="20dp"-->
-        <!--                android:layout_marginRight="20dp"-->
-        <!--                android:layout_marginBottom="50dp"-->
-        <!--                android:visibility="gone"-->
-        <!--                 />-->
-        <!--        </RelativeLayout>-->
+            <ImageView
+                android:id="@+id/white_comment"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/szrm_sdk_white_comment_icon"></ImageView>
 
+            <TextView
+                android:id="@+id/web_comment_edtInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/white_comment"
+                android:gravity="center_vertical"
+                android:hint="写评论..."
+                android:textColorHint="#3E3A39"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/video_dp10"
+            android:layout_weight="0.8">
+
+            <RelativeLayout
+                android:id="@+id/web_comment_click"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/web_comment_icon"
+                    android:layout_width="@dimen/video_dp18"
+                    android:layout_height="@dimen/video_dp18"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/web_comment_icon">
+
+                </ImageView>
+
+                <flyco.tablayout.widget.MsgView
+                    android:id="@+id/web_comment_msg_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="@dimen/video_dp30"
+                    android:layout_marginTop="@dimen/video_dp7"
+                    android:gravity="center"
+                    android:minWidth="@dimen/video_dp20"
+                    android:paddingLeft="@dimen/video_dp4"
+                    android:paddingRight="@dimen/video_dp4"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="#ffffff"
+                    android:textSize="7sp"
+                    android:visibility="gone"
+                    mv:mv_backgroundColor="@color/bz_red"
+                    mv:mv_isRadiusHalfHeight="true"
+                    mv:mv_strokeWidth="0dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/web_like_click"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/web_like_icon"
+                    android:layout_width="@dimen/video_dp18"
+                    android:layout_height="@dimen/video_dp18"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/web_comment_unlike">
+
+                </ImageView>
+
+                <flyco.tablayout.widget.MsgView
+                    android:id="@+id/web_like_msg_tip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="@dimen/video_dp30"
+                    android:layout_marginTop="@dimen/video_dp7"
+                    android:gravity="center"
+                    android:minWidth="@dimen/video_dp20"
+                    android:paddingLeft="@dimen/video_dp4"
+                    android:paddingRight="@dimen/video_dp4"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="7sp"
+                    android:visibility="gone"
+                    mv:mv_isRadiusHalfHeight="true"
+                    mv:mv_strokeWidth="0dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/web_share_click"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/video_dp18"
+                    android:layout_height="@dimen/video_dp18"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/web_comment_share"></ImageView>
+
+            </RelativeLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout
@@ -122,4 +225,4 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone" />
-</FrameLayout>
+</RelativeLayout>
