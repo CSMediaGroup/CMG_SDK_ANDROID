@@ -93,10 +93,26 @@ public class SzrmRecommend {
                 .execute(new JsonCallback<SZContentModel>() {
                     @Override
                     public void onSuccess(Response<SZContentModel> response) {
-                        if (null != response.body().getData()) {
-                            contentListCallBack.ContentListSuccessCallBack(response.body().getData().get(0).getContents());
-                        } else {
+                        if (null == response.body().getData()) {
                             contentListCallBack.ContentListErrorCallBack(response.body().message);
+                            return;
+                        }
+                        if (!response.body().getData().isEmpty()) {
+                            List<SZContentModel.DataDTO.ContentsDTO> contentsDTOList = new ArrayList<>();
+                            for (SZContentModel.DataDTO.ContentsDTO contentsDTO : response.body().getData().get(0).getContents()) {
+                                if (!TextUtils.equals(contentsDTO.type,"activity.works")) {
+                                    contentsDTOList.add(contentsDTO);
+                                }
+
+                                if (TextUtils.equals(contentsDTO.type,"activity.works")) {
+                                    Log.e("测试一下过滤ugc", "----------------");
+                                }
+                            }
+
+                            contentListCallBack.ContentListSuccessCallBack(contentsDTOList);
+                        } else {
+                            List<SZContentModel.DataDTO.ContentsDTO> list = new ArrayList<>();
+                            contentListCallBack.ContentListSuccessCallBack(list);
                         }
                     }
 
@@ -128,6 +144,18 @@ public class SzrmRecommend {
         this.contentListCallBack = contentListCallBack;
     }
 
+    public MoreContentListCallBack moreContentListCallBack;
+
+    public interface MoreContentListCallBack {
+        void MoreContentListSuccessCallBack(List<SZContentModel.DataDTO.ContentsDTO> response);
+
+        abstract void MoreContentListErrorCallBack(String errorMessage);
+    }
+
+    public void setMoreContentListCallBack(ContentListCallBack contentListCallBack) {
+        this.contentListCallBack = contentListCallBack;
+    }
+
 
     public void requestMoreContentList(SZContentModel.DataDTO.ContentsDTO contentsDTO, String pageSize) {
         OkGo.<SZContentLoadMoreModel>get(ApiConstants.getInstance().getContentList())
@@ -153,6 +181,59 @@ public class SzrmRecommend {
                     }
                 });
     }
+
+    public void requestMoreContentList(SZContentModel.DataDTO.ContentsDTO contentsDTO, String pageSize, final MoreContentListCallBack moreContentListCallBack) {
+        OkGo.<SZContentLoadMoreModel>get(ApiConstants.getInstance().getContentList())
+                .tag("zxs_moreContentList")
+                .params("contentId", contentsDTO.getId())
+                .params("panelId", PersonInfoManager.getInstance().getPanId())
+                .params("pageSize", pageSize)
+                .params("vernier", contentsDTO.getVernier())
+                .params("personalRec", "1")
+                .params("ssid", PersonInfoManager.getInstance().getANDROID_ID())
+                .params("refreshType", "loadmore")
+                .execute(new JsonCallback<SZContentLoadMoreModel>() {
+                    @Override
+                    public void onSuccess(Response<SZContentLoadMoreModel> response) {
+                        if (null == response.body().getData()) {
+                            moreContentListCallBack.MoreContentListErrorCallBack(response.body().getMessage());
+                            return;
+                        }
+                        if (!response.body().getData().isEmpty()) {
+                            List<SZContentModel.DataDTO.ContentsDTO> contentsDTOList = new ArrayList<>();
+                            for (SZContentModel.DataDTO.ContentsDTO contentsDTO : response.body().getData()) {
+                                if (!TextUtils.equals(contentsDTO.type,"activity.works")) {
+                                    contentsDTOList.add(contentsDTO);
+                                }
+
+                                if (TextUtils.equals(contentsDTO.type,"activity.works")) {
+                                    Log.e("测试一下过滤ugc", "----------------");
+                                }
+                            }
+
+                            moreContentListCallBack.MoreContentListSuccessCallBack(contentsDTOList);
+                        } else {
+                            List<SZContentModel.DataDTO.ContentsDTO> list = new ArrayList<>();
+                            moreContentListCallBack.MoreContentListSuccessCallBack(list);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<SZContentLoadMoreModel> response) {
+                        super.onError(response);
+                        if (null == response.body()) {
+                            return;
+                        }
+
+                        if (null == response.body().getMessage()) {
+                            return;
+                        }
+                        Log.e("zxs_list", response.body().getMessage());
+                        moreContentListCallBack.MoreContentListErrorCallBack(response.body().getMessage());
+                    }
+                });
+    }
+
 
     /**
      * 进入新闻详情页

@@ -82,6 +82,7 @@ import common.utils.ToastUtils;
 import common.utils.AppInit;
 import common.utils.VideoScaleUtils;
 import custompop.CustomPopWindow;
+import event.SzrmRecommend;
 import flyco.tablayout.SlidingTabLayout;
 import model.bean.ActivityRuleBean;
 import smartrefresh.layout.SmartRefreshLayout;
@@ -2469,6 +2470,11 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         if (null == jsonObject) {
             return;
         }
+
+        if (TextUtils.equals("0", SdkInteractiveParam.getInstance().getIsAgreePrivacy())) {
+            return;
+        }
+
         OkGo.<TrackingUploadModel>post(ApiConstants.getInstance().trackingUpload())
                 .tag(TRACKINGUPLOAD)
                 .headers("token", PersonInfoManager.getInstance().getTransformationToken())

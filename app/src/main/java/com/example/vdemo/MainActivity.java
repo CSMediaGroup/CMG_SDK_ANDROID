@@ -188,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                String sds = SdkInteractiveParam.getInstance().getIsAgreePrivacy();
             }
         });
 
@@ -214,7 +215,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!contents.isEmpty()) {
                     SZContentModel.DataDTO.ContentsDTO contentsDTO = contents.get(contents.size() - 1);
-                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+//                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10", new SzrmRecommend.MoreContentListCallBack() {
+                        @Override
+                        public void MoreContentListSuccessCallBack(List<SZContentModel.DataDTO.ContentsDTO> response) {
+                            List<SZContentModel.DataDTO.ContentsDTO> list = new ArrayList<>();
+                            list = response;
+                        }
+
+                        @Override
+                        public void MoreContentListErrorCallBack(String errorMessage) {
+
+                        }
+                    });
                 }
             }
         });
@@ -316,6 +329,11 @@ public class MainActivity extends AppCompatActivity {
                 //这里是你跳转你的登录页面 去登录
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+
+            @Override
+            public String setIsAgreePrivacy() {
+                return "1";
             }
         });
 

@@ -73,6 +73,15 @@ public class SdkInteractiveParam {
         }
     }
 
+    public String getIsAgreePrivacy() {
+        if (callBack == null) {
+            Log.e(TAG, "获取参数失败，请重试");
+            return "0";
+        } else {
+            return callBack.setIsAgreePrivacy();
+        }
+    }
+
     /**
      * 获取webFragment实例
      *
