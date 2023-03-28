@@ -1,6 +1,7 @@
 package tencent.liteav.demo.superplayer.model;
 
 import com.tencent.rtmp.TXLivePlayer;
+import com.tencent.rtmp.TXVodPlayer;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
 import java.util.List;
@@ -98,6 +99,8 @@ public interface SuperPlayer {
     void setMirror(boolean isMirror);
 
     void switchStream(VideoQuality quality);
+
+    TXVodPlayer getVodPlay();
 
     String getPlayURL();
 

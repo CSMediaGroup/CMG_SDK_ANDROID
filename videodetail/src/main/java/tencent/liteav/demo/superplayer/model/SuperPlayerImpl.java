@@ -989,6 +989,11 @@ public class SuperPlayerImpl implements SuperPlayer, ITXVodPlayListener, ITXLive
     }
 
     @Override
+    public TXVodPlayer getVodPlay() {
+        return mVodPlayer;
+    }
+
+    @Override
     public String getPlayURL() {
         return mCurrentPlayVideoURL;
     }

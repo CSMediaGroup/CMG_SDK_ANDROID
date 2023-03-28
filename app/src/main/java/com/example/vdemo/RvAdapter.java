@@ -14,10 +14,10 @@ import brvah.BaseViewHolder;
 import event.SzrmRecommend;
 import model.bean.SZContentModel;
 
-public class RvAdatper extends BaseQuickAdapter<SZContentModel.DataDTO.ContentsDTO, BaseViewHolder> {
+public class RvAdapter extends BaseQuickAdapter<SZContentModel.DataDTO.ContentsDTO, BaseViewHolder> {
     private Context context;
 
-    public RvAdatper(Context context, int layoutResId, @Nullable List<SZContentModel.DataDTO.ContentsDTO> data) {
+    public RvAdapter(Context context, int layoutResId, @Nullable List<SZContentModel.DataDTO.ContentsDTO> data) {
         super(layoutResId, data);
         this.context = context;
     }

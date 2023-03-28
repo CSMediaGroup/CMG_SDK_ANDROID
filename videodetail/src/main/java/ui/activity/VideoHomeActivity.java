@@ -77,6 +77,7 @@ import common.utils.SoftKeyBoardListener;
 import common.utils.ToastUtils;
 import common.utils.AppInit;
 import custompop.CustomPopWindow;
+import event.SzrmRecommend;
 import flyco.tablayout.SlidingTabLayout;
 import model.bean.ActivityRuleBean;
 import smartrefresh.layout.SmartRefreshLayout;
@@ -122,6 +123,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class VideoHomeActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView videoBack;
     private SuperPlayerView playerView;
@@ -133,7 +135,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     private TextView noLoginTipsOk;
     public String contentId;
     public static double maxPercent = 0; //记录最大百分比
-    public static long lsDuration = 0; //每一次上报临时保存的播放时长
+//    public static long lsDuration = 0; //每一次上报临时保存的播放时长
     private NetBroadcastReceiver netWorkStateReceiver;
     private String categoryName;
     public static boolean isPause;
@@ -312,7 +314,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 playerView.mFullScreenPlayer.toggleView(playerView.mFullScreenPlayer.mLayoutReplay, false);
                                 float percentage = ((float) curProgress) / maxProgress;
                                 long duration = (long) (percentage * mDuration);
-                                lsDuration = duration;
                                 if (percentage > maxPercent) {
                                     maxPercent = percentage;
                                 }
@@ -380,7 +381,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                                 playerView.mWindowPlayer.toggleView(playerView.mWindowPlayer.mLayoutReplay, false);
                                 float percentage = ((float) curProgress) / maxProgress;
                                 long duration = (long) (percentage * mDuration);
-                                lsDuration = duration;
                                 if (percentage > maxPercent) {
                                     maxPercent = percentage;
                                 }
@@ -626,36 +626,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
 
                     playerView.mWindowPlayer.hide();
 
-                    if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
-                        if (mDuration != 0 && mProgress != 0) {
-                            //上报埋点
-                            long evePlayTime = Math.abs(mProgress - lsDuration);
-                            double currentPercent = (evePlayTime * 1.0 / mDuration);
-                            double uploadPercent = 0;
-                            if (null == playerView.buriedPointModel.getXksh_renew() || TextUtils.equals("false", playerView.buriedPointModel.getXksh_renew())) {
-                                //不为重播
-                                if (currentPercent > maxPercent) {
-                                    uploadPercent = currentPercent;
-                                    maxPercent = currentPercent;
-                                } else {
-                                    uploadPercent = maxPercent;
-                                }
-                            } else {
-                                uploadPercent = 1;
-                            }
-                            xkshReportTime = DateUtils.getTimeCurrent() - xkshOldSystemTime;
-                            BigDecimal two = new BigDecimal(uploadPercent);
-                            double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-                            uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(VideoHomeActivity.this, mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), Constants.CMS_VIDEO_OVER_AUTO, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), Constants.CMS_VIDEO_OVER_AUTO);
-                            Log.e("xksh_md", "埋点事件：" + Constants.CMS_VIDEO_OVER_AUTO + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
-                        }
-                    }
-                    String isFinish;
-                    if (null == playerView.buriedPointModel.getIs_renew() || TextUtils.equals("false", playerView.buriedPointModel.getIs_renew())) {
-                        isFinish = "否";
-                    } else {
-                        isFinish = "是";
-                    }
+                    finderPoint();
 
                     mDataDTO = mDatas.get(position);
 
@@ -682,7 +653,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                     }
                     //滑动下一条或者上一条视频
                     playerView.mWindowPlayer.setRecordDuration(0);
-                    lsDuration = 0;
                     maxPercent = 0;
                     playerView.mCurrentPlayVideoURL = mDatas.get(position).getPlayUrl();
                     playUrl = mDatas.get(position).getPlayUrl();
@@ -1338,16 +1308,30 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         if (null == mDataDTO) {
             return;
         }
-        if (playerView.mWindowPlayer.mCurrentPlayState != SuperPlayerDef.PlayerState.END) {
-            if (mDuration != 0 && mProgress != 0) {
+        finderPoint();
+    }
+
+    public void finderPoint() {
+        playerView.mSuperPlayer.pause();
+        if (!TextUtils.isEmpty(mDataDTO.getVolcCategory())) {
+            if (playerView.mWindowPlayer.mCurrentPlayState != SuperPlayerDef.PlayerState.END) {
+
                 /**
                  * 上报内容埋点 视频播放时长
                  */
-                String event = Constants.CMS_VIDEO_OVER_AUTO;
-                long evePlayTime = Math.abs(mProgress - lsDuration);
-                double currentPercent = evePlayTime * 1.0 / mDuration;
+                double currentPercent = 0;
+                xkshReportTime = DateUtils.getTimeCurrent() - xkshOldSystemTime;
+                if (mDuration != 0) {
+                    //这里算拖动到哪里  算最高的播放百分比，用来看完播率
+                    if (mProgress == 0) {
+                        currentPercent = (xkshReportTime * 1.0 / (mDuration * 1000.0));
+                    } else {
+                        currentPercent = playerView.mSuperPlayer.getVodPlay().getCurrentPlaybackTime() * 1.0 / mDuration;
+                    }
+
+                }
                 double uploadPercent = 0;
-                if (null == playerView.buriedPointModel.getXksh_renew() || TextUtils.equals("false", playerView.buriedPointModel.getXksh_renew())) {
+                if (null == playerView.buriedPointModel.getIs_renew() || TextUtils.equals("false", playerView.buriedPointModel.getIs_renew())) {
 //                      //不为重播
                     if (currentPercent > maxPercent) {
                         uploadPercent = currentPercent;
@@ -1359,19 +1343,17 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
                     uploadPercent = 1;
                 }
 
-                xkshReportTime = DateUtils.getTimeCurrent() - xkshOldSystemTime;
-                BigDecimal two = new BigDecimal(uploadPercent);
-                double pointPercentTwo = two.setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-                lsDuration = mProgress;
-                //上报埋点
-                String contentId = "";
-                if (TextUtils.isEmpty(mDataDTO.getThirdPartyId())) {
-                    contentId = String.valueOf(mDataDTO.getId());
+                String pointPercentTwo = NumberFormatTool.division(uploadPercent);
+//                lsDuration = mProgress;
+                String event;
+                if (TextUtils.equals(mDataDTO.getIsAutoReportEvent(), "1")) {
+                    event = Constants.CMS_VIDEO_OVER;
                 } else {
-                    contentId = mDataDTO.getThirdPartyId();
+                    event = Constants.CMS_VIDEO_OVER_AUTO;
                 }
-                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(this, contentId, String.valueOf(xkshReportTime), String.valueOf(Math.floor(pointPercentTwo * 100)), event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), event);
-                Log.e("xksh_md", "埋点事件：" + event + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
+                //上报埋点
+                uploadBuriedPoint(ContentBuriedPointManager.setContentBuriedPoint(this, mDataDTO.getThirdPartyId(), String.valueOf(xkshReportTime), pointPercentTwo, event, mDataDTO.getVolcCategory(), mDataDTO.getRequestId(), appName), event);
+                Log.e("video_md", "埋点事件：" + event + "播放时长:" + xkshReportTime + "---" + "播放百分比:" + pointPercentTwo);
             }
         }
     }
@@ -1386,7 +1368,6 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         }
         OkGo.getInstance().cancelAll();
         maxPercent = 0;
-        lsDuration = 0;
         unregisterReceiver(netWorkStateReceiver);
 //        OkGo.getInstance().cancelTag(VIDEOTAG);
     }
@@ -2469,6 +2450,11 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
         if (null == jsonObject) {
             return;
         }
+
+        if (TextUtils.equals("0", SdkInteractiveParam.getInstance().getIsAgreePrivacy())) {
+            return;
+        }
+
         OkGo.<TrackingUploadModel>post(ApiConstants.getInstance().trackingUpload())
                 .tag(TRACKINGUPLOAD)
                 .headers("token", PersonInfoManager.getInstance().getTransformationToken())

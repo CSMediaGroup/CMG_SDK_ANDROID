@@ -1,7 +1,6 @@
 package com.example.vdemo;
 
 
-import static ui.activity.WebActivity.LOGIN_REQUEST_CODE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +32,6 @@ import common.callback.VideoParamCallBack;
 import common.http.ApiConstants;
 import common.model.BuriedPointModel;
 import common.model.JumpToNativePageModel;
-import common.model.SdkUserInfo;
 import common.model.ShareInfo;
 import common.model.ThirdUserInfo;
 import common.utils.PersonInfoManager;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     private List<SZContentModel.DataDTO.ContentsDTO> loadMoreContents = new ArrayList<>();
     private WebFragment webFragment;
     private RecyclerView recyclerview;
-    private RvAdatper adatper;
+    private RvAdapter adatper;
     private TextView getListData;
     private List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS = new ArrayList<>();
 
@@ -188,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                String sds = SdkInteractiveParam.getInstance().getIsAgreePrivacy();
             }
         });
 
@@ -214,7 +214,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!contents.isEmpty()) {
                     SZContentModel.DataDTO.ContentsDTO contentsDTO = contents.get(contents.size() - 1);
-                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+//                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10");
+                    SzrmRecommend.getInstance().requestMoreContentList(contentsDTO, "10", new SzrmRecommend.MoreContentListCallBack() {
+                        @Override
+                        public void MoreContentListSuccessCallBack(List<SZContentModel.DataDTO.ContentsDTO> response) {
+                            List<SZContentModel.DataDTO.ContentsDTO> list = new ArrayList<>();
+                            list = response;
+                        }
+
+                        @Override
+                        public void MoreContentListErrorCallBack(String errorMessage) {
+
+                        }
+                    });
                 }
             }
         });
@@ -317,6 +329,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
+
+            @Override
+            public String setIsAgreePrivacy() {
+                return "1";
+            }
         });
 
 //        /**
@@ -348,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView() {
         recyclerview = findViewById(R.id.recyclerview);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        adatper = new RvAdatper(this, R.layout.rv_item_layout, contentsDTOS);
+        adatper = new RvAdapter(this, R.layout.rv_item_layout, contentsDTOS);
         recyclerview.setAdapter(adatper);
 
         getListData.setOnClickListener(new View.OnClickListener() {
