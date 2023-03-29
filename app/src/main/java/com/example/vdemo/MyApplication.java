@@ -12,7 +12,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        AppInit.init(this, false, "9111184"); //1960205 uat   9111184 生产
+        AppInit.init(this, true, "1960205"); //1960205 uat   9111184 生产
     }
 
 

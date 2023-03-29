@@ -30,7 +30,10 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.ClientCertRequest;
+import android.webkit.HttpAuthHandler;
 import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -46,6 +49,7 @@ import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.just.agentweb.AgentWeb;
+import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -154,6 +158,8 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     public CustomPopWindow popupWindow;
     private ImageView webLikeIcon;
     private TextView webCommentEdtInput;
+    private RelativeLayout webToolbar;
+    private boolean toolBarIsShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,6 +181,15 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
         intent = getIntent().getStringExtra("intent");
         shareInfo = (ShareInfo) getIntent().getSerializableExtra("shareInfo");
+        webToolbar = findViewById(R.id.webToolbar);
+        toolBarIsShow = getIntent().getBooleanExtra("toolBarIsShow", true);
+
+        if (toolBarIsShow) {
+            webToolbar.setVisibility(View.VISIBLE);
+        } else {
+            webToolbar.setVisibility(View.GONE);
+        }
+
         if (null != param) {
             myContentId = param.getContentId();
         }
@@ -309,6 +324,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         return new WebViewClient() {
             BridgeWebViewClient mBridgeWebViewClient = new BridgeWebViewClient(mBridgeWebView);
 
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (mBridgeWebViewClient.shouldOverrideUrlLoading(view, url)) {
@@ -347,9 +363,29 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 mBridgeWebViewClient.onPageFinished(view, url);
                 isFinish = true;
             }
-
         };
     }
+
+    protected WebChromeClient mWebChromeClient = new WebChromeClient() {
+
+
+        @Override
+        public void onProgressChanged(WebView view, int newProgress) {
+            super.onProgressChanged(view, newProgress);
+            Log.i(TAG, "onProgressChanged:" + newProgress + "  view:" + view);
+        }
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            if (webTitle != null && !TextUtils.isEmpty(title)) {
+                if (title.length() > 10) {
+                    title = title.substring(0, 10).concat("...");
+                }
+            }
+            webTitle.setText(title);
+        }
+    };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -439,6 +475,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 .useDefaultIndicator()
                 .setWebViewClient(getWebViewClient())
                 .setWebView(mBridgeWebView)
+                .setWebChromeClient(mWebChromeClient)
 //                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
 //               .setDownloadListener(mDownloadListener) 4.0.0 删除该API
                 .createAgentWeb()

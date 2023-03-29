@@ -87,6 +87,10 @@ public final class AppInit {
                             ToastUtils.showShort(com.szrm.videodetail.demo.R.string.data_err);
                             return;
                         }
+                        if (null == response.body().getCode()) {
+                            ToastUtils.showShort(response.body().getMessage());
+                            return;
+                        }
 
                         if (response.body().getCode().equals(success_code)) {
                             MechanismModel.DataDTO model = response.body().getData();
