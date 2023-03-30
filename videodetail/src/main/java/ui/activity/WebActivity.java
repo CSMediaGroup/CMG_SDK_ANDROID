@@ -360,32 +360,12 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                webTitle.setText(view.getTitle());
                 mBridgeWebViewClient.onPageFinished(view, url);
                 isFinish = true;
             }
         };
     }
-
-    protected WebChromeClient mWebChromeClient = new WebChromeClient() {
-
-
-        @Override
-        public void onProgressChanged(WebView view, int newProgress) {
-            super.onProgressChanged(view, newProgress);
-            Log.i(TAG, "onProgressChanged:" + newProgress + "  view:" + view);
-        }
-
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            if (webTitle != null && !TextUtils.isEmpty(title)) {
-                if (title.length() > 10) {
-                    title = title.substring(0, 10).concat("...");
-                }
-            }
-            webTitle.setText(title);
-        }
-    };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -475,7 +455,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 .useDefaultIndicator()
                 .setWebViewClient(getWebViewClient())
                 .setWebView(mBridgeWebView)
-                .setWebChromeClient(mWebChromeClient)
 //                .setSecurityType(AgentWeb.SecurityType.STRICT_CHECK)
 //               .setDownloadListener(mDownloadListener) 4.0.0 删除该API
                 .createAgentWeb()
@@ -1230,6 +1209,9 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
      * 获取收藏点赞状态
      */
     public void getContentState(String contentId) {
+        if (TextUtils.isEmpty(contentId)) {
+            return;
+        }
         OkGo.<ContentStateModel>get(ApiConstants.getInstance().queryStatsData())
                 .tag(VIDEOTAG)
                 .headers("token", PersonInfoManager.getInstance().getTransformationToken())
