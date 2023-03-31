@@ -45,6 +45,7 @@ import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.just.agentweb.AgentWeb;
+import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
@@ -342,6 +343,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                webTitle.setText(view.getTitle());
                 mBridgeWebViewClient.onPageFinished(view, url);
                 isFinish = true;
             }
@@ -1190,6 +1192,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
      * 获取收藏点赞状态
      */
     public void getContentState(String contentId) {
+        if (TextUtils.isEmpty(contentId)) {
+            return;
+        }
+
         OkGo.<ContentStateModel>get(ApiConstants.getInstance().queryStatsData())
                 .tag(VIDEOTAG)
                 .headers("token", PersonInfoManager.getInstance().getTransformationToken())
