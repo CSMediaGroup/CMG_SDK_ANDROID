@@ -243,10 +243,10 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
 
             if (TextUtils.equals(param.getDisableComment(), "true")) {
                 webCommentEdtInput.setText("该内容禁止评论");
-                webCommentEdtInput.setTextColor(getResources().getColor(R.color.black));
+                webCommentEdtInput.setTextColor(getResources().getColor(R.color.video_black));
             } else {
                 webCommentEdtInput.setText("写评论...");
-                webCommentEdtInput.setTextColor(getResources().getColor(R.color.black));
+                webCommentEdtInput.setTextColor(getResources().getColor(R.color.video_black));
             }
         } else {
             getCfg();
@@ -1243,7 +1243,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                 webLikeMsgTip.setTextColor(getResources().getColor(R.color.bz_red));
             } else {
                 webLikeIcon.setImageResource(R.drawable.web_comment_unlike);
-                webLikeMsgTip.setTextColor(getResources().getColor(R.color.black));
+                webLikeMsgTip.setTextColor(getResources().getColor(R.color.video_black));
             }
         }
 
@@ -1416,7 +1416,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
                                     int num = 0;
                                     if (null != likeImage) {
                                         likeImage.setImageResource(R.drawable.web_comment_unlike);
-                                        likeNum.setTextColor(getResources().getColor(R.color.black));
+                                        likeNum.setTextColor(getResources().getColor(R.color.video_black));
                                     }
                                     if (null != likeNum) {
                                         num = Integer.parseInt(NumberFormatTool.getNumStr(likeNum.getText().toString()));

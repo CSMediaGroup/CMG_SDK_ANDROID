@@ -152,7 +152,7 @@ public class VideoDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView commentEdtInput;
     private RelativeLayout collectionBtn;
     private RelativeLayout likesBtn;
-    private RelativeLayout commentPopRl;
+    private LinearLayout commentPopRl;
     private RelativeLayout commentShare;
     //附着在软键盘上的输入弹出窗
     public CustomPopWindow inputAndSendPop;

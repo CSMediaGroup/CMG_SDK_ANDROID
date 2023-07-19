@@ -159,7 +159,7 @@ public class VideoHomeActivity extends AppCompatActivity implements View.OnClick
     private RelativeLayout dismissPop;
     private RecyclerView commentPopRv;
     private TextView commentEdtInput;
-    private RelativeLayout commentPop;
+    private LinearLayout commentPop;
     //附着在软键盘上的输入弹出窗
     public CustomPopWindow inputAndSendPop;
     private View sendPopContentView;
