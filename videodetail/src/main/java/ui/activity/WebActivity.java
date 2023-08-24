@@ -354,7 +354,6 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                webTitle.setText(view.getTitle());
                 mBridgeWebViewClient.onPageFinished(view, url);
                 isFinish = true;
             }

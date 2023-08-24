@@ -296,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
 //                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
 //                startActivity(intent);
                 Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                intent.putExtra("testUrl", enterUrl.getText().toString());
+                intent.putExtra("enterUrl", enterUrl.getText().toString());
                 startActivity(intent);
             }
         });
