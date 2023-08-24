@@ -101,6 +101,7 @@
         android:layout_below="@+id/set_code"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="2dp"
+        android:visibility="gone"
         android:background="@color/video_c9"
         android:gravity="center"
         android:text="SDK首页（Fragment）"
@@ -194,6 +195,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_below="@+id/change_user_info"
+        android:visibility="gone"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/get_list_data"
         android:text="切换正式环境"></Switch>
@@ -227,11 +229,22 @@
 
     </TextView>
 
+    <EditText
+        android:id="@+id/enter_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/test"
+        android:text="http://192.168.1.122:8001/#/taiyi/bridge_test?debug=1"
+        android:layout_marginTop="10dp">
+
+    </EditText>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/test">
+        android:layout_below="@+id/enter_url"
+        android:layout_marginTop="10dp">
 
     </android.support.v7.widget.RecyclerView>
 

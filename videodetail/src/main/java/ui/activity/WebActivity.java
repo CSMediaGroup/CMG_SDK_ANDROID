@@ -154,6 +154,8 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
     private ImageView webLikeIcon;
     private TextView webCommentEdtInput;
 
+    private String enterUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +171,7 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
         webTitle = findViewById(R.id.webTitle);
         iconShare = findViewById(R.id.iconShare);
         iconShare.setOnClickListener(this);
+        enterUrl = getIntent().getStringExtra("enterUrl");
         ScreenUtils.fullScreen(this, true);
         ScreenUtils.setStatusBarColor(this, R.color.white);
         param = (JumpToNativePageModel) getIntent().getSerializableExtra("param");
@@ -231,27 +234,35 @@ public class WebActivity extends AppCompatActivity implements View.OnClickListen
             getContentState(param.getContentId());
         }
         webCommentLl = findViewById(R.id.web_comment_ll);
-        if (TextUtils.equals("1", intent)) {
-            PersonInfoManager.getInstance().setIntentUrl(param.getNewsLink());
+        if (TextUtils.isEmpty(enterUrl)) {
+            if (TextUtils.equals("1", intent)) {
+                PersonInfoManager.getInstance().setIntentUrl(param.getNewsLink());
 //            intentUrl = param.getNewsLink();
-            initBridge();
-            if (TextUtils.isEmpty(param.getContentId())) {
-                webCommentLl.setVisibility(View.GONE);
-            } else {
-                webCommentLl.setVisibility(View.VISIBLE);
-            }
+                initBridge();
+                if (TextUtils.isEmpty(param.getContentId())) {
+                    webCommentLl.setVisibility(View.GONE);
+                } else {
+                    webCommentLl.setVisibility(View.VISIBLE);
+                }
 
-            if (TextUtils.equals(param.getDisableComment(), "true")) {
-                webCommentEdtInput.setText("该内容禁止评论");
-                webCommentEdtInput.setTextColor(getResources().getColor(R.color.video_black));
+                if (TextUtils.equals(param.getDisableComment(), "true")) {
+                    webCommentEdtInput.setText("该内容禁止评论");
+                    webCommentEdtInput.setTextColor(getResources().getColor(R.color.video_black));
+                } else {
+                    webCommentEdtInput.setText("写评论...");
+                    webCommentEdtInput.setTextColor(getResources().getColor(R.color.video_black));
+                }
             } else {
-                webCommentEdtInput.setText("写评论...");
-                webCommentEdtInput.setTextColor(getResources().getColor(R.color.video_black));
+                getCfg();
+                webCommentLl.setVisibility(View.GONE);
             }
         } else {
-            getCfg();
+            PersonInfoManager.getInstance().setIntentUrl(enterUrl);
             webCommentLl.setVisibility(View.GONE);
+            initBridge();
         }
+
+
     }
 
     /**

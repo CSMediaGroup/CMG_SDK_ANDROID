@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView getListData;
     private List<SZContentModel.DataDTO.ContentsDTO> contentsDTOS = new ArrayList<>();
 
+    private EditText enterUrl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         toPageDetail = findViewById(R.id.to_page_detail);
         recyclerview = findViewById(R.id.recyclerview);
         getListData = findViewById(R.id.get_list_data);
+        enterUrl = findViewById(R.id.enter_url);
         initRecyclerView();
         fxsys.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,11 +288,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //测试
         test.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, TgtCodeActivity.class);
-                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
+//                Intent intent = new Intent(MainActivity.this, TgtCodeActivity.class);
+//                intent.putExtra("newsLink", "http://192.168.31.161:8081/news/index.html");
+//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                intent.putExtra("testUrl", enterUrl.getText().toString());
                 startActivity(intent);
             }
         });
